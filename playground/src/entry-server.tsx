@@ -3,15 +3,21 @@ import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import { head } from './head'
 import { PageView } from './page'
 import { ogName, type Page, pageByPath, type ToolId } from './site'
+import batch from './tools/batch'
 import calendar from './tools/calendar'
 import date from './tools/date'
 import faker from './tools/faker'
 import iban from './tools/iban'
 import iin from './tools/iin'
 import money from './tools/money'
+import mrp from './tools/mrp'
 import phone from './tools/phone'
 import plate from './tools/plate'
+import regions from './tools/regions'
+import requisites from './tools/requisites'
+import salary from './tools/salary'
 import translit from './tools/translit'
+import vat from './tools/vat'
 import type { ToolProps } from './ui'
 
 export { ogName, pages, SITE } from './site'
@@ -21,6 +27,12 @@ const WIDGETS: Record<ToolId, ComponentType<ToolProps>> = {
   phone,
   iban,
   plate,
+  regions,
+  batch,
+  requisites,
+  salary,
+  vat,
+  mrp,
   money,
   calendar,
   date,

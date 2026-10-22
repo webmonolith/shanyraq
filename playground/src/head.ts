@@ -58,6 +58,7 @@ export const head = (page: Page, og: string | undefined): string => {
     `<title>${attr(title)}</title>`,
     `<meta name="description" content="${attr(page.description)}" />`,
     `<link rel="canonical" href="${url}" />`,
+    `<link rel="manifest" href="/manifest.${page.lang}.webmanifest" />`,
     ...alternates.map(([l, p]) => `<link rel="alternate" hreflang="${l}" href="${SITE}${p}" />`),
     '<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />',
     '<meta name="theme-color" content="#111413" media="(prefers-color-scheme: dark)" />',

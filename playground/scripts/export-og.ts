@@ -5,11 +5,11 @@ import { promisify } from 'node:util'
 import { LOGO_PATH } from '../src/icons'
 import { ogName, pages, TOOLS } from '../src/site'
 
-// 1200×630 link previews: page heading on a plain card, one Chrome process per shot;
+// 1200×630 link previews (page heading on a plain card) and PWA icons, one Chrome process per shot;
 // each worker needs its own profile, parallel Chromes sharing one fail on the profile lock
 const CHROME = process.env.CHROME ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 const TMP = resolve('node_modules/.export-og/html')
-const OUT = resolve('public/og')
+const OUT = resolve('public')
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;')
 
@@ -34,36 +34,53 @@ const card = (lang: string, heading: string, tag: string) => `<!doctype html>
   <div class="site">shanyraq.webmonolith.kz</div>
 </div></body></html>`
 
+// Full-bleed square: the logo stays inside the 80% safe zone of maskable icons.
+const icon = (size: number) => `<!doctype html>
+<html><head><meta charset="utf-8"><style>
+body{margin:0;width:${size}px;height:${size}px;overflow:hidden;background:#0b7a75;display:grid;place-items:center}
+svg{width:58%;height:58%;fill:#fff}
+</style></head><body>${mark}</body></html>`
+
+const ICONS = { 'icons/180': 180, 'icons/192': 192, 'icons/512': 512 }
+
 const TAG = { ru: 'Инструменты для Казахстана', kk: 'Қазақстанға арналған құралдар' }
 
 const run = promisify(execFile)
-const shot = (name: string, worker: number) =>
+const shot = ([name, w, h]: Shot, worker: number) =>
   run(CHROME, [
     '--headless=new',
     `--user-data-dir=${TMP}/../profile-${worker}`,
     '--disable-gpu',
     '--hide-scrollbars',
     '--force-device-scale-factor=1',
-    '--window-size=1200,630',
+    `--window-size=${w},${h}`,
     `--screenshot=${OUT}/${name}.png`,
-    `file://${TMP}/${name}.html`,
+    `file://${TMP}/${name.replace('/', '-')}.html`,
   ])
+
+type Shot = [name: string, width: number, height: number]
 
 await rm(TMP, { recursive: true, force: true })
 await mkdir(TMP, { recursive: true })
-await mkdir(OUT, { recursive: true })
+await mkdir(`${OUT}/og`, { recursive: true })
+await mkdir(`${OUT}/icons`, { recursive: true })
 
 for (const page of pages) {
   const tool = TOOLS.find((t) => t.id === page.tool)
   const heading = page.kind === 'root' ? 'ИИН, IBAN, телефон, теңге, календарь' : page.h1
-  const tag = tool ? `shanyraq/${tool.module.split('/')[1]}` : TAG[page.lang]
-  await writeFile(`${TMP}/${ogName(page)}.html`, card(page.lang, heading, tag))
+  const tag = tool ? tool.module : TAG[page.lang]
+  await writeFile(`${TMP}/og-${ogName(page)}.html`, card(page.lang, heading, tag))
 }
+for (const [name, size] of Object.entries(ICONS))
+  await writeFile(`${TMP}/${name.replace('/', '-')}.html`, icon(size))
 
-const queue = pages.map(ogName)
+const queue: Shot[] = [
+  ...pages.map((p): Shot => [`og/${ogName(p)}`, 1200, 630]),
+  ...Object.entries(ICONS).map(([name, size]): Shot => [name, size, size]),
+]
 await Promise.all(
   Array.from({ length: 6 }, async (_, worker) => {
-    for (let n = queue.shift(); n; n = queue.shift()) await shot(n, worker)
+    for (let s = queue.shift(); s; s = queue.shift()) await shot(s, worker)
   }),
 )
-console.log(`public/og: ${pages.length} png`)
+console.log(`public/og: ${pages.length} png, public/icons: ${Object.keys(ICONS).length} png`)

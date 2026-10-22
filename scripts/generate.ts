@@ -255,3 +255,57 @@ write(
 export const SCHEMES: Record<'2021' | '2018', Record<string, [string, string]>> = ${json({ 2021: scheme2021, 2018: scheme2018 })}
 `,
 )
+
+interface TaxData {
+  years: Record<string, { mrp: number; mzp: number }>
+  ipn: { rate: number; highRate: number; thresholdMrp: number; baseDeductionMrp: number }
+  opv: { rate: number; maxMzp: number }
+  opvr: { rates: Record<string, number>; minMzp: number; maxMzp: number }
+  so: { rate: number; minMzp: number; maxMzp: number }
+  vosms: { rate: number; maxMzp: number }
+  oosms: { rate: number; maxMzp: number }
+  sn: { rate: number; minMrp: number }
+  vat: { rate: number; registrationThresholdMrp: number }
+}
+
+const tax = read<TaxData>('tax')
+const pct = (n: number) => Math.round(n * 10) / 1000
+
+const taxYears = Object.fromEntries(
+  Object.entries(tax.years).map(([y, v]) => {
+    const opvr = tax.opvr.rates[y]
+    if (opvr === undefined) throw new Error(`data/tax.json: no ОПВР rate for ${y}`)
+    return [y, { mrp: v.mrp, mzp: v.mzp, opvr: pct(opvr) }]
+  }),
+)
+
+write(
+  'tax/generated.ts',
+  'data/tax.json',
+  `/** MRP, MZP (tenge) and the employer pension rate that changes every year. */
+export const YEARS: Record<number, { mrp: number; mzp: number; opvr: number }> = ${json(taxYears)}
+
+/** Rates as fractions; limits in MRP or MZP of the year. */
+export const RATES = ${json({
+    ipn: pct(tax.ipn.rate),
+    ipnHigh: pct(tax.ipn.highRate),
+    ipnThresholdMrp: tax.ipn.thresholdMrp,
+    baseDeductionMrp: tax.ipn.baseDeductionMrp,
+    opv: pct(tax.opv.rate),
+    opvMaxMzp: tax.opv.maxMzp,
+    opvrMinMzp: tax.opvr.minMzp,
+    opvrMaxMzp: tax.opvr.maxMzp,
+    so: pct(tax.so.rate),
+    soMinMzp: tax.so.minMzp,
+    soMaxMzp: tax.so.maxMzp,
+    vosms: pct(tax.vosms.rate),
+    vosmsMaxMzp: tax.vosms.maxMzp,
+    oosms: pct(tax.oosms.rate),
+    oosmsMaxMzp: tax.oosms.maxMzp,
+    sn: pct(tax.sn.rate),
+    snMinMrp: tax.sn.minMrp,
+    vat: pct(tax.vat.rate),
+    vatThresholdMrp: tax.vat.registrationThresholdMrp,
+  })} as const
+`,
+)

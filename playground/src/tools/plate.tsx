@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { kk, ru } from 'shanyraq/i18n'
 import { type PlateType, parsePlate } from 'shanyraq/plate'
 import { getRegion } from 'shanyraq/regions'
-import { Check, Field, Rows, Status, type ToolProps } from '../ui'
+import { Check, Field, Rows, Share, Status, type ToolProps, useQuery } from '../ui'
 
 const EXAMPLES = ['237 BLM 01', '389bk02', 'D123 456', 'H 544 01']
 
@@ -67,7 +67,7 @@ const T = {
 
 export default function Plate({ lang }: ToolProps) {
   const t = T[lang]
-  const [value, setValue] = useState('')
+  const [value, setValue] = useQuery('q')
   const [strict, setStrict] = useState(false)
   const r = value.trim() ? parsePlate(value, { strict }) : undefined
   const region = r?.ok && r.value.regionId ? getRegion(r.value.regionId) : undefined
@@ -84,6 +84,7 @@ export default function Plate({ lang }: ToolProps) {
             </button>
           ))}
         </span>
+        {value.trim() && <Share lang={lang} />}
       </div>
       {!r ? (
         <Status>{t.hint}</Status>
@@ -93,6 +94,7 @@ export default function Plate({ lang }: ToolProps) {
         <>
           <Status ok>{t.valid}</Status>
           <Rows
+            lang={lang}
             rows={[
               [t.canonical, <code key="v">{r.value.value}</code>],
               [t.type, t.types[r.value.type]],

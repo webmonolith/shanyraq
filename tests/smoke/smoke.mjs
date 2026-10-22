@@ -13,6 +13,7 @@ import { parseAmount } from 'shanyraq/money'
 import { formatPhone } from 'shanyraq/phone'
 import { parsePlate } from 'shanyraq/plate'
 import { regionByPlateCode } from 'shanyraq/regions'
+import { addVAT, calculateSalary } from 'shanyraq/tax'
 import { parseTaxId } from 'shanyraq/taxid'
 import { toLatin } from 'shanyraq/translit'
 
@@ -36,6 +37,8 @@ assert.equal(isDayOff('2026-03-24'), true)
 assert.equal(countWorkingDays('2026-03-01', '2026-03-31').value, 18)
 assert.equal(formatDate('2026-10-22', { lang: 'kk' }).value, '2026 жылғы 22 қазан')
 assert.equal(toLatin('Қазақстан'), 'Qazaqstan')
+assert.equal(calculateSalary(500000).value.net, 408975)
+assert.equal(addVAT(1000).value.gross, 1160)
 
 const cli = new URL('../../dist/cli.js', import.meta.url).pathname
 const run = (...args) =>

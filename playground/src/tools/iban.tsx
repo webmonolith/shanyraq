@@ -2,7 +2,7 @@ import { type ReactNode, useState } from 'react'
 import { createFaker } from 'shanyraq/faker'
 import { kk, ru } from 'shanyraq/i18n'
 import { formatIBAN, parseIBAN } from 'shanyraq/iban'
-import { Check, Copy, Field, Rows, Status, type ToolProps } from '../ui'
+import { Check, Field, Rows, Share, Status, type ToolProps, useQuery } from '../ui'
 
 const fake = createFaker(2026)
 const EXAMPLES = [fake.iban({ bankCode: '722' }), fake.iban({ bankCode: '601' })]
@@ -44,7 +44,7 @@ const T = {
 
 export default function Iban({ lang }: ToolProps) {
   const t = T[lang]
-  const [value, setValue] = useState('')
+  const [value, setValue] = useQuery('q')
   const [strict, setStrict] = useState(false)
   const r = value.trim() ? parseIBAN(value, { strict }) : undefined
   const bank = r?.ok ? r.value.bank : undefined
@@ -61,6 +61,7 @@ export default function Iban({ lang }: ToolProps) {
             </button>
           ))}
         </span>
+        {value.trim() && <Share lang={lang} />}
       </div>
       {!r ? (
         <Status>{t.hint}</Status>
@@ -70,14 +71,9 @@ export default function Iban({ lang }: ToolProps) {
         <>
           <Status ok>{t.valid}</Status>
           <Rows
+            lang={lang}
             rows={[
-              [
-                t.formatted,
-                <span className="copyable" key="f">
-                  <code>{formatIBAN(r.value)}</code>
-                  <Copy text={formatIBAN(r.value)} lang={lang} />
-                </span>,
-              ],
+              [t.formatted, <code key="f">{formatIBAN(r.value)}</code>],
               [t.bank, bank ? bank.name[lang] + (bank.active ? '' : t.inactive) : t.unknownBank],
               ...(bank ? [[t.bic, <code key="b">{bank.bic}</code>] as [string, ReactNode]] : []),
               [t.code, <code key="c">{r.value.bankCode}</code>],

@@ -77,6 +77,13 @@
     "gzip": true
   },
   {
+    "name": "shanyraq/tax (with 2026 rates)",
+    "path": "dist/tax/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
     "name": "shanyraq/date",
     "path": "dist/date/index.js",
     "import": "*",

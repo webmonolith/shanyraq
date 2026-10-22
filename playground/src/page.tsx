@@ -57,6 +57,16 @@ const CODE: Record<string, string> = {
   iban: "import { parseIBAN, getBank } from 'shanyraq/iban'\n\ngetBank('722')?.bic // 'CASPKZKA'",
   plate:
     "import { parsePlate } from 'shanyraq/plate'\n\nparsePlate('237blm01') // { ok: true, value: { value: '237 BLM 01', type: 'individual', … } }",
+  regions:
+    "import { regionByKato, regionByPlateCode } from 'shanyraq/regions'\n\nregionByKato('751110000')?.id // 'almaty'\nregionByPlateCode('18')?.name.ru // 'область Абай'",
+  batch:
+    "import { parseTaxId } from 'shanyraq/taxid'\n\nconst bad = column.filter((v) => !parseTaxId(v).ok)",
+  requisites:
+    "import { parseIBAN } from 'shanyraq/iban'\nimport { parseTaxId } from 'shanyraq/taxid'\n\nparseIBAN('KZ86 125K ZT50 0410 0100').ok // true\nparseTaxId('180340021791').value?.kind // 'bin'",
+  salary:
+    "import { calculateSalary, grossFromNet } from 'shanyraq/tax'\n\ncalculateSalary(500000).value // { opv: 50000, vosms: 10000, ipn: 31025, net: 408975, … }\ngrossFromNet(408975).value?.gross // 500000",
+  vat: "import { addVAT, extractVAT } from 'shanyraq/tax'\n\naddVAT(1000).value // { net: 1000, vat: 160, gross: 1160 }\nextractVAT(1160, { rate: 16 }).value?.vat // 160",
+  mrp: "import { getTaxYear, mrpToTenge } from 'shanyraq/tax'\n\ngetTaxYear(2026) // { year: 2026, mrp: 4325, mzp: 85000 }\nmrpToTenge(10).value // 43250",
   money:
     "import { moneyToWords } from 'shanyraq/money'\n\nmoneyToWords(1234.5, { lang: 'kk' }) // { ok: true, value: 'Бір мың екі жүз отыз төрт теңге 50 тиын' }",
   calendar:
@@ -76,7 +86,11 @@ const STUDIO_GITHUB = 'https://github.com/webmonolith'
 const GROUPS: { title: Record<Lang, string>; tools: ToolId[] }[] = [
   {
     title: { ru: 'Проверка данных', kk: 'Деректерді тексеру' },
-    tools: ['iin', 'phone', 'iban', 'plate'],
+    tools: ['iin', 'phone', 'iban', 'plate', 'regions', 'batch', 'requisites'],
+  },
+  {
+    title: { ru: 'Налоги и зарплата', kk: 'Салықтар мен жалақы' },
+    tools: ['salary', 'vat', 'mrp'],
   },
   {
     title: { ru: 'Тексты и даты', kk: 'Мәтін мен күндер' },

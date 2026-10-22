@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import { toLatin } from 'shanyraq/translit'
-import { Output, type ToolProps } from '../ui'
+import { Output, type ToolProps, useQuery } from '../ui'
 
 const T = {
   ru: {
@@ -17,7 +16,7 @@ const T = {
 
 export default function Translit({ lang }: ToolProps) {
   const t = T[lang]
-  const [text, setText] = useState('Қазақстан Республикасы — тәуелсіз мемлекет.')
+  const [text, setText] = useQuery('q', 'Қазақстан Республикасы — тәуелсіз мемлекет.')
   return (
     <>
       <label className="field wide">

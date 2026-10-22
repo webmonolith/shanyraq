@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { kk, ru } from 'shanyraq/i18n'
 import { moneyToWords } from 'shanyraq/money'
-import { Check, Choice, Field, Output, Status, type ToolProps } from '../ui'
+import { Check, Choice, Field, Output, Status, type ToolProps, useQuery } from '../ui'
 
 const T = {
   ru: {
@@ -44,7 +44,7 @@ const T = {
 
 export default function Money({ lang }: ToolProps) {
   const t = T[lang]
-  const [value, setValue] = useState('1234,50')
+  const [value, setValue] = useQuery('q', '1234,50')
   const [out, setOut] = useState<'ru' | 'kk'>(lang)
   const [tiyn, setTiyn] = useState<'digits' | 'words'>('digits')
   const [currency, setCurrency] = useState<'теңге' | 'тенге'>('теңге')
