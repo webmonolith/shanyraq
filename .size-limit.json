@@ -1,0 +1,132 @@
+[
+  {
+    "name": "shanyraq/i18n (one language)",
+    "path": "dist/i18n/index.js",
+    "import": "{ ru }",
+    "limit": "1 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/i18n (all languages)",
+    "path": "dist/i18n/index.js",
+    "import": "{ messages }",
+    "limit": "2.5 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/iin",
+    "path": "dist/iin/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/bin",
+    "path": "dist/bin/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/taxid",
+    "path": "dist/taxid/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/phone (with data)",
+    "path": "dist/phone/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/money",
+    "path": "dist/money/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/iban (with bank directory)",
+    "path": "dist/iban/index.js",
+    "import": "*",
+    "limit": "4 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/regions (with data)",
+    "path": "dist/regions/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/plate",
+    "path": "dist/plate/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/calendar (with data)",
+    "path": "dist/calendar/index.js",
+    "import": "*",
+    "limit": "2.5 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/date",
+    "path": "dist/date/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/translit (both schemes)",
+    "path": "dist/translit/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/faker (with phone data, bank codes)",
+    "path": "dist/faker/index.js",
+    "import": "*",
+    "limit": "2.5 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/zod { iin } (zod excluded)",
+    "path": "dist/zod/index.js",
+    "import": "{ iin }",
+    "ignore": ["zod"],
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/zod { plate } (zod excluded)",
+    "path": "dist/zod/index.js",
+    "import": "{ plate }",
+    "ignore": ["zod"],
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/zod { iban } (zod excluded, with bank data)",
+    "path": "dist/zod/index.js",
+    "import": "{ iban }",
+    "ignore": ["zod"],
+    "limit": "4.5 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/zod (zod excluded, all schemas with phone and bank data)",
+    "path": "dist/zod/index.js",
+    "import": "*",
+    "ignore": ["zod"],
+    "limit": "7.5 kB",
+    "gzip": true
+  }
+]

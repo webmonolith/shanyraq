@@ -1,0 +1,55 @@
+import type { Messages } from './types'
+
+export const en: Messages = {
+  iin: {
+    format: 'IIN must contain digits only',
+    length: 'IIN must be 12 digits long',
+    date: 'IIN contains an invalid birth date',
+    century: 'Invalid 7th digit of IIN (century and gender)',
+    checksum: 'Invalid IIN check digit',
+  },
+  bin: {
+    format: 'BIN must contain digits only',
+    length: 'BIN must be 12 digits long',
+    date: 'BIN contains an invalid registration year or month',
+    entityType: 'Unknown legal entity type (5th digit of BIN)',
+    divisionType: 'Unknown division type (6th digit of BIN)',
+    checksum: 'Invalid BIN check digit',
+  },
+  taxid: {
+    format: 'IIN/BIN must contain digits only',
+    length: 'IIN/BIN must be 12 digits long',
+    kind: 'The number looks like neither an IIN nor a BIN',
+    checksum: 'Invalid IIN/BIN check digit',
+  },
+  phone: {
+    format: 'Invalid phone number format',
+    length: 'Invalid phone number length',
+    country: 'Only Kazakhstan numbers (+7) are supported',
+    prefix: 'Unknown operator or area code',
+  },
+  iban: {
+    format: 'IBAN may contain only Latin letters and digits',
+    length: 'A Kazakhstan IBAN is 20 characters long',
+    country: 'IBAN must start with KZ',
+    checksum: 'Invalid IBAN check digits',
+    bank: 'Unknown or inactive bank code in IBAN',
+  },
+  plate: {
+    format: 'Invalid license plate format',
+    region: 'Unknown region code in license plate',
+  },
+  money: {
+    invalid: 'Amount must be a finite number',
+    range: 'Amount is out of the supported range (up to 999 trillion)',
+  },
+  date: {
+    format: 'Invalid date format',
+    date: 'This date does not exist',
+  },
+  calendar: {
+    date: 'Invalid date, expected YYYY-MM-DD',
+    range: 'Invalid date range or number of days',
+    data: 'No Kurban ait or day-off transfer data for this year',
+  },
+}

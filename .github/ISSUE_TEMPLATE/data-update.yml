@@ -1,0 +1,37 @@
+name: Data update
+description: Holidays and day transfers for a new year, bank directory changes, new phone codes, regions or plates
+title: "[data] "
+labels: [data]
+body:
+  - type: dropdown
+    id: dataset
+    attributes:
+      label: Dataset
+      options:
+        - calendar (holidays, transfers, Kurban ait)
+        - banks (IBAN codes, BIC)
+        - phone (operator or area codes)
+        - regions / KATO
+        - plates
+        - translit
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: What changed
+      description: Exact values to add, change or remove.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Official source URL
+      description: adilet.zan.kz, nationalbank.kz, stat.gov.kz, gov.kz or another primary source. News articles alone are not enough.
+    validations:
+      required: true
+  - type: input
+    id: effective
+    attributes:
+      label: Effective date
+      placeholder: YYYY-MM-DD

@@ -1,0 +1,235 @@
+{
+  "name": "shanyraq",
+  "version": "0.0.0",
+  "description": "Zero-dependency TypeScript utilities for Kazakhstan: IIN/BIN, phones, IBAN, amounts in words, licence plates, holidays and working days, dates, Latin script",
+  "keywords": [
+    "kazakhstan",
+    "iin",
+    "bin",
+    "iban",
+    "kzt",
+    "tenge",
+    "phone",
+    "validation",
+    "kz",
+    "plate",
+    "holidays",
+    "calendar",
+    "translit",
+    "kato"
+  ],
+  "homepage": "https://github.com/perfomancce/shanyraq#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/perfomancce/shanyraq.git"
+  },
+  "bugs": {
+    "url": "https://github.com/perfomancce/shanyraq/issues"
+  },
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "shanyraq": "./dist/cli.js"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./bin": {
+      "import": {
+        "types": "./dist/bin/index.d.ts",
+        "default": "./dist/bin/index.js"
+      },
+      "require": {
+        "types": "./dist/bin/index.d.cts",
+        "default": "./dist/bin/index.cjs"
+      }
+    },
+    "./calendar": {
+      "import": {
+        "types": "./dist/calendar/index.d.ts",
+        "default": "./dist/calendar/index.js"
+      },
+      "require": {
+        "types": "./dist/calendar/index.d.cts",
+        "default": "./dist/calendar/index.cjs"
+      }
+    },
+    "./date": {
+      "import": {
+        "types": "./dist/date/index.d.ts",
+        "default": "./dist/date/index.js"
+      },
+      "require": {
+        "types": "./dist/date/index.d.cts",
+        "default": "./dist/date/index.cjs"
+      }
+    },
+    "./faker": {
+      "import": {
+        "types": "./dist/faker/index.d.ts",
+        "default": "./dist/faker/index.js"
+      },
+      "require": {
+        "types": "./dist/faker/index.d.cts",
+        "default": "./dist/faker/index.cjs"
+      }
+    },
+    "./i18n": {
+      "import": {
+        "types": "./dist/i18n/index.d.ts",
+        "default": "./dist/i18n/index.js"
+      },
+      "require": {
+        "types": "./dist/i18n/index.d.cts",
+        "default": "./dist/i18n/index.cjs"
+      }
+    },
+    "./iban": {
+      "import": {
+        "types": "./dist/iban/index.d.ts",
+        "default": "./dist/iban/index.js"
+      },
+      "require": {
+        "types": "./dist/iban/index.d.cts",
+        "default": "./dist/iban/index.cjs"
+      }
+    },
+    "./iin": {
+      "import": {
+        "types": "./dist/iin/index.d.ts",
+        "default": "./dist/iin/index.js"
+      },
+      "require": {
+        "types": "./dist/iin/index.d.cts",
+        "default": "./dist/iin/index.cjs"
+      }
+    },
+    "./money": {
+      "import": {
+        "types": "./dist/money/index.d.ts",
+        "default": "./dist/money/index.js"
+      },
+      "require": {
+        "types": "./dist/money/index.d.cts",
+        "default": "./dist/money/index.cjs"
+      }
+    },
+    "./phone": {
+      "import": {
+        "types": "./dist/phone/index.d.ts",
+        "default": "./dist/phone/index.js"
+      },
+      "require": {
+        "types": "./dist/phone/index.d.cts",
+        "default": "./dist/phone/index.cjs"
+      }
+    },
+    "./plate": {
+      "import": {
+        "types": "./dist/plate/index.d.ts",
+        "default": "./dist/plate/index.js"
+      },
+      "require": {
+        "types": "./dist/plate/index.d.cts",
+        "default": "./dist/plate/index.cjs"
+      }
+    },
+    "./regions": {
+      "import": {
+        "types": "./dist/regions/index.d.ts",
+        "default": "./dist/regions/index.js"
+      },
+      "require": {
+        "types": "./dist/regions/index.d.cts",
+        "default": "./dist/regions/index.cjs"
+      }
+    },
+    "./taxid": {
+      "import": {
+        "types": "./dist/taxid/index.d.ts",
+        "default": "./dist/taxid/index.js"
+      },
+      "require": {
+        "types": "./dist/taxid/index.d.cts",
+        "default": "./dist/taxid/index.cjs"
+      }
+    },
+    "./translit": {
+      "import": {
+        "types": "./dist/translit/index.d.ts",
+        "default": "./dist/translit/index.js"
+      },
+      "require": {
+        "types": "./dist/translit/index.d.cts",
+        "default": "./dist/translit/index.cjs"
+      }
+    },
+    "./zod": {
+      "import": {
+        "types": "./dist/zod/index.d.ts",
+        "default": "./dist/zod/index.js"
+      },
+      "require": {
+        "types": "./dist/zod/index.d.cts",
+        "default": "./dist/zod/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
+    "smoke": "node tests/smoke/smoke.mjs && node tests/smoke/smoke.cjs",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "typecheck": "tsc --noEmit",
+    "size": "size-limit",
+    "check:pkg": "publint --strict && attw --pack . --profile node16",
+    "changeset": "changeset",
+    "release": "npm run build && changeset publish",
+    "generate": "node scripts/generate.ts && biome format --write src/*/generated.ts"
+  },
+  "peerDependencies": {
+    "zod": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "zod": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@biomejs/biome": "^2.6.2",
+    "@changesets/cli": "^3.0.3",
+    "@size-limit/preset-small-lib": "^14.2.0",
+    "@types/node": "^24.19.2",
+    "@vitest/coverage-v8": "^5.0.5",
+    "fast-check": "^4.10.2",
+    "publint": "^0.3.25",
+    "size-limit": "^14.2.0",
+    "tsup": "^9.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5",
+    "zod": "^4.6.7"
+  }
+}
