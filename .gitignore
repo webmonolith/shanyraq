@@ -4,4 +4,3 @@ coverage
 *.tgz
 .DS_Store
 dist-server
-CLAUDE.md

@@ -1,0 +1,560 @@
+{
+  "source": [
+    {
+      "title": "КАТО (Классификатор административно-территориальных объектов), файл КАТО_18.09.2026.xlsx, Бюро национальной статистики АСПиР РК",
+      "url": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+      "page": "https://stat.gov.kz/ru/classifiers/statistical/21/"
+    },
+    {
+      "title": "НК РК 11-2025 Классификатор административно-территориальных объектов (структура кода; введен с 01.02.2025 взамен НК РК 11-2021)",
+      "url": "https://stat.gov.kz/upload/iblock/b79/39nf76eyu5gsa6jn83vsz6u6leiiz1hv/НК РК 11-2025.docx"
+    },
+    {
+      "title": "Приказ МВД РК от 19.12.2015 № 1040 «Об утверждении форм и образцов государственных регистрационных номерных знаков», приложение «Перечень цифровых кодов областей и городов», ред. приказа и.о. МВД от 09.07.2026 № 484",
+      "url": "https://adilet.zan.kz/rus/docs/V1500012892",
+      "urlKk": "https://adilet.zan.kz/kaz/docs/V1500012892",
+      "retrievedVia": "https://zakon.uchet.kz/kaz/docs/V1500012892 (зеркало; adilet.zan.kz — SPA, текст не отдаёт без JS)"
+    },
+    {
+      "title": "Указ Президента РК от 03.05.2022 № 887 «О некоторых вопросах административно-территориального устройства РК» (в силу с 08.06.2022)",
+      "url": "https://adilet.zan.kz/rus/docs/U2200000887",
+      "retrievedVia": "https://zakon.uchet.kz/rus/docs/U2200000887"
+    }
+  ],
+  "retrievedAt": "2026-10-22",
+  "notes": [
+    "КАТО: 20 объектов верхнего уровня (17 областей + 3 города респ. значения). katoCode — 9-значный код ТЕ; katoPrefix — признак AB (2 цифры).",
+    "Туркестанская область в КАТО имеет код 61 (не 51 — бывшая Южно-Казахстанская).",
+    "Русские официальные названия новых областей в КАТО и Указе № 887 — «область Абай», «область Жетісу», «область Ұлытау» (с казахскими буквами), а не «Абайская/Жетысуская/Улытауская область».",
+    "Центр Алматинской области в КАТО и Указе — «Қонаев» (с буквой Қ и в русском тексте).",
+    "Коды номеров присвоены по алфавиту казахских названий для 03–16; 17 Шымкент, 18–20 новые области (до ред. 09.07.2026 18/19/20 значились как «Резерв»)."
+  ],
+  "regions": [
+    {
+      "id": "astana",
+      "kind": "city",
+      "nameRu": "г. Астана",
+      "nameKk": "Астана қаласы",
+      "nameEn": "Astana",
+      "center": "Астана",
+      "plateCode": "01",
+      "katoPrefix": "71",
+      "katoCode": "710000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "high",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "almaty",
+      "kind": "city",
+      "nameRu": "г. Алматы",
+      "nameKk": "Алматы қаласы",
+      "nameEn": "Almaty",
+      "center": "Алматы",
+      "plateCode": "02",
+      "katoPrefix": "75",
+      "katoCode": "750000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "high",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "akmola",
+      "kind": "region",
+      "nameRu": "Акмолинская область",
+      "nameKk": "Ақмола облысы",
+      "nameEn": "Akmola Region",
+      "center": "Кокшетау",
+      "plateCode": "03",
+      "katoPrefix": "11",
+      "katoCode": "110000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "aktobe",
+      "kind": "region",
+      "nameRu": "Актюбинская область",
+      "nameKk": "Ақтөбе облысы",
+      "nameEn": "Aktobe Region",
+      "center": "Актобе",
+      "plateCode": "04",
+      "katoPrefix": "15",
+      "katoCode": "150000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "almaty-region",
+      "kind": "region",
+      "nameRu": "Алматинская область",
+      "nameKk": "Алматы облысы",
+      "nameEn": "Almaty Region",
+      "center": "Қонаев",
+      "plateCode": "05",
+      "katoPrefix": "19",
+      "katoCode": "190000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://adilet.zan.kz/rus/docs/U2200000887"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "high",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "atyrau",
+      "kind": "region",
+      "nameRu": "Атырауская область",
+      "nameKk": "Атырау облысы",
+      "nameEn": "Atyrau Region",
+      "center": "Атырау",
+      "plateCode": "06",
+      "katoPrefix": "23",
+      "katoCode": "230000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "west-kazakhstan",
+      "kind": "region",
+      "nameRu": "Западно-Казахстанская область",
+      "nameKk": "Батыс Қазақстан облысы",
+      "nameEn": "West Kazakhstan Region",
+      "center": "Уральск",
+      "plateCode": "07",
+      "katoPrefix": "27",
+      "katoCode": "270000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "zhambyl",
+      "kind": "region",
+      "nameRu": "Жамбылская область",
+      "nameKk": "Жамбыл облысы",
+      "nameEn": "Zhambyl Region",
+      "center": "Тараз",
+      "plateCode": "08",
+      "katoPrefix": "31",
+      "katoCode": "310000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "karaganda",
+      "kind": "region",
+      "nameRu": "Карагандинская область",
+      "nameKk": "Қарағанды облысы",
+      "nameEn": "Karaganda Region",
+      "center": "Караганда",
+      "plateCode": "09",
+      "katoPrefix": "35",
+      "katoCode": "350000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "kostanay",
+      "kind": "region",
+      "nameRu": "Костанайская область",
+      "nameKk": "Қостанай облысы",
+      "nameEn": "Kostanay Region",
+      "center": "Костанай",
+      "plateCode": "10",
+      "katoPrefix": "39",
+      "katoCode": "390000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "kyzylorda",
+      "kind": "region",
+      "nameRu": "Кызылординская область",
+      "nameKk": "Қызылорда облысы",
+      "nameEn": "Kyzylorda Region",
+      "center": "Кызылорда",
+      "plateCode": "11",
+      "katoPrefix": "43",
+      "katoCode": "430000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "mangystau",
+      "kind": "region",
+      "nameRu": "Мангистауская область",
+      "nameKk": "Маңғыстау облысы",
+      "nameEn": "Mangystau Region",
+      "center": "Актау",
+      "plateCode": "12",
+      "katoPrefix": "47",
+      "katoCode": "470000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "turkestan",
+      "kind": "region",
+      "nameRu": "Туркестанская область",
+      "nameKk": "Түркістан облысы",
+      "nameEn": "Turkistan Region",
+      "center": "Туркестан",
+      "plateCode": "13",
+      "katoPrefix": "61",
+      "katoCode": "610000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "pavlodar",
+      "kind": "region",
+      "nameRu": "Павлодарская область",
+      "nameKk": "Павлодар облысы",
+      "nameEn": "Pavlodar Region",
+      "center": "Павлодар",
+      "plateCode": "14",
+      "katoPrefix": "55",
+      "katoCode": "550000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "north-kazakhstan",
+      "kind": "region",
+      "nameRu": "Северо-Казахстанская область",
+      "nameKk": "Солтүстік Қазақстан облысы",
+      "nameEn": "North Kazakhstan Region",
+      "center": "Петропавловск",
+      "plateCode": "15",
+      "katoPrefix": "59",
+      "katoCode": "590000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "east-kazakhstan",
+      "kind": "region",
+      "nameRu": "Восточно-Казахстанская область",
+      "nameKk": "Шығыс Қазақстан облысы",
+      "nameEn": "East Kazakhstan Region",
+      "center": "Усть-Каменогорск",
+      "plateCode": "16",
+      "katoPrefix": "63",
+      "katoCode": "630000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "medium",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "shymkent",
+      "kind": "city",
+      "nameRu": "г. Шымкент",
+      "nameKk": "Шымкент қаласы",
+      "nameEn": "Shymkent",
+      "center": "Шымкент",
+      "plateCode": "17",
+      "katoPrefix": "79",
+      "katoCode": "790000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx (центр = город с CD=10, IJ=01 в КАТО; явно центр в КАТО не помечен)"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "high",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "abai",
+      "kind": "region",
+      "nameRu": "область Абай",
+      "nameKk": "Абай облысы",
+      "nameEn": "Abai Region",
+      "center": "Семей",
+      "plateCode": "18",
+      "katoPrefix": "10",
+      "katoCode": "100000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://adilet.zan.kz/rus/docs/U2200000887"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "high",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "zhetisu",
+      "kind": "region",
+      "nameRu": "область Жетісу",
+      "nameKk": "Жетісу облысы",
+      "nameEn": "Zhetisu Region",
+      "center": "Талдыкорган",
+      "plateCode": "19",
+      "katoPrefix": "33",
+      "katoCode": "330000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://adilet.zan.kz/rus/docs/U2200000887"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "high",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    },
+    {
+      "id": "ulytau",
+      "kind": "region",
+      "nameRu": "область Ұлытау",
+      "nameKk": "Ұлытау облысы",
+      "nameEn": "Ulytau Region",
+      "center": "Жезказган",
+      "plateCode": "20",
+      "katoPrefix": "62",
+      "katoCode": "620000000",
+      "source": {
+        "nameRu": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "nameKk": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "katoPrefix": "https://stat.gov.kz/upload/iblock/a7d/eqogm92xc0udumlzfzffhcrutk0fjhb4/КАТО_18.09.2026.xlsx",
+        "plateCode": "https://adilet.zan.kz/kaz/docs/V1500012892 (Приложение к Формам и образцам, ред. приказа № 484 от 09.07.2026)",
+        "center": "https://adilet.zan.kz/rus/docs/U2200000887"
+      },
+      "confidence": {
+        "nameRu": "high",
+        "nameKk": "high",
+        "nameEn": "medium",
+        "center": "high",
+        "plateCode": "high",
+        "katoPrefix": "high"
+      }
+    }
+  ],
+  "unverified": [
+    "nameEn: официальные английские названия не найдены в первоисточниках (КАТО без английской колонки). Приведены общеупотребительные формы; варианты Abai/Abay, Zhetisu/Zhetysu, Turkistan/Turkestan, Kostanay/Qostanay — UNVERIFIED.",
+    "center для старых областей: в КАТО центр явно не помечен; выведено из структуры кода (первый город областного значения, CD=10) — совпадает с общеизвестными данными, но конкретный НПА не открывался.",
+    "Русская редакция приложения к приказу № 1040 на зеркале zakon.uchet.kz ещё показывает «Резерв 18, 19, 20»; казахская редакция (ред. № 484 от 09.07.2026) — Абай 18, Жетісу 19, Ұлытау 20. Русскую версию на adilet.zan.kz напрямую не удалось проверить.",
+    "Алатау (Алматинская обл.) — город с особым правовым режимом (Конституционный закон, в силу с 01.07.2026), но в КАТО 18.09.2026 — город областного значения (191810000), не город республиканского значения. Иных переименований/новых городов респ. значения 2023–2026 не найдено (в т.ч. в КАТО), но полный перечень указов не проверялся."
+  ]
+}

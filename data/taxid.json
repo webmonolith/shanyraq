@@ -1,0 +1,236 @@
+{
+  "source": [
+    "https://adilet.zan.kz/rus/docs/V2300032942",
+    "https://adilet.zan.kz/rus/docs/V2300032918",
+    "https://adilet.zan.kz/rus/docs/Z070000223_",
+    "https://adilet.zan.kz/rus/docs/P070000406_",
+    "https://adilet.zan.kz/rus/docs/P1300000853",
+    "https://adilet.zan.kz/rus/docs/P2300000758",
+    "https://zakon.uchet.kz/kaz/history/P070000406_/15.05.2013",
+    "https://www.zakon.kz/redaktsiia-zakonkz/4964361-v-mvd-rk-prokommentirovali-informatsiyu.html"
+  ],
+  "retrievedAt": "2026-10-22",
+  "notes": [
+    "adilet.zan.kz is now a JS SPA; texts of V2300032942, V2300032918, P2300000758 were read from adilet rendered in headless Chrome. Older/historical versions were read from the zakon.uchet.kz mirror of adilet (secondary copy of the official text).",
+    "Law Z070000223_ was amended by Law of 30.06.2025 No. 203-VIII, which removed subpoints 2), 2-1), 2-2), 3), 5) of Article 6 (competence of the authorized body), including subpoint 2-1) that the BIN rules order No. 423 cites as its basis. On 2026-10-22, adilet showed both 2023 orders without any repeal note, but whether they remain formally in force after that change was not confirmed."
+  ],
+  "acts": {
+    "iinRules2023": {
+      "title": "Правила формирования индивидуального идентификационного номера",
+      "act": "Приказ Министра внутренних дел РК от 29 июня 2023 года № 521, зарегистрирован в МЮ РК 29 июня 2023 года № 32942",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032942",
+      "confidence": "high"
+    },
+    "binRules2023": {
+      "title": "Правила формирования бизнес-идентификационного номера",
+      "act": "Приказ Министра юстиции РК от 27 июня 2023 года № 423, зарегистрирован в МЮ РК 29 июня 2023 года № 32918",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032918",
+      "confidence": "high"
+    },
+    "rules2007Repealed": {
+      "title": "Правила формирования идентификационного номера (постановление Правительства РК от 22 мая 2007 года № 406)",
+      "status": "Утратило силу постановлением Правительства РК от 1 сентября 2023 года № 758",
+      "source": "https://adilet.zan.kz/rus/docs/P070000406_",
+      "confidence": "high"
+    },
+    "law": {
+      "title": "Закон РК от 12 января 2007 года № 223 «О национальных реестрах идентификационных номеров»",
+      "source": "https://adilet.zan.kz/rus/docs/Z070000223_",
+      "confidence": "high"
+    }
+  },
+  "iin": {
+    "length": {
+      "value": 12,
+      "text": "ИИН представляет собой уникальную комбинацию из 12 цифр",
+      "where": "Приказ МВД № 521, приложение, п. 2",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032942",
+      "confidence": "high"
+    },
+    "currentLegalStructure": {
+      "value": "The current rules define no internal structure besides 12 digits and a check digit in position 12. There is no YYMMDD and no century/gender digit.",
+      "text": "Формирование ИИН происходит автоматически с учетом принципов уникальности и неизменности ... он не подлежит какой-либо модификации или перегенерации с момента первоначального формирования.",
+      "where": "Приказ МВД № 521, приложение, п. 2 (такая же редакция с 2013 г.: п. 3 Правил 2007 г. в ред. постановления № 853 от 26.08.2013)",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032942",
+      "confidence": "high"
+    },
+    "structureRemoved2013": {
+      "value": "The YYMMDD + century/gender structure was removed from the legal text by Government resolution No. 853 of 26.08.2013, which rewrote paragraph 3. Numbers issued before that keep their structure because an IIN is never regenerated.",
+      "source": "https://adilet.zan.kz/rus/docs/P1300000853",
+      "confidence": "high"
+    },
+    "historicalStructure_2007_2013": {
+      "value": "Digits 1-6 are YYMMDD (birth date); digit 7 is gender and century; digits 8-11 are a sequential registration number; digit 12 is the check digit.",
+      "textKz": "Жеке сәйкестендіру нөмірі (бұдан әрі - ЖСН) 12 цифрды қамтиды және төрт бөліктен тұрады: 1) бірінші бөлік - 6 цифрдан тұрады және жеке тұлғаның туған жылын (соңғы екі цифр), туған айын және күнін қамтиды; 2) екінші бөлік - 1 цифрдан тұрады және жеке тұлғаның жынысын және оның туған ғасырын қамтиды ...; 3) үшінші бөлік - 4 цифрдан тұрады және жүйедегі реттік тіркеу нөмірін қамтиды; 4) төртінші бөлік - автоматты түрде анықталатын және бақылау цифры болып табылатын 1 цифрдан тұрады.",
+      "where": "Правила 2007 г. (постановление № 406), п. 3, редакция до 26.08.2013",
+      "source": "https://zakon.uchet.kz/kaz/history/P070000406_/15.05.2013",
+      "confidence": "high",
+      "caveat": "Only the Kazakh text of the historical version could be retrieved. The original Russian wording was not retrieved."
+    },
+    "digit7_historical": {
+      "values": {
+        "1": "мужчины, родившиеся в XIX веке",
+        "2": "женщины, родившиеся в XIX веке",
+        "3": "мужчины, родившиеся в XX веке",
+        "4": "женщины, родившиеся в XX веке",
+        "5": "мужчины, родившиеся в XXI веке",
+        "6": "женщины, родившиеся в XXI веке"
+      },
+      "reserved": {
+        "digits": [7, 8, 9, 0],
+        "meaning": "Reserve digits for use, if needed, after the 21st century has passed. Odd digits are for men and even digits for women.",
+        "textKz": "Бұдан әрі қажет болған жағдайда пайдалануы XXI ғасыр өткен соң мүмкін болатын 7, 8, 9, 0 резервтік цифрлар қолданылады, бұл ретте ерлер үшін - тақ цифрлар, әйелдер үшін - жұп цифрлар қолданылады"
+      },
+      "zeroForForeignersOrUnknown": "NOT defined in any legal text found. In the 2007 text, 0 is only a reserve digit (even, so female) for use after the 21st century.",
+      "source": "https://zakon.uchet.kz/kaz/history/P070000406_/15.05.2013",
+      "confidence": "high"
+    },
+    "unknownBirthDate": {
+      "value": "No legal text found that covers an unknown birth date (00 day/month) or foreigners' IINs.",
+      "source": null,
+      "confidence": "low"
+    },
+    "mvdPosition": {
+      "value": "In 2019 the MVD said the digits have a purely technical meaning, that refusals based on an IIN not matching birth date, century or gender are unlawful, and that only the check digit should be verified.",
+      "text": "Цифры, составляющие ИИН, имеют чисто техническое значение, и единственным важным условием является уникальность кода.",
+      "source": "https://www.zakon.kz/redaktsiia-zakonkz/4964361-v-mvd-rk-prokommentirovali-informatsiyu.html",
+      "confidence": "medium",
+      "caveat": "Secondary source (news site quoting the MVD). The original MVD statement was not retrieved."
+    },
+    "regenerationOnBadChecksum": {
+      "value": "A new IIN is formed when documents are reissued in two cases: adoption, or when the check digit does not match the algorithm.",
+      "text": "формирование нового индивидуального идентификационного номера не производится, кроме случаев усыновления (удочерения), а также несоответствия контрольного разряда в индивидуальном идентификационном номере алгоритму его расчета",
+      "where": "Закон № 223, ст. 9",
+      "source": "https://adilet.zan.kz/rus/docs/Z070000223_",
+      "confidence": "high"
+    }
+  },
+  "bin": {
+    "length": {
+      "value": 12,
+      "text": "БИН - содержит 12 цифр и состоит из пяти частей",
+      "where": "Приказ МЮ № 423, Правила, п. 3",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032918",
+      "confidence": "high"
+    },
+    "facet1_yymm": {
+      "positions": "1-4",
+      "text": "первый фасет - содержит 4 разряда (с а 1 по а 4) и характеризует год (две последние цифры) и месяц регистрации юридического лица или индивидуального предпринимателя, осуществляющего деятельность на основе совместного предпринимательства (далее - ЮЛ или ИП(С))",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032918",
+      "confidence": "high"
+    },
+    "facet2_type": {
+      "position": 5,
+      "values": {
+        "4": "для юридических лиц-резидентов",
+        "5": "для юридических лиц-нерезидентов",
+        "6": "для индивидуальных предпринимателей, осуществляющих деятельность на основе совместного предпринимательства"
+      },
+      "reserved": [7, 8, 9],
+      "excluded": [0, 1, 2, 3],
+      "text": "второй фасет - содержит 1 разряд (а 5) и характеризует тип ЮЛ или ИП(С). Алгоритм задания значения данного разряда используется для исключения возможности совпадения БИН с индивидуальным идентификационным номером (далее - ИИН). При генерировании в структуре БИН а 5 (пятого разряда) исключается использование цифр 0, 1, 2 и 3. Значение данного разряда: 4 - для юридических лиц-резидентов; 5 - для юридических лиц-нерезидентов; 6 - для индивидуальных предпринимателей, осуществляющих деятельность на основе совместного предпринимательства. Резервные значения 7, 8 и 9",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032918",
+      "confidence": "high"
+    },
+    "facet3_attribute": {
+      "position": 6,
+      "values": {
+        "0": "признак головного подразделения ЮЛ или ИП(С)",
+        "1": "признак филиала ЮЛ или ИП(С)",
+        "2": "признак представительства ЮЛ или ИП(С)",
+        "4": "признак крестьянского (фермерского) хозяйства, осуществляющего деятельность на основе совместного предпринимательства"
+      },
+      "text": "третий фасет - содержит 1 разряд (а 6) и характеризует специальный признак, являющийся дополнительной детализацией разряда а 5: 0 - признак головного подразделения ЮЛ или ИП(С); 1 - признак филиала ЮЛ или ИП(С); 2 - признак представительства ЮЛ или ИП(С); 4 - признак крестьянского (фермерского) хозяйства, осуществляющего деятельность на основе совместного предпринимательства",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032918",
+      "confidence": "high",
+      "caveat": "The current text gives the peasant/farm enterprise code as 4 and does not define 3. The repealed 2007 rules gave it as 3 ('3 - крестьянское (фермерское) хозяйство, осуществляющее деятельность на основе совместного предпринимательства'). BINs issued under the 2007 rules may therefore contain 3. It is not confirmed whether the 2023 value 4 is a deliberate change or a drafting error."
+    },
+    "facet3_attribute_2007": {
+      "values": {
+        "0": "головного подразделения юридического лица или ИП(С)",
+        "1": "филиала юридического лица или ИП(С)",
+        "2": "представительства юридического лица или ИП(С)",
+        "3": "крестьянское (фермерское) хозяйство, осуществляющее деятельность на основе совместного предпринимательства"
+      },
+      "status": "repealed 01.09.2023",
+      "source": "https://adilet.zan.kz/rus/docs/P070000406_",
+      "confidence": "high"
+    },
+    "facet4_serial": {
+      "positions": "7-11",
+      "text": "четвертый фасет - содержит 5 разрядов (с а 7 по а 11) и характеризует порядковый номер регистрации в системе ЮЛ или ИП(С), а также их структурных подразделений",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032918",
+      "confidence": "high"
+    },
+    "facet4_aifcRange_2007": {
+      "value": "Under the repealed 2007 rules (as amended in 2017), bodies, organizations and participants of the AIFC (МФЦА) got serial numbers 90001-99999. This range does not appear in the 2023 rules.",
+      "text": "Органам МФЦА, их организациям и участникам МФЦА порядковый номер присваивается с первой цифры, начиная с номера 90001 по 99999 включительно.",
+      "source": "https://adilet.zan.kz/rus/docs/P070000406_",
+      "confidence": "high"
+    },
+    "facet5_check": {
+      "position": 12,
+      "text": "пятый фасет - содержит 1 разряд (а 12) и является контрольным разрядом БИН.",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032918",
+      "confidence": "high"
+    }
+  },
+  "checksum": {
+    "iinAlgorithm": {
+      "text": "а12 = (a1*b1 + а2*b2 + ... + a11*b11) mod 11, где: ai - значение i-го разряда ИИН; bi - вес і-го разряда. Если полученное число равно 10, то расчет контрольного разряда производится с другой последовательностью весов: значение разряда ИИН: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11; вес разряда: 3, 4, 5, 6, 7, 8, 9,10, 11, 1, 2. Если полученное число имеет значение от 0 до 9, то данное число берется в качестве контрольного разряда.",
+      "where": "Приказ МВД № 521, приложение, п. 2 (ранее п. 3 Правил 2007 г. в ред. № 853 от 26.08.2013)",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032942",
+      "confidence": "high"
+    },
+    "firstCycleWeights": {
+      "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+      "note": "The text does not list the first-cycle weights. It defines bi only as 'вес i-го разряда'. Weights 1..11 are the established reading, not an explicit list in the text.",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032942",
+      "confidence": "medium"
+    },
+    "secondCycleWeights": {
+      "value": [3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2],
+      "source": "https://adilet.zan.kz/rus/docs/V2300032942",
+      "confidence": "high"
+    },
+    "secondCycleEquals10": {
+      "value": "The legal text does not say what happens if the second cycle also gives 10. It only says a result of 0-9 is taken as the check digit. 'Such a number is not issued' is common practice and an inference, not a legal statement.",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032942",
+      "confidence": "low"
+    },
+    "binAlgorithm": {
+      "value": "The BIN rules say only that position 12 is a check digit and do not give an algorithm. In practice the IIN algorithm is applied to BINs. The law refers separately to 'алгоритм формирования бизнес-идентификационного номера' without defining it.",
+      "text": "контролировать правильность указания в соответствии с алгоритмом формирования бизнес-идентификационного номера и (или) контрольного разряда в индивидуальном идентификационном номере в соответствии с алгоритмом его расчета, установленным законодательством Республики Казахстан",
+      "source": "https://adilet.zan.kz/rus/docs/V2300032918",
+      "confidence": "low"
+    },
+    "algorithmIntroduced": {
+      "value": "The algorithm text first appeared in the 2013 amendment (No. 853). The pre-2013 text said only that the check digit is 'determined automatically'.",
+      "source": "https://adilet.zan.kz/rus/docs/P1300000853",
+      "confidence": "medium"
+    }
+  },
+  "iinVsBinSeparation": {
+    "value": "BIN position 5 is never 0-3 (the law excludes them). An IIN with a YYMMDD prefix always has the tens digit of the day (position 5) in 0-3. So the two number spaces do not overlap, and the rules state this purpose directly.",
+    "text": "Алгоритм задания значения данного разряда используется для исключения возможности совпадения БИН с индивидуальным идентификационным номером ... исключается использование цифр 0, 1, 2 и 3.",
+    "source": "https://adilet.zan.kz/rus/docs/V2300032918",
+    "confidence": "high",
+    "edgeCases": [
+      "Since 2013 the IIN rules do not require YYMMDD, so no legal text guarantees that IIN position 5 is 0-3. The guarantee comes only from the BIN side (a5 is not 0-3) plus actual issuing practice.",
+      "Values 7, 8 and 9 in BIN position 5 are reserved, not invalid. A strict validator should treat them as 'reserved/unknown', not as an IIN.",
+      "BIN position 6 = 3 (farm enterprise under the 2007 rules) versus 4 (2023 rules): accept both.",
+      "e-resident IINs (Law art. 1, sub. 2-1) have no structure defined in any text found.",
+      "Before the 2013 amendment, IIN position 7 = 0 was a reserve digit, not 'unknown'. No legal source was found for IINs with 00 in the date."
+    ],
+    "edgeCasesConfidence": "medium"
+  },
+  "unverified": [
+    "Whether a 7th digit of 0 (or 00 in the date) is used for foreigners or people with an unknown birth date: no legal text found.",
+    "That 'if the second cycle also gives 10, the number is not issued': the law does not say this. It is practice/inference.",
+    "That BINs use the same check-digit algorithm as IINs: the BIN rules give no algorithm. It is practice.",
+    "Whether the BIN farm-enterprise code changed from 3 (2007) to 4 (2023) on purpose, or the 2023 text has a drafting error.",
+    "Whether orders No. 521 and No. 423 remain in force after the Law of 30.06.2025 No. 203-VIII removed the delegating subpoints of Article 6. Adilet showed no repeal note on 2026-10-22.",
+    "The original Russian wording of the pre-2013 IIN structure: only the Kazakh text was retrieved.",
+    "No official kgd.gov.kz or egov.kz page describing the structure was found."
+  ]
+}

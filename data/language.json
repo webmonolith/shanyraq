@@ -1,0 +1,151 @@
+{
+  "retrievedAt": "2026-10-22",
+  "sources": {
+    "nbrk208": {
+      "title": "Правила осуществления безналичных платежей и (или) переводов денег на территории РК (Постановление Правления НБРК от 31.08.2016 № 208)",
+      "url": "https://adilet.zan.kz/rus/docs/V1600014419",
+      "readVia": "https://zakon.uchet.kz/rus/docs/V1600014419 ; https://zakon.uchet.kz/kaz/docs/V1600014419"
+    },
+    "docRules2023": {
+      "title": "Правила документирования, управления документацией и использования систем электронного документооборота в государственных и негосударственных организациях (приказ Министра культуры и спорта РК от 25.08.2023 № 236, рег. № 33339)",
+      "url": "https://adilet.zan.kz/rus/docs/V2300033339",
+      "readVia": "https://zakon.uchet.kz/rus/docs/V2300033339 ; https://zakon.uchet.kz/kaz/docs/V2300033339",
+      "note": "Replaced Постановление Правительства № 703 (31.10.2018), which was repealed by Постановление № 780 of 11.09.2023. The mirror shows the text as of 16.01.2024."
+    },
+    "koapKk": {
+      "title": "ҚР Әкімшілік құқық бұзушылық туралы кодексі (К1400000235), Kazakh text",
+      "url": "https://adilet.zan.kz/kaz/docs/K1400000235",
+      "readVia": "https://zakon.uchet.kz/kaz/docs/K1400000235"
+    },
+    "nbLaw": {
+      "title": "Закон РК 'О Национальном Банке' (Z950002155_), ст. 38",
+      "url": "https://adilet.zan.kz/rus/docs/Z950002155_",
+      "readVia": "https://zakon.uchet.kz/rus/docs/Z950002155_ ; https://zakon.uchet.kz/kaz/docs/Z950002155_"
+    },
+    "law306": {
+      "title": "Закон РК от 11.06.2026 № 306-VIII (приведение в соответствие с Конституцией и др.). Replaces 'тенге' with 'теңге' in Russian texts, in force 01.07.2026",
+      "url": "https://adilet.zan.kz/rus/docs/Z2600000306",
+      "readVia": "https://zakon.uchet.kz/rus/docs/Z2600000306"
+    },
+    "gramota": { "title": "gramota.ru dictionaries (Лопатин; Штудинер; Зарва; Кузнецов)", "url": "https://gramota.ru/poisk?query=тенге&mode=slovari" },
+    "draftDecree2021": { "title": "Проект Указа 2021 (text contains the date formula)", "url": "https://legalacts.egov.kz/npa/view?id=8243312" },
+    "reception99": { "title": "Постановление Правительства РК P990000058_ (Kazakh text)", "url": "https://zakon.uchet.kz/kaz/docs/P990000058_" }
+  },
+  "numbers": {
+    "kk": {
+      "units": { "0": "нөл", "1": "бір", "2": "екі", "3": "үш", "4": "төрт", "5": "бес", "6": "алты", "7": "жеті", "8": "сегіз", "9": "тоғыз" },
+      "tens": { "10": "он", "20": "жиырма", "30": "отыз", "40": "қырық", "50": "елу", "60": "алпыс", "70": "жетпіс", "80": "сексен", "90": "тоқсан" },
+      "hundred": "жүз",
+      "thousand": "мың",
+      "million": "миллион",
+      "billion": "миллиард",
+      "trillion": "триллион",
+      "hundredsForm": "<digit> жүз (екі жүз, бес жүз …)",
+      "compoundOrder": "Words in descending order, separated by spaces, no conjunction: 'бір жүз сексен үш', 'жеті жүз елу'",
+      "source": "koapKk / Налоговый кодекс kk (all 0-9, tens, жүз, мың, миллион found in text); 'миллиард теңге' in nbLaw kk ст. 33 ('кемінде 20 миллиард теңге'); 'нөл' found 3× in the codes",
+      "confidence": "high for 1-1000 and миллион/миллиард; medium for 'триллион' (standard term, but not found in the acts that were checked)",
+      "leadingBir": {
+        "rule": "Official/legal Kazakh writes 'бір' before жүз and мың: 'бір жүз', 'бір мың'.",
+        "evidence": "Kazakh KoAP text, counted programmatically: 'бір жүз' 694 vs bare 'жүз' meaning 100 once ('жүз айлық есептік көрсеткіш'). 'бір мың' 144 vs bare 'мың' 0. Tax Code kk: 'бір жүз сексен жұмыс күні', 'күнтізбелік бір жүз сексен үш күн'. Bare 'жүз' appears only in the set phrase 'жүз пайыз'.",
+        "examples": ["бір жүз алпыс айлық есептік көрсеткіш", "бір мың айлық есептік көрсеткіш", "бір жүз сексен үш күн"],
+        "bankingDocs": "UNVERIFIED for payment orders specifically. НБРК № 208 only requires the amount 'цифрами и прописью'/'цифрлармен және жазумен' and does not prescribe 'бір'. Legislative drafting practice consistently uses 'бір жүз'/'бір мың'.",
+        "confidence": "high (legal texts), medium (by extension to payment documents)"
+      },
+      "millionLeadingBir": "Use 'бір миллион'. A bare 'миллион' was not observed. Confidence: medium."
+    },
+    "ru": {
+      "units": { "0": "ноль", "1": ["один", "одна", "одно"], "2": ["два", "две"], "3": "три", "4": "четыре", "5": "пять", "6": "шесть", "7": "семь", "8": "восемь", "9": "девять" },
+      "teens": { "10": "десять", "11": "одиннадцать", "12": "двенадцать", "13": "тринадцать", "14": "четырнадцать", "15": "пятнадцать", "16": "шестнадцать", "17": "семнадцать", "18": "восемнадцать", "19": "девятнадцать" },
+      "tens": { "20": "двадцать", "30": "тридцать", "40": "сорок", "50": "пятьдесят", "60": "шестьдесят", "70": "семьдесят", "80": "восемьдесят", "90": "девяносто" },
+      "hundreds": { "100": "сто", "200": "двести", "300": "триста", "400": "четыреста", "500": "пятьсот", "600": "шестьсот", "700": "семьсот", "800": "восемьсот", "900": "девятьсот" },
+      "scales": {
+        "thousand": { "gender": "f", "forms": ["тысяча", "тысячи", "тысяч"] },
+        "million": { "gender": "m", "forms": ["миллион", "миллиона", "миллионов"] },
+        "billion": { "gender": "m", "forms": ["миллиард", "миллиарда", "миллиардов"] },
+        "trillion": { "gender": "m", "forms": ["триллион", "триллиона", "триллионов"] }
+      },
+      "currencyGender": "теңге/тенге: masculine ('один теңге', 'два теңге'; gramota: 'нескл., м.'); тиын: masculine",
+      "source": "standard Russian grammar; gender of тенге per gramota.ru",
+      "confidence": "high",
+      "oneThousand": "'одна тысяча' vs 'тысяча' in Russian amounts in words: not researched, UNVERIFIED (bank convention usually writes 'Одна тысяча')."
+    }
+  },
+  "currency": {
+    "kk": {
+      "tenge": "теңге",
+      "tiyn": "тиын",
+      "invariableAfterNumeral": true,
+      "rule": "Kazakh nouns take no plural suffix after numerals, so 'екі мың теңге' and '50 тиын' do not change. Case endings attach to the noun: 'теңгемен', 'тиыннан'.",
+      "evidence": "nbLaw kk ст. 38: 'Қазақстан Республикасының ұлттық валютасы (ақша бірлігі) – теңге. Теңге 100 тиыннан тұрады.' Also nbLaw kk: 'кемінде 20 миллиард теңге мөлшерінде'",
+      "confidence": "high"
+    },
+    "ru": {
+      "tenge": "теңге",
+      "tengeLegacy": "тенге",
+      "tengeSpellingChange": "From 01.07.2026 Russian-language legal acts use 'теңге' (with ң), not 'тенге'. Law № 306-VIII of 11.06.2026 rewrote the NBRK Law ст. 38 as 'Национальная валюта (денежная единица) Республики Казахстан – теңге. Теңге состоит из 100 тиынов.' and replaced 'тенге'/'казахстанских тенге' with 'теңге' in the Civil Code and other codes. Press (akchabar.kg 02.07.2026, 24.kz) also reports NBRK by-laws and the Tax Code changing. NBRK Rules № 208 on the mirror still read 'тенге' (mirror may be stale).",
+      "tengeInvariable": true,
+      "tengeInvariableSource": "gramota.ru: 'тенге́, нескл., м.' (Лопатин; Штудинер; Зарва); Кузнецов: 'неизм.; м.'. No dictionary entry for 'теңге' with ң, but legal usage treats it as indeclinable ('казахстанских тенге' was replaced by the invariable 'теңге').",
+      "tiyn": { "declines": true, "forms": { "1": "тиын", "2-4": "тиына", "5+": "тиынов" }, "plural": "тиыны" },
+      "tiynSource": "nbLaw ru ст. 38 (2026 version): 'Теңге состоит из 100 тиынов'; NBRK № 208 п.: 'Тиыны в сумме прописью указываются цифрами'. gramota.ru has NO entry for 'тиын'.",
+      "tiynConfidence": "medium-high (genitive plural and nominative plural attested in law; 'тиына' inferred from the regular masculine paradigm)",
+      "confidence": "high"
+    },
+    "paymentDocumentRules": {
+      "rule_ru": "сумму платежа, обозначенную цифрами и прописью. Тиыны в сумме прописью указываются цифрами. Если сумма платежа цифрами выражена в тенге, без указания тиын, то тиыны в сумме прописью не указываются",
+      "rule_kk": "цифрлармен және жазумен көрсетілген төлем сомасы. Жазумен берілген сомадағы тиындар цифрлармен көрсетіледі. Егер цифрлармен көрсетілген төлем сомасы тиын көрсетілмей теңгемен берілсе, онда тиын жазумен берілген сомада көрсетілмейді",
+      "fieldLabel": { "ru": "Сумма прописью", "kk": "Сомасы жазумен" },
+      "datesInPaymentDocs_ru": "номер платежного документа, число, месяц, год его выписки, которые указываются цифрами. В платежных документах, предъявленных на бумажном носителе, допускается обозначение месяца прописью",
+      "implication": "Spell out the tenge part in words and keep tiyn as digits, e.g. 'Сто двадцать тысяч теңге 50 тиын' / 'Бір жүз жиырма мың теңге 50 тиын'. Omit tiyn entirely when the amount has none.",
+      "exampleConfidence": "medium (the format of the example is inferred from the rule; capitalization and the 'теңге'/'тенге' choice are convention)",
+      "source": "nbrk208 (п. on payment document requisites, item 10; form appendices)",
+      "confidence": "high"
+    }
+  },
+  "dates": {
+    "monthsKk": {
+      "nominative": ["қаңтар", "ақпан", "наурыз", "сәуір", "мамыр", "маусым", "шілде", "тамыз", "қыркүйек", "қазан", "қараша", "желтоқсан"],
+      "source": "all 12 found (inflected) in KoAP kk / Tax Code kk / Labor Code kk / docRules2023 kk",
+      "confidence": "high"
+    },
+    "monthsRu": {
+      "nominative": ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"],
+      "genitive": ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
+      "confidence": "high"
+    },
+    "weekdaysKk": {
+      "names": ["дүйсенбі", "сейсенбі", "сәрсенбі", "бейсенбі", "жұма", "сенбі", "жексенбі"],
+      "order": "Monday..Sunday",
+      "source": "'сәрсенбі, жұма күндері' (P990000058_ kk); 'жексенбі жалпы демалыс күні' (Labor Code kk K1500000414). Дүйсенбі, сейсенбі, бейсенбі and сенбі were not found in the acts checked; they are standard names.",
+      "confidence": "high (standard), partially verified in acts"
+    },
+    "weekdaysRu": {
+      "names": ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"],
+      "confidence": "high"
+    },
+    "officialRule": {
+      "ru": "Дата документа оформляется: 1) в правовых актах, протоколах, банковских, финансовых, бухгалтерских документах и документах, затрагивающих права и интересы физических и юридических лиц, словесно-цифровым способом – день месяца и год оформляются арабскими цифрами, месяц – прописью; 2) в иных документах – цифровым способом день месяца и месяц двумя парами арабских цифр, разделенными точкой, год – четырьмя арабскими цифрами.",
+      "kk": "Құжат датасы: 1) құқықтық актілерде, хаттамаларда, банктік, қаржылық, бухгалтерлік құжаттарда … сөз-сан тәсілімен жыл, айдың күні араб цифрларымен, ай – сөзбен; 2) өзге де құжаттарда – цифрлық тәсілмен айдың күні мен ай – екі араб цифрымен, жыл төрт араб цифрымен нүкте арқылы бөлініп ресімделеді.",
+      "source": "docRules2023 п. 21",
+      "confidence": "high"
+    },
+    "formatsKk": {
+      "standalone": { "pattern": "{yyyy} жылғы {d} {monthNom}", "example": "2026 жылғы 22 қазан", "evidence": "docRules2023 kk sample forms: 'БҰЙРЫҚ ПРИКАЗ 2017 жылғы 15 наурыз', 'АНЫҚТАМА 2017 жылғы 15 қазан', '2017 жылғы 19 наурыз № 04-07/151'", "confidence": "high" },
+      "attributive": { "pattern": "{yyyy} жылғы {d} {monthNom}+ДАҒЫ/ДЕГІ/ТАҒЫ/ТЕГІ", "example": "2026 жылғы 22 қазандағы № 1 бұйрық", "evidence": "draftDecree2021: 'Қазақстан Республикасы Президентінің 2017 жылғы 26 қазандағы № 569 Жарлығына'; docRules2023 kk: '2018 жылғы 31 қазандағы № 703 қаулысы', '2023 жылғы 11 қыркүйектегі № 780'", "suffixRule": "Vowel harmony: back vowels → -дағы/-тағы, front → -дегі/-тегі. Voiceless final consonant (к,қ,п,с,т,ф,х,ш) → т-variant: қыркүйектегі, ақпандағы, сәуірдегі, шілдедегі, тамыздағы", "confidence": "high" },
+      "ablativeFrom": { "example": "2024 жылғы 1 қаңтардан бастап", "evidence": "KoAP kk ('жылғы … қаңтардан' 5×), kgd.gov.kz", "confidence": "high" },
+      "numeric": { "pattern": "dd.MM.yyyy", "example": "22.10.2026", "source": "docRules2023 п. 21(2)", "confidence": "high" },
+      "blankForm": "___ жылғы \"___\" _________ (NBRK № 208 kk payment forms)"
+    },
+    "formatsRu": {
+      "standalone": { "pattern": "{d} {monthGen} {yyyy} года", "example": "22 октября 2026 года", "evidence": "docRules2023 ru uses the full 'года' throughout (24 matches of 'd месяц yyyy года', 0 of 'г.'). Example in the rules: 'письмо … от 15 октября 2014 года № 3-5/151'. Acts: 'Указ … от 26 октября 2017 года № 569'.", "confidence": "high" },
+      "abbreviated": { "pattern": "{d} {monthGen} {yyyy} г.", "note": "Abbreviation 'г.' appears in bibliographic-style citations ('САПП Республики Казахстан, 2017 г., № 50-51-52, ст. 326'), not in document dates. Use 'года' for official documents.", "confidence": "medium-high" },
+      "numeric": { "pattern": "dd.MM.yyyy", "example": "22.10.2026", "source": "docRules2023 п. 21(2)", "confidence": "high" }
+    }
+  },
+  "unverified": [
+    "Whether payment orders/invoices specifically use 'бір жүз'/'бір мың'. NBRK № 208 does not prescribe it, and no egov/MinFin filled sample was found. Legal-act drafting uses it consistently.",
+    "'триллион' in a Kazakh legal text (standard term, not found in the acts checked).",
+    "Russian 'одна тысяча' vs 'тысяча' at the start of an amount in words.",
+    "Whether NBRK № 208 itself has been updated to 'теңге' (the mirror shows 'тенге'; the press says NBRK by-laws were amended for 01.07.2026).",
+    "Capitalization of the first word of an amount in words (convention: capitalized)."
+  ]
+}

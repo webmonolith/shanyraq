@@ -1,0 +1,128 @@
+{
+  "source": "Draft Presidential Decree 'О некоторых вопросах перевода алфавита казахского языка с кириллицы на латинскую графику' (Open NPA portal, id=8243312), appendix table; conventions for letters absent from the table are secondary sources",
+  "retrievedAt": "2026-10-22",
+  "scheme": "2021",
+  "act": {
+    "status": "DRAFT, never signed. The portal lists it as 'Архив' (archived draft). Not legally adopted as of 2026-10-22.",
+    "type": "Проект Указа Президента РК (Жарлық жобасы), amending Указ от 26.10.2017 № 569 by replacing its appendix with a new alphabet",
+    "title_ru": "О некоторых вопросах перевода алфавита казахского языка с кириллицы на латинскую графику",
+    "title_kk": "Қазақ тілі әліпбиін кириллицадан латын графикасына көшірудің кейбір мәселелері туралы",
+    "developer": "Комитет языковой политики (Тіл саясаты комитеті), Министерство образования и науки РК (2021)",
+    "createdOnPortal": "2021-04-21",
+    "publicDiscussionUntil": "2021-05-06",
+    "url": "https://legalacts.egov.kz/npa/view?id=8243312",
+    "docxUrl": "https://legalacts.egov.kz/application/downloadnpa?id=8243313",
+    "presented": "2021-01-28, presented to the Government at a session of the National Commission chaired by PM A. Mamin (informburo.kz, 28.01.2021). A revised draft was published 2021-04-21/22, in which ŋ was replaced by ñ.",
+    "letterCount": 31,
+    "foreignOnlyLetters": "C, X, W are used only in foreign words written on the quotation principle ('*Знаки C, X, W используются в иностранных словах на основе цитатного принципа').",
+    "spellingRules": "Draft clause 2 instructs the Government to approve the 'Правила правописания казахского языка, основанного на латинской графике'. No approved spelling rules were found, so the rendering of Ё/Ц/Ч/Щ/Ъ/Ь/Э/Ю/Я is not official.",
+    "laterDevelopments": [
+      {
+        "date": "2022-06",
+        "fact": "President Tokayev said the transition must not be rushed and that the spelling rules should be revised.",
+        "source": "https://informburo.kz/novosti/perexod-kazaxskogo-yazyka-na-latinicu-ucyonye-vybrali-okoncatelnyi-variant-alfavita",
+        "confidence": "medium"
+      },
+      {
+        "date": "2023-01-27",
+        "fact": "The Institute of Linguistics submitted a single variant (the April 2021 one) for a political decision. It was not adopted. Planned transition: 2023-2031.",
+        "source": "https://informburo.kz/novosti/perexod-kazaxskogo-yazyka-na-latinicu-ucyonye-vybrali-okoncatelnyi-variant-alfavita",
+        "confidence": "medium"
+      },
+      {
+        "date": "2023-08-25",
+        "fact": "Ministry of Science and Higher Education: scientists propose writing 'Ы' as 'I ı' in the NEW draft. This conflicts with the 2021 table (Ы=Y y, І=I ı), so a post-2021 working draft exists. Its full table was not published.",
+        "source": "https://informburo.kz/kaz/newskaz/latyn-alipbiine-kosu-galymdar-y-arpi-qalai-zazylatynyn-aitty",
+        "confidence": "medium"
+      },
+      {
+        "date": "2026-09-08",
+        "fact": "E. Asan, deputy chair of the Language Policy Committee (Ministry of Science and Higher Education), said no dates for the transition have been set and the alphabet draft and spelling rules are still being revised. She called the use of different Latin variants before legal approval unjustified.",
+        "source": "https://economist.kg/society/2026/09/08/kazakhstan-latinitsa-sroki-perekhoda/",
+        "confidence": "medium"
+      }
+    ],
+    "legallyInForce": {
+      "act": "Указ Президента РК от 26.10.2017 № 569, appendix in the version of Указ от 19.02.2018 № 637 (the 2018 acute scheme). It has not been repealed or amended by a signed act.",
+      "url": "https://adilet.zan.kz/rus/docs/U1700000569",
+      "confidence": "medium-high (no amending act found; adilet.zan.kz is a JS-only SPA and its API needs credentials, so the current version was read via the cdb.kz mirror)"
+    }
+  },
+  "map": [
+    { "cyr": "А", "lat": "A", "latLower": "a", "official": true, "source": "draft-2021 table #1" },
+    { "cyr": "Ә", "lat": "Ä", "latLower": "ä", "official": true, "source": "draft-2021 table #2" },
+    { "cyr": "Б", "lat": "B", "latLower": "b", "official": true, "source": "draft-2021 table #3" },
+    { "cyr": "В", "lat": "V", "latLower": "v", "official": true, "source": "draft-2021 table #29" },
+    { "cyr": "Г", "lat": "G", "latLower": "g", "official": true, "source": "draft-2021 table #7" },
+    { "cyr": "Ғ", "lat": "Ğ", "latLower": "ğ", "official": true, "source": "draft-2021 table #8" },
+    { "cyr": "Д", "lat": "D", "latLower": "d", "official": true, "source": "draft-2021 table #4" },
+    { "cyr": "Е", "lat": "E", "latLower": "e", "official": true, "source": "draft-2021 table #5" },
+    { "cyr": "Ё", "lat": "İo", "latLower": "io", "official": false, "source": "convention: en.wikipedia.org/wiki/Kazakh_alphabets (correspondence chart). Not in the draft table.", "confidence": "low" },
+    { "cyr": "Ж", "lat": "J", "latLower": "j", "official": true, "source": "draft-2021 table #12" },
+    { "cyr": "З", "lat": "Z", "latLower": "z", "official": true, "source": "draft-2021 table #31" },
+    { "cyr": "И", "lat": "İ", "latLower": "i", "official": true, "source": "draft-2021 table #10 'İ i — ій' (one letter for И and Й)" },
+    { "cyr": "Й", "lat": "İ", "latLower": "i", "official": true, "source": "draft-2021 table #10 'İ i — ій'. Rationale: informburo.kz 30.04.2021 (Tіl-Qazyna, G. Mamyrbek)" },
+    { "cyr": "К", "lat": "K", "latLower": "k", "official": true, "source": "draft-2021 table #13" },
+    { "cyr": "Қ", "lat": "Q", "latLower": "q", "official": true, "source": "draft-2021 table #21" },
+    { "cyr": "Л", "lat": "L", "latLower": "l", "official": true, "source": "draft-2021 table #14" },
+    { "cyr": "М", "lat": "M", "latLower": "m", "official": true, "source": "draft-2021 table #15" },
+    { "cyr": "Н", "lat": "N", "latLower": "n", "official": true, "source": "draft-2021 table #16" },
+    { "cyr": "Ң", "lat": "Ñ", "latLower": "ñ", "official": true, "source": "draft-2021 table #17 (U+00D1/U+00F1)" },
+    { "cyr": "О", "lat": "O", "latLower": "o", "official": true, "source": "draft-2021 table #18" },
+    { "cyr": "Ө", "lat": "Ö", "latLower": "ö", "official": true, "source": "draft-2021 table #19. The source docx/HTML literally contains CYRILLIC Ӧ/ӧ (U+04E6/U+04E7), clearly a typo. Use Latin U+00D6/U+00F6." },
+    { "cyr": "П", "lat": "P", "latLower": "p", "official": true, "source": "draft-2021 table #20" },
+    { "cyr": "Р", "lat": "R", "latLower": "r", "official": true, "source": "draft-2021 table #22" },
+    { "cyr": "С", "lat": "S", "latLower": "s", "official": true, "source": "draft-2021 table #23" },
+    { "cyr": "Т", "lat": "T", "latLower": "t", "official": true, "source": "draft-2021 table #25" },
+    { "cyr": "У", "lat": "U", "latLower": "u", "official": true, "source": "draft-2021 table #26 'U u — ұу' (letter name of У)" },
+    { "cyr": "Ұ", "lat": "Ū", "latLower": "ū", "official": true, "source": "draft-2021 table #27" },
+    { "cyr": "Ү", "lat": "Ü", "latLower": "ü", "official": true, "source": "draft-2021 table #28" },
+    { "cyr": "Ф", "lat": "F", "latLower": "f", "official": true, "source": "draft-2021 table #6" },
+    { "cyr": "Х", "lat": "H", "latLower": "h", "official": false, "source": "convention: Wikipedia lists 'H h (Х х, Һ һ)'. The draft table names H only 'һы', and X is reserved for foreign words.", "confidence": "medium" },
+    { "cyr": "Һ", "lat": "H", "latLower": "h", "official": true, "source": "draft-2021 table #9 'H h — һы'" },
+    { "cyr": "Ц", "lat": "Ts", "latLower": "ts", "official": false, "source": "convention: en.wikipedia.org/wiki/Kazakh_alphabets. Not in the draft table.", "confidence": "low" },
+    { "cyr": "Ч", "lat": "Tş", "latLower": "tş", "official": false, "source": "convention: en.wikipedia.org/wiki/Kazakh_alphabets. Not in the draft table.", "confidence": "low" },
+    { "cyr": "Ш", "lat": "Ş", "latLower": "ş", "official": true, "source": "draft-2021 table #24" },
+    { "cyr": "Щ", "lat": "Ştş", "latLower": "ştş", "official": false, "source": "convention: en.wikipedia.org/wiki/Kazakh_alphabets. Native words (ащы) are written with ş in Latin, so an alternative is 'Şş'. Not in the draft table.", "confidence": "low" },
+    { "cyr": "Ъ", "lat": "", "latLower": "", "official": false, "source": "convention: omitted (Wikipedia shows no Latin equivalent). Not in the draft table.", "confidence": "low" },
+    { "cyr": "Ы", "lat": "Y", "latLower": "y", "official": true, "source": "draft-2021 table #30" },
+    { "cyr": "І", "lat": "I", "latLower": "ı", "official": true, "source": "draft-2021 table #11 'I ı — і' (capital is ASCII I U+0049, lowercase is dotless ı U+0131)" },
+    { "cyr": "Ь", "lat": "", "latLower": "", "official": false, "source": "convention: omitted. Institute of Linguistics prof. A. Aldasheva's examples (2018 discussion): Автомобиль→avtomobil, Апельсин→apelsin (informburo.kz 05.09.2018)", "confidence": "medium" },
+    { "cyr": "Э", "lat": "E", "latLower": "e", "official": false, "source": "convention: en.wikipedia.org/wiki/Kazakh_alphabets. Not in the draft table.", "confidence": "medium" },
+    { "cyr": "Ю", "lat": "İu", "latLower": "iu", "official": false, "source": "convention: Wikipedia, plus inbusiness.kz on the draft spelling rules (ю→iu: qiu, jiu). Not in the draft table.", "confidence": "low-medium" },
+    { "cyr": "Я", "lat": "İa", "latLower": "ia", "official": false, "source": "convention: Wikipedia, plus inbusiness.kz on the draft spelling rules (я→ia: qoian, sia). Not in the draft table.", "confidence": "low-medium" }
+  ],
+  "notes": [
+    "The draft table is literally: 1 A a а, 2 Ä ä ә, 3 B b бы, 4 D d ды, 5 E e е, 6 F f фы, 7 G g гі, 8 Ğ ğ ғы, 9 H h һы, 10 İ i ій, 11 I ı і, 12 J j жы, 13 K k кі, 14 L l ыл, 15 M m мы, 16 N n ны, 17 Ñ ñ ың, 18 O o о, 19 Ö ö ө, 20 P p пы, 21 Q q қы, 22 R r ыр, 23 S s сы, 24 Ş ş шы, 25 T t ты, 26 U u ұу, 27 Ū ū ұ, 28 Ü ü ү, 29 V v вы, 30 Y y ы, 31 Z z зы. The third column is the LETTER NAME, not the sound.",
+    "Turkish-style dotted/dotless casing: İ↔i (И/Й) and I↔ı (І). Default Unicode case mapping turns 'i' into 'I', which is wrong here. In JS, toLocaleUpperCase('kk') does not apply Turkic rules (ICU special-cases only tr/az/lt), so case conversion has to be explicit.",
+    "Characters used: Ä U+00C4, Ğ U+011E, İ U+0130, ı U+0131, Ñ U+00D1, Ö U+00D6, Ş U+015E, Ū U+016A, Ü U+00DC. Normalize to NFC; the input may contain the Cyrillic Ӧ typo or a combining macron/diaeresis.",
+    "Digraph capitalization (Ts/TS, İa/İA) for ALL-CAPS text: convention, not specified anywhere.",
+    "Cyrillic И in Kazakh also often stands for ый/ій (e.g. 'ми' < 'мый'). The 2021 table collapses this into İ. Phonetic respelling (сиа, аю) belongs to unapproved spelling rules and is out of scope for letter-level transliteration."
+  ],
+  "unverified": [
+    "Rendering of Ё, Ц, Ч, Щ, Ъ, Э, Ю, Я. No adopted or published official spelling rules were found. The values are Wikipedia/press convention.",
+    "Whether Х → H is officially intended (likely, because X is reserved for foreign words, but the table names H only 'һы').",
+    "The full table of the post-2023 working draft (where Ы may become I ı) is not public.",
+    "The current version of Указ № 569 on adilet.zan.kz itself (the site is an SPA and its API needs credentials). Verified through the cdb.kz mirror and the absence of any signed amending act."
+  ],
+  "otherSchemes": {
+    "2017": {
+      "act": "Указ Президента РК от 26.10.2017 № 569 'О переводе алфавита казахского языка с кириллицы на латинскую графику' (САПП РК, 2017, № 50-51-52, ст. 326). Original appendix superseded on 19.02.2018.",
+      "url": "https://adilet.zan.kz/rus/docs/U1700000569",
+      "archivedOriginal": "http://web.archive.org/web/20171124220345/http://adilet.zan.kz:80/rus/docs/U1700000569",
+      "tableNote": "On adilet the original appendix was an IMAGE, so there is no text. 32 letters, 9 of them with an apostrophe (currenttime.tv 27.10.2017). The apostrophe letters below come from the Wikipedia chart; the remaining letters are inferred to match the 2018 scheme's base letters.",
+      "confidence": "medium (apostrophe letters), low (rest)",
+      "map": { "А": "A", "Ә": "A'", "Б": "B", "В": "V", "Г": "G", "Ғ": "G'", "Д": "D", "Е": "E", "Ж": "J", "З": "Z", "И": "I'", "Й": "I'", "І": "I", "К": "K", "Қ": "Q", "Л": "L", "М": "M", "Н": "N", "Ң": "N'", "О": "O", "Ө": "O'", "П": "P", "Р": "R", "С": "S", "Т": "T", "У": "Y'", "Ұ": "U", "Ү": "U'", "Ф": "F", "Х": "H", "Һ": "H", "Ч": "C'", "Ш": "S'", "Ы": "Y" }
+    },
+    "2018": {
+      "act": "Указ Президента РК от 19.02.2018 № 637 'О внесении изменения в Указ … от 26 октября 2017 года № 569' (appendix replaced). In force from publication.",
+      "url": "https://adilet.zan.kz/rus/docs/U1800000637",
+      "textMirror": "https://cdb.kz/sistema/pravovaya-baza/o-perevode-alfavita-kazakhskogo-yazyka-s-kirillitsy-na-latinskuyu-grafiku/",
+      "confidence": "high (table text from the mirror of the official act)",
+      "officialTable": "1 A a а; 2 Á á ә; 3 B b б; 4 D d д; 5 E e е; 6 F f ф; 7 G g г; 8 Ǵ ǵ ғ; 9 H h х, һ; 10 I i і; 11 I ı и, й; 12 J j ж; 13 K k к; 14 L l л; 15 M m м; 16 N n н; 17 Ń ń ң; 18 O o о; 19 Ó ó ө; 20 P p п; 21 Q q қ; 22 R r р; 23 S s с; 24 T t т; 25 U u ұ; 26 Ú ú ү; 27 V v в; 28 Y y ы; 29 Ý ý у; 30 Z z з; 31 Sh sh ш; 32 Ch ch ч",
+      "conventionForMissing": { "Ё": "Io", "Ц": "S (per Wikipedia, unverified)", "Щ": "Shch", "Ъ": "", "Ь": "", "Э": "E", "Ю": "Iý", "Я": "Ia" },
+      "conventionConfidence": "low",
+      "caseNote": "In the 2018 scheme the uppercase of both i (і) and ı (и/й) is plain 'I', so uppercase text is lossy."
+    }
+  }
+}

@@ -1,0 +1,225 @@
+{
+  "source": [
+    "https://adilet.zan.kz/rus/docs/Z010000267_",
+    "https://adilet.zan.kz/kaz/docs/Z010000267_",
+    "https://adilet.zan.kz/rus/docs/Z2600000306",
+    "https://adilet.zan.kz/rus/docs/Z2200000143",
+    "https://adilet.zan.kz/rus/docs/K1500000414",
+    "https://adilet.zan.kz/kaz/docs/K1500000414",
+    "https://adilet.zan.kz/rus/docs/G24G0000109",
+    "https://adilet.zan.kz/rus/docs/G24G0000436",
+    "https://www.muftyat.kz/kk/news/qmdb/2024-06-07/44827-16-mausyim---rban-ajt-merekesn-brnsh-kn/",
+    "https://www.muftyat.kz/kk/news/qmdb/2025-05-28/46583-6-mausyim---rban-ajt-merekesn-brnsh-kn/",
+    "https://www.muftyat.kz/kk/news/qmdb/2026-05-18/48345-27-mamyir---rban-ajt-merekesn-brnsh-kn/"
+  ],
+  "retrievedAt": "2026-10-22",
+  "law": {
+    "title": "Закон Республики Казахстан от 13 декабря 2001 года № 267-II «О праздниках в Республике Казахстан»",
+    "url": "https://adilet.zan.kz/rus/docs/Z010000267_",
+    "revision": "с изменениями по Закону РК от 11.06.2026 № 306-VIII (вводится в действие с 01.07.2026): ст. 2 — «День Республики Казахстан»; ст. 3 — добавлен «День Конституции Республики Казахстан – 15 марта», 30 августа исключено. Ст. 5: праздничные дни нерабочие; при совпадении выходного и праздничного дней выходным является следующий после праздничного рабочий день.",
+    "articles": {
+      "national": "ст. 2",
+      "state": "ст. 3",
+      "dayOffAndWeekendShift": "ст. 5",
+      "religiousDaysOff": "Трудовой кодекс РК (№ 414-V от 23.11.2015), ст. 84 п. 5 — https://adilet.zan.kz/rus/docs/K1500000414",
+      "transfersAuthority": "Трудовой кодекс РК, ст. 85 п. 3 — переносит уполномоченный орган по труду (не Правительство)"
+    }
+  },
+  "holidays": [
+    {
+      "id": "new-year",
+      "month": 1, "day": 1, "durationDays": 2,
+      "nameRu": "Новый год",
+      "nameKk": "Жаңа жыл",
+      "nameEn": "New Year",
+      "type": "state", "dayOff": true, "weekendShift": true,
+      "source": "Закон № 267-II, ст. 3, ст. 5",
+      "confidence": "high"
+    },
+    {
+      "id": "orthodox-christmas",
+      "month": 1, "day": 7, "durationDays": 1,
+      "nameRu": "Православное Рождество",
+      "nameKk": "Православиелік Рождество",
+      "nameEn": "Orthodox Christmas",
+      "type": "religious", "dayOff": true, "weekendShift": false,
+      "source": "Трудовой кодекс РК, ст. 84 п. 5 (выходной день, не праздничный; ст. 5 Закона о праздниках на него не распространяется)",
+      "confidence": "high"
+    },
+    {
+      "id": "womens-day",
+      "month": 3, "day": 8, "durationDays": 1,
+      "nameRu": "Международный женский день",
+      "nameKk": "Халықаралық әйелдер күні",
+      "nameEn": "International Women's Day",
+      "type": "state", "dayOff": true, "weekendShift": true,
+      "source": "Закон № 267-II, ст. 3, ст. 5",
+      "confidence": "high"
+    },
+    {
+      "id": "constitution-day",
+      "month": 3, "day": 15, "durationDays": 1,
+      "nameRu": "День Конституции Республики Казахстан",
+      "nameKk": "Қазақстан Республикасының Конституциясы күні",
+      "nameEn": "Constitution Day",
+      "type": "state", "dayOff": true, "weekendShift": true,
+      "since": "2026-07-01",
+      "source": "Закон № 267-II, ст. 3 в ред. Закона РК от 11.06.2026 № 306-VIII (ст. 1 п. 26), https://adilet.zan.kz/rus/docs/Z2600000306",
+      "confidence": "high"
+    },
+    {
+      "id": "nauryz",
+      "month": 3, "day": 21, "durationDays": 3,
+      "nameRu": "Наурыз мейрамы",
+      "nameKk": "Наурыз мейрамы",
+      "nameEn": "Nauryz",
+      "type": "state", "dayOff": true, "weekendShift": true,
+      "source": "Закон № 267-II, ст. 3, ст. 5",
+      "confidence": "high"
+    },
+    {
+      "id": "unity-day",
+      "month": 5, "day": 1, "durationDays": 1,
+      "nameRu": "Праздник единства народа Казахстана",
+      "nameKk": "Қазақстан халқының бірлігі мерекесі",
+      "nameEn": "Day of Unity of the People of Kazakhstan",
+      "type": "state", "dayOff": true, "weekendShift": true,
+      "source": "Закон № 267-II, ст. 3, ст. 5",
+      "confidence": "high"
+    },
+    {
+      "id": "defender-day",
+      "month": 5, "day": 7, "durationDays": 1,
+      "nameRu": "День защитника Отечества",
+      "nameKk": "Отан қорғаушы күні",
+      "nameEn": "Defender of the Fatherland Day",
+      "type": "state", "dayOff": true, "weekendShift": true,
+      "source": "Закон № 267-II, ст. 3, ст. 5",
+      "confidence": "high"
+    },
+    {
+      "id": "victory-day",
+      "month": 5, "day": 9, "durationDays": 1,
+      "nameRu": "День Победы",
+      "nameKk": "Жеңіс күні",
+      "nameEn": "Victory Day",
+      "type": "state", "dayOff": true, "weekendShift": true,
+      "source": "Закон № 267-II, ст. 3, ст. 5",
+      "confidence": "high"
+    },
+    {
+      "id": "capital-day",
+      "month": 7, "day": 6, "durationDays": 1,
+      "nameRu": "День Столицы",
+      "nameKk": "Астана күні",
+      "nameEn": "Capital Day",
+      "type": "state", "dayOff": true, "weekendShift": true,
+      "source": "Закон № 267-II, ст. 3, ст. 5",
+      "confidence": "high"
+    },
+    {
+      "id": "kurban-ait",
+      "month": null, "day": null, "durationDays": 1,
+      "nameRu": "Первый день Курбан-айта",
+      "nameKk": "Құрбан айттың бірінші күні",
+      "nameEn": "Kurban Ait (Eid al-Adha), first day",
+      "type": "religious", "dayOff": true, "weekendShift": false,
+      "source": "Трудовой кодекс РК, ст. 84 п. 5; дата — по мусульманскому календарю (ДУМК), см. kurbanAit",
+      "confidence": "high"
+    },
+    {
+      "id": "republic-day",
+      "month": 10, "day": 25, "durationDays": 1,
+      "nameRu": "День Республики Казахстан",
+      "nameKk": "Қазақстан Республикасы күні",
+      "nameEn": "Republic Day",
+      "type": "national", "dayOff": true, "weekendShift": true,
+      "since": "2022",
+      "source": "Закон № 267-II, ст. 2 в ред. Закона РК от 29.09.2022 № 143-VII (вводится со дня первого официального опубликования), https://adilet.zan.kz/rus/docs/Z2200000143; название уточнено Законом № 306-VIII",
+      "confidence": "high"
+    },
+    {
+      "id": "independence-day",
+      "month": 12, "day": 16, "durationDays": 1,
+      "nameRu": "День Независимости",
+      "nameKk": "Тәуелсіздік күні",
+      "nameEn": "Independence Day",
+      "type": "state", "dayOff": true, "weekendShift": true,
+      "since": "2022",
+      "source": "Закон № 267-II, ст. 3; Законом № 143-VII от 29.09.2022 прежний абзац (16–17 декабря) исключён и добавлено «День Независимости – 16 декабря»",
+      "confidence": "high"
+    }
+  ],
+  "removed": [
+    {
+      "id": "constitution-day-aug30",
+      "month": 8, "day": 30,
+      "nameRu": "День Конституции Республики Казахстан (30 августа)",
+      "until": "2026-06-30",
+      "source": "Закон РК от 11.06.2026 № 306-VIII, ст. 1 п. 26 («абзац девятый исключить»), в силе с 01.07.2026; 30.08.2026 (вс) уже не праздник, 31.08.2026 — рабочий день",
+      "confidence": "high"
+    },
+    {
+      "id": "independence-day-dec17",
+      "month": 12, "day": 17,
+      "nameRu": "День Независимости (второй день, 17 декабря)",
+      "until": "2022",
+      "source": "Закон РК от 29.09.2022 № 143-VII, ст. 1 п. 1",
+      "confidence": "high"
+    }
+  ],
+  "kurbanAit": {
+    "2020": { "date": "2020-07-31", "source": "muftyat.kz (календарь «Жұма мінбері»; статья https://www.muftyat.kz/kk/articles/kurban-ait/2020-07-29/32327-namazdan-keiin-tkbir-tashrikty-aitu-mindet-pe/ — Арафа 30 июля)", "confidence": "medium" },
+    "2021": { "date": "2021-07-20", "source": "https://www.muftyat.kz/kk/news/qmdb/2021-07-20/37038-elimizde-kurban-ait-merekesi-bastaldy-foto/", "confidence": "high" },
+    "2022": { "date": "2022-07-09", "source": "https://www.muftyat.kz/kk/news/qmdb/2022-06-30/39928-9-shilde-kurban-ait-merekesinin-birinshi-kuni/", "confidence": "high", "note": "суббота" },
+    "2023": { "date": "2023-06-28", "source": "https://www.muftyat.kz/kk/news/qmdb/2023-06-19/42360-28-mausym-kurban-ait-merekesinin-birinshi-kuni/", "confidence": "high" },
+    "2024": { "date": "2024-06-16", "source": "https://www.muftyat.kz/kk/news/qmdb/2024-06-07/44827-16-mausyim---rban-ajt-merekesn-brnsh-kn/", "confidence": "high", "note": "воскресенье; ранее ДУМК анонсировало 17 июня, перенесено заявлением от 07.06.2024; Минтруда: доп. выходного 17.06 нет" },
+    "2025": { "date": "2025-06-06", "source": "https://www.muftyat.kz/kk/news/qmdb/2025-05-28/46583-6-mausyim---rban-ajt-merekesn-brnsh-kn/", "confidence": "high" },
+    "2026": { "date": "2026-05-27", "source": "https://www.muftyat.kz/kk/news/qmdb/2026-05-18/48345-27-mamyir---rban-ajt-merekesn-brnsh-kn/", "confidence": "high" },
+    "2027": { "date": "2027-05-16", "source": "Календарь ДУМК на 2027 г. (по СМИ, напр. https://bes.media/news/v-kazahstane-utverdili-kalendar-religioznyh-prazdnikov-na-2027-god/); первоисточник на muftyat.kz не открыт", "confidence": "medium", "projection": true, "note": "воскресенье; дата может сдвинуться на ±1 день по наблюдению новолуния" }
+  },
+  "transfers": {
+    "2024": {
+      "act": "Приказ и.о. Министра труда и социальной защиты населения РК от 17 апреля 2024 года № 109 «О переносе дня отдыха в 2024 году»",
+      "url": "https://adilet.zan.kz/rus/docs/G24G0000109",
+      "days": [ { "from": "2024-05-04", "to": "2024-05-08" } ],
+      "note": "день отдыха с субботы 04.05 перенесён на среду 08.05 (04.05 — рабочая суббота)",
+      "confidence": "high"
+    },
+    "2025": {
+      "act": "Приказ Министра труда и социальной защиты населения РК от 21 ноября 2024 года № 436 «О переносе дня отдыха в 2025 году»",
+      "url": "https://adilet.zan.kz/rus/docs/G24G0000436",
+      "days": [ { "from": "2025-01-05", "to": "2025-01-03" } ],
+      "note": "день отдыха с воскресенья 05.01 перенесён на пятницу 03.01",
+      "confidence": "high"
+    },
+    "2026": {
+      "act": null,
+      "url": null,
+      "days": [],
+      "note": "Разъяснение МТСЗН от 19.03.2026 (eOtinish, по pro1c.kz): переносов в 2026 году не будет. Приказ на adilet не найден.",
+      "confidence": "medium"
+    },
+    "2027": {
+      "act": null,
+      "url": null,
+      "days": [],
+      "note": "Приказов о переносе на 2027 не найдено. 02.01.2027 (сб) → 04.01.2027 (пн) выходной в силу ст. 5 Закона, а не переноса.",
+      "confidence": "medium"
+    }
+  },
+  "notes": [
+    "Перенос выходных с 2023 г. (Закон № 223-VII от 19.04.2023) делает уполномоченный орган по труду приказом по п. 3 ст. 85 ТК, а не постановлением Правительства.",
+    "Курбан-айт и 7 января — выходные дни по ст. 84 п. 5 ТК, а не праздничные дни по Закону; правило ст. 5 Закона (перенос на следующий рабочий день) к ним не применяется. Для Курбан-айта это подтверждено практикой 2024 г. (16.06 вс, доп. выходного не было).",
+    "1 марта (День благодарности) и прочие даты ст. 4 — праздничные даты, не выходные.",
+    "nameEn — неофициальные переводы; nameKk — из казахского текста Закона № 267-II и ТК РК на adilet."
+  ],
+  "unverified": [
+    "Как ст. 5 применяется к многодневным праздникам (напр. Наурыз 21–23 марта, если 2 дня приходятся на сб–вс): сдвигаются ли все совпавшие дни — текст закона прямо не уточняет.",
+    "Отсутствие других приказов о переносе в 2024 году (кроме № 109) — найден только один приказ.",
+    "2026: официальный приказ об отсутствии переносов не издаётся; опора на ответ МТСЗН через eOtinish (вторичный пересказ).",
+    "Курбан айт 2020 — дата по косвенным материалам muftyat.kz, без отдельного объявления.",
+    "Курбан айт 2027 — по пересказу СМИ календаря ДУМК; 2028–2030 официально не объявлены (астрономически ~05.05.2028, ~24.04.2029, ~13.04.2030 — проекция, не включена).",
+    "Точная дата вступления в силу Закона № 143-VII (2022) — «со дня первого официального опубликования», дата публикации не проверена."
+  ]
+}

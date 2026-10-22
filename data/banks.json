@@ -1,0 +1,544 @@
+{
+  "source": [
+    "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps",
+    "https://nationalbank.kz/kz/page/spravochnik-bik-rk-ps",
+    "https://nationalbank.kz/en/page/spravochnik-bik-rk-ps",
+    "https://adilet.zan.kz/rus/docs/V1600014422",
+    "https://adilet.zan.kz/rus/docs/V1200007960 (Инструкция о БИК, пост. № 236; по метаданным Әділет end_date 2020-12-16 — утратила силу)",
+    "Wayback snapshots of https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps 2022-01-08 … 2025-12-26",
+    "https://raw.githubusercontent.com/globalcitizen/php-iban/master/registry.txt (вторичное зеркало SWIFT IBAN Registry; swift.com вернул 403)"
+  ],
+  "retrievedAt": "2026-10-22",
+  "iban": {
+    "countryCode": "KZ",
+    "length": 20,
+    "pattern": "KZ{2 check digits}{3-digit bank code}{13-char internal account}",
+    "template": "KZССБББХХХХХХХХХХХХХ",
+    "printFormat": "KZСС БББХ ХХХХ ХХХХ ХХХХ (на бумаге, группы по 4); в электронных документах — без пробелов",
+    "checkDigits": {
+      "positions": [
+        3,
+        4
+      ],
+      "algorithm": "ISO 7064 MOD 97-10",
+      "compute": "перенести первые 4 символа в конец, KZ→2035, СС→00, буквы A=10…Z=35; 98 - (N mod 97), с ведущим нулём",
+      "validate": "N mod 97 == 1",
+      "examples": [
+        {
+          "iban": "KZ551231234564567891",
+          "valid": true,
+          "source": "НБРК Прил. 2, пример 1 (пересчитано: верно)"
+        },
+        {
+          "iban": "KZ081231234565678902",
+          "valid": true,
+          "source": "НБРК Прил. 2, пример 2 (пересчитано: верно)"
+        },
+        {
+          "iban": "KZ86125KZT5004100100",
+          "valid": true,
+          "source": "пример SWIFT IBAN Registry через php-iban (пересчитано: mod97=1)"
+        }
+      ]
+    },
+    "bankCode": {
+      "positions": [
+        5,
+        7
+      ],
+      "format": "3 цифры",
+      "assignedBy": "Национальный Банк РК"
+    },
+    "account": {
+      "positions": [
+        8,
+        20
+      ],
+      "length": 13,
+      "charset": "цифры или латинские буквы, кроме I, Q, O (по тексту НБРК — \"І\", \"Q\", \"O\"); свободные разряды заполняются нулями слева",
+      "alphanumeric": true
+    },
+    "swiftBbanFormat": "3!n13!c",
+    "source": "https://adilet.zan.kz/rus/docs/V1600014422 (Правила открытия, ведения и закрытия банковских счетов клиентов, пост. Правления НБРК № 207; Приложения 1 и 2 в ред. пост. № 139 от 30.11.2020, вводятся с 16.12.2020; изм. пост. № 109 от 27.08.2026)",
+    "confidence": "high (НБРК); swiftBbanFormat — medium (вторичное зеркало)"
+  },
+  "banks": [
+    {
+      "code": "009",
+      "bic": "GCVPKZ2A",
+      "nameRu": "НАО Государственная корпорация \"Правительство для граждан\"",
+      "nameKk": "Азаматтарға арналған үкімет Мемлекеттік корпорациясы КЕАҚ",
+      "nameEn": "NJSC Public Corporation Governement for Citizens",
+      "type": "state_corporation",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "070",
+      "bic": "KKMFKZ2A",
+      "nameRu": "РГУ \"Комитет государственного казначейства МФ РК\"",
+      "nameKk": "ҚР Қаржы министрлігінің Мемлекеттік қазынашылық комитеті РММ",
+      "nameEn": "RSI \"State Treasury Committee of the Ministry of Finance of the Republic of Kazakhstan\"",
+      "type": "treasury",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "125",
+      "bic": "NBRKKZKX",
+      "nameRu": "РГУ Национальный Банк Республики Казахстан",
+      "nameKk": "Қазақстан Республикасының Ұлттық Банкі РММ",
+      "nameEn": "RSI \"The National Bank of the Republic of Kazakhstan\"",
+      "type": "central_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "246",
+      "bic": "HLALKZKZ",
+      "nameRu": "АО «Исламский Банк «ADCB»",
+      "nameKk": "«ADCB» Ислам Банкі» АҚ",
+      "nameEn": "«ADCB» Islamic Bank» JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": "До 2025: АО \"Исламский Банк \"Al Hilal\"; переименован в «Исламский Банк «ADCB».",
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "432",
+      "bic": "VTBAKZKZ",
+      "nameRu": "ДО АО Банк ВТБ (Казахстан)",
+      "nameKk": "Банк ВТБ (Қазақстан) АҚ еншілес ұйымы",
+      "nameEn": "VTB Bank (Kazakhstan) Subsidiary Joint Stock Company",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "435",
+      "bic": "SHBKKZKA",
+      "nameRu": "АО \"Шинхан Банк Казахстан\"",
+      "nameKk": "Шинхан Банк Қазақстан АҚ",
+      "nameEn": "Shinhan Bank Kazakhstan JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "550",
+      "bic": "INEARUMM",
+      "nameRu": "г.Москва Межгосударственный Банк",
+      "nameKk": "Мәскеу қ., Мемлекетаралық Банк",
+      "nameEn": "Moscow, INTERSTATE BANK",
+      "type": "foreign_interstate_bank",
+      "active": true,
+      "note": "Иностранная организация (Москва); BIC не казахстанский.",
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "551",
+      "bic": "KSNVKZKA",
+      "nameRu": "АО \"Фридом Банк Казахстан\"",
+      "nameKk": "Фридом Банк Қазақстан АҚ",
+      "nameEn": "Freedom Bank Kazakhstan JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": "В справочнике 2022–2023: АО \"Банк Фридом Финанс Казахстан\"; с 2024 — \"Фридом Банк Казахстан\".",
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "563",
+      "bic": "KPSTKZKA",
+      "nameRu": "АО \"КАЗПОЧТА\"",
+      "nameKk": "Қазпочта АҚ",
+      "nameEn": "KAZPOST JSC",
+      "type": "postal_operator",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "601",
+      "bic": "HSBKKZKX",
+      "nameRu": "АО \"Народный Банк Казахстана\"",
+      "nameKk": "Қазақстан Халық Банкі АҚ",
+      "nameEn": "JSC \"Halyk Bank of Kazakhstan\"",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "700",
+      "bic": "EABRKZKA",
+      "nameRu": "ЕВРАЗИЙСКИЙ БАНК РАЗВИТИЯ",
+      "nameKk": "ЕУРАЗИЯ ДАМУ БАНКІ",
+      "nameEn": "Eurasian Development Bank",
+      "type": "development_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "715",
+      "bic": "KCCJKZKK",
+      "nameRu": "АО \"Клиринговый центр KASE\"",
+      "nameKk": "KASE клиринг орталығы АҚ",
+      "nameEn": "KASE Clearing Centre JSC",
+      "type": "market_infrastructure",
+      "active": true,
+      "note": "Впервые появился в справочнике между 23.10.2023 и 12.06.2024.",
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "719",
+      "bic": "KMFBKZKK",
+      "nameRu": "Aкционерное общество \"KMF Банк\"",
+      "nameKk": "KMF Банк акционерлік қоғамы",
+      "nameEn": "KMF Bank Joint-Stock Company",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": "Впервые появился в справочнике между 30.05.2025 и 28.10.2025.",
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "722",
+      "bic": "CASPKZKA",
+      "nameRu": "АО \"KASPI BANK\"",
+      "nameKk": "Kaspi Bank АҚ",
+      "nameEn": "KASPI BANK JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "724",
+      "bic": "MOKFKZKA",
+      "nameRu": "Акционерное общество «Коммерческий Банк БиЭнКей»",
+      "nameKk": "«БиЭнКей Коммерциялық Банкі» акционерлік қоғамы",
+      "nameEn": "Joint Stock Company «BNK Commercial Bank»",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": "Впервые появился в справочнике между 30.05.2025 и 28.10.2025.",
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "766",
+      "bic": "CEDUKZKA",
+      "nameRu": "АО \"Центральный Депозитарий Ценных Бумаг\"",
+      "nameKk": "Бағалы қағаздар орталық депозитарийі АҚ",
+      "nameEn": "CENTRAL DEPOSITORY OF SECURITIES JSC",
+      "type": "market_infrastructure",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "821",
+      "bic": "KINCKZKA",
+      "nameRu": "АО \"Банк \"Bank RBK\"",
+      "nameKk": "Bank RBK Банкі\" акционерлік қоғамы",
+      "nameEn": "Bank \"Bank RBK\" JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "832",
+      "bic": "CITIKZKA",
+      "nameRu": "АО \"Ситибанк Казахстан\"",
+      "nameKk": "Ситибанк Қазақстан АҚ",
+      "nameEn": "Citibank Kazakhstan JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "849",
+      "bic": "NURSKZKX",
+      "nameRu": "АО \"Нурбанк\"",
+      "nameKk": "Нұрбанк АҚ",
+      "nameEn": "Nurbank JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "856",
+      "bic": "KCJBKZKX",
+      "nameRu": "АО \"Банк ЦентрКредит\"",
+      "nameKk": "Банк ЦентрКредит АҚ",
+      "nameEn": "Bank CenterCredit JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "885",
+      "bic": "KZIBKZKA",
+      "nameRu": "АО \"ДБ \"КАЗАХСТАН-ЗИРААТ ИНТЕРНЕШНЛ БАНК\"",
+      "nameKk": "ҚАЗАҚСТАН-ЗИРААТ ХАЛЫҚАРАЛЫҚ БАНКІ ЕБ\" АҚ",
+      "nameEn": "ALMATY, Bank Subsidiary of KAZAKHSTAN-ZIRAAT INTERNATIONAL BANK JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "886",
+      "bic": "INLMKZKA",
+      "nameRu": "АО \"Home Credit Bank\" (ДБ АО \"ForteBank\")",
+      "nameKk": "Home Credit Bank АҚ (\"ForteBank\" АҚ ЕБ)",
+      "nameEn": "Joint-Stock Company \"Home Credit Bank\" (SB of JSC \"ForteBank\")",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": "В 2022: ДБ АО \"Хоум Кредит энд Финанс Банк\"; с конца 2025 — дочерний банк АО \"ForteBank\".",
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "896",
+      "bic": "ZAJSKZ22",
+      "nameRu": "АО \"Исламский банк \"Заман-Банк\"",
+      "nameKk": "Заман-Банк Ислам банкі\" АҚ",
+      "nameEn": "Islamic bank Zaman-Bank\" JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "907",
+      "bic": "DVKAKZKA",
+      "nameRu": "АО \"Банк Развития Казахстана\"",
+      "nameKk": "Қазақстанның Даму Банкі АҚ",
+      "nameEn": "Development Bank of Kazakhstan JSC",
+      "type": "development_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "913",
+      "bic": "BKCHKZKA",
+      "nameRu": "АО ДБ \"БАНК КИТАЯ В КАЗАХСТАНЕ\"",
+      "nameKk": "КАЗАҚСТАНДАҒЫ ҚЫТАЙ БАНКІ ЕБ АҚ",
+      "nameEn": "BANK SUBSIDIARY \"BANK OF CHINA IN KAZAKHSTAN \" JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "914",
+      "bic": "BRKEKZKA",
+      "nameRu": "АО \"Bereke Bank\" (дочерний банк Lesha Bank LLC (Public))",
+      "nameKk": "Bereke Bank АҚ (Lesha Bank LLC (Public) еншілес банкі)",
+      "nameEn": "Bereke Bank JSC (SB of Lesha Bank LLC (Public))",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": "Код 914 ранее принадлежал ДБ АО \"Сбербанк\" (BIC SABRKZKA) — по снимку справочника НБРК 08.01.2022; в 2023 тот же код 914 указан за Bereke Bank с новым BIC.",
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "927",
+      "bic": "KICEKZKX",
+      "nameRu": "АО \"Казахстанская фондовая биржа\"",
+      "nameKk": "Қазақстан қор биржасы акционерлік қоғамы",
+      "nameEn": "Kazakhstan Stock Exchange JSC",
+      "type": "market_infrastructure",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "930",
+      "bic": "ICBKKZKX",
+      "nameRu": "АО \"Торгово-промышленный Банк Китая в г. Алматы\"",
+      "nameKk": "Алматы қаласындағы Қытай сауда-өнеркәсіп Банкі АҚ",
+      "nameEn": "Commercial and Industrial Bank of China in Almaty JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "948",
+      "bic": "EURIKZKA",
+      "nameRu": "АО \"Евразийский Банк\"",
+      "nameKk": "Еуразиялық банк АҚ",
+      "nameEn": "Eurasian Bank JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "949",
+      "bic": "ATYNKZKA",
+      "nameRu": "АО \"Altyn Bank\" (ДБ China Citic Bank Corporation Limited)",
+      "nameKk": "Altyn Bank АҚ (China Citic Bank Corporation Limited ЕБ)",
+      "nameEn": "JSC \"Altyn Bank\" (Subsidiary bank of China Citic Bank Corporation Limited)",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "965",
+      "bic": "IRTYKZKA",
+      "nameRu": "АО \"ForteBank\"",
+      "nameKk": "ForteBank АҚ",
+      "nameEn": "ForteBank JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "972",
+      "bic": "HCSKKZKA",
+      "nameRu": "АО \"Жилищный строительный сберегательный банк \"Отбасы банк\"",
+      "nameKk": "Отбасы банк тұрғын үй құрылыс жинақ банкі\" АҚ",
+      "nameEn": "JSC \"Otbasy bank\" house construction savings bank",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": null,
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "998",
+      "bic": "TSESKZKA",
+      "nameRu": "АО \"Alatau City Bank\"",
+      "nameKk": "Alatau City Bank АҚ",
+      "nameEn": "Alatau City Bank JSC",
+      "type": "second_tier_bank",
+      "active": true,
+      "note": "До ~окт. 2025 в справочнике НБРК: АО \"First Heartland Jusan Bank\"; переименован в \"Alatau City Bank\" (снимки 30.05.2025 → 28.10.2025).",
+      "source": "https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps (ru/kz/en)",
+      "confidence": "high"
+    },
+    {
+      "code": "947",
+      "bic": "ALFAKZKA",
+      "nameRu": "АО \"Дочерний Банк \"АЛЬФА-БАНК\"",
+      "nameKk": "Альфа-Банк Еншілес банкі АҚ",
+      "nameEn": "BANK SUBSIDIARY ALFA-BANK JSC",
+      "type": "second_tier_bank",
+      "active": false,
+      "note": "Отсутствует в справочнике НБРК с 2023 (был 08.01.2022). Причина исключения не проверена по первоисточнику.",
+      "source": "https://web.archive.org/web/20220108051554/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps ; https://web.archive.org/web/20230207020311/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps ; https://web.archive.org/web/20231023165152/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps",
+      "confidence": "high (факт исключения из справочника); причина — UNVERIFIED"
+    },
+    {
+      "code": "826",
+      "bic": "ALMNKZKA",
+      "nameRu": "АО \"АТФБанк\" (ДБ АО \"First Heartland Jusan Bank\")",
+      "nameKk": "АТФБанк АҚ ( \"First Heartland Jusan Bank\" АҚ ЕБ)",
+      "nameEn": "ATFBank JSC (SB of \"First Heartland Jusan Bank\" JSC)",
+      "type": "second_tier_bank",
+      "active": false,
+      "note": "Отсутствует в справочнике НБРК с 2023 (был 08.01.2022, как ДБ First Heartland Jusan Bank). Причина (присоединение к Jusan) не проверена по первоисточнику.",
+      "source": "https://web.archive.org/web/20220108051554/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps ; https://web.archive.org/web/20230207020311/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps ; https://web.archive.org/web/20231023165152/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps",
+      "confidence": "high (факт исключения из справочника); причина — UNVERIFIED"
+    },
+    {
+      "code": "781",
+      "bic": "TBKBKZKA",
+      "nameRu": "АО \"Capital Bank Kazakhstan\"",
+      "nameKk": "Capital Bank Kazakhstan АҚ",
+      "nameEn": "JSC \"Capital Bank Kazakhstan\"",
+      "type": "second_tier_bank",
+      "active": false,
+      "note": "Отсутствует в справочнике НБРК с 2023 (был 08.01.2022). Причина (лишение лицензии) не проверена по первоисточнику.",
+      "source": "https://web.archive.org/web/20220108051554/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps ; https://web.archive.org/web/20230207020311/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps ; https://web.archive.org/web/20231023165152/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps",
+      "confidence": "high (факт исключения из справочника); причина — UNVERIFIED"
+    },
+    {
+      "code": "224",
+      "bic": "KISCKZKX",
+      "nameRu": "РГП \"Казахстанский центр межбанковских расчетов НБРК\"",
+      "nameKk": "ҚРҰБ Қазақстан банкаралық есеп айырысу орталығы ШЖҚРМК",
+      "nameEn": "Republican state enterprise «Kazakhstan Interbank Settlement Centre of the National Bank of the Republic of Kazakhstan»",
+      "type": "market_infrastructure",
+      "active": false,
+      "note": "РГП КЦМР НБРК; отсутствует в справочнике с 23.10.2023 (был 07.02.2023).",
+      "source": "https://web.archive.org/web/20220108051554/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps ; https://web.archive.org/web/20230207020311/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps ; https://web.archive.org/web/20231023165152/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps",
+      "confidence": "high (факт исключения из справочника); причина — UNVERIFIED"
+    },
+    {
+      "code": "147",
+      "bic": "NBPFKZKX",
+      "nameRu": "Банк-кастодиан АО ЕНПФ\"",
+      "nameKk": "Бірынғай жинақтаушы зейнетақы қоры АҚ Банк-кастодианы\"",
+      "nameEn": "Integrated Accumulative Pension Fund JSC Сastodian-bank\"",
+      "type": "other",
+      "active": false,
+      "note": "Банк-кастодиан ЕНПФ; отсутствует в справочнике с 23.10.2023 (был 07.02.2023).",
+      "source": "https://web.archive.org/web/20220108051554/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps ; https://web.archive.org/web/20230207020311/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps ; https://web.archive.org/web/20231023165152/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps",
+      "confidence": "high (факт исключения из справочника); причина — UNVERIFIED"
+    },
+    {
+      "code": "914",
+      "bic": "SABRKZKA",
+      "nameRu": "ДБ АО \"Сбербанк\"",
+      "nameKk": "Жинақ банкі АҚ ЕБ",
+      "nameEn": "BANK SUBSIDIARY OF SBERBANK JSC",
+      "type": "second_tier_bank",
+      "active": false,
+      "note": "Исторический BIC для кода 914. Код 914 сейчас активен за BRKEKZKA (Bereke Bank). Для валидации IBAN код 914 — действующий.",
+      "source": "https://web.archive.org/web/20220108051554/https://nationalbank.kz/ru/page/spravochnik-bik-rk-ps",
+      "confidence": "high"
+    }
+  ],
+  "unverified": [
+    "SWIFT IBAN Registry с swift.com не получен (HTTP 403); формат 3!n13!c, длина 20, пример KZ86125KZT5004100100 взяты из зеркала php-iban.",
+    "Исключение букв I/Q/O в номере счёта — требование НБРК; в SWIFT-формате \"c\" допускает любые A-Z. В русском тексте НБРК стоит кириллическая/казахская \"І\" — вероятно опечатка вместо латинской I (таблица конвертации действительно пропускает I, O, Q).",
+    "Причины исключения ALFAKZKA/947, ALMNKZKA/826, TBKBKZKA/781 (реорганизация/лишение лицензии) не подтверждены первоисточником АРРФР.",
+    "Коды банков, закрытых до 2022 (Delta Bank, Qazaq Banki, AsiaCredit, Tengri, Eximbank, Kazinvestbank, Bank Astana, Tsesnabank и т.п.) — не найдены в доступных первоисточниках (архив страницы НБРК есть только с 2022). Не включены.",
+    "Поле type — моя классификация; в справочнике НБРК его нет. Число БВУ = 23 совпадает с отчётом АРРФР на 01.01.2026 (по вторичным пересказам), сам перечень АРРФР не скачан.",
+    "Статус V1600014422 в API Әділет: status=\"upd\", end_date=2026-08-27 — интерпретировано как дата последней редакции, а не утрата силы (в тексте есть изменения от 27.08.2026).",
+    "Акт, заменивший Инструкцию о БИК № 236 (V1200007960) после 16.12.2020, не установлен."
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "source": [
+    {
+      "id": "itu-nnp-kz",
+      "title": "ITU-T National Numbering Plan: Kazakhstan (country code +7) — contains Communication of 4.V.2026 (KZ–RU intergovernmental agreement), Communication of 1.VI.2022 (national numbering plan of Kazakhstan, MDDIAI), Communication of 11.VIII.2006 (first KZ–RU agreement)",
+      "url": "https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200006F0003PDFE.pdf",
+      "index": "https://www.itu.int/oth/T020200006F/en",
+      "updated": "2026-06-30",
+      "type": "primary"
+    },
+    {
+      "id": "itu-ob-1341",
+      "title": "ITU Operational Bulletin No. 1341 (1.VI.2026), p.7–8: Kazakhstan / Russian Federation (country code +7), Communication of 4.V.2026",
+      "url": "https://www.itu.int/dms_pub/itu-t/opb/sp/T-SP-OB.1341-2026-OAS-PDF-E.pdf",
+      "type": "primary"
+    },
+    {
+      "id": "kz-order-307",
+      "title": "Приказ Председателя Агентства РК по информатизации и связи от 9 сентября 2008 года № 307 «Об утверждении Правил построения системы и плана нумерации на сетях телекоммуникаций Республики Казахстан» (ред. от 22.02.2010; статус «Действует» по зеркалу spinform)",
+      "url": "https://base.spinform.ru/show_doc.fwx?rgn=27972",
+      "note": "Mirror, not adilet. Adilet URL/ID not verified (adilet.zan.kz is a JS SPA, its API requires credentials). Full text paywalled; only the 10-digit national number definition was readable.",
+      "type": "secondary-mirror-of-primary"
+    },
+    {
+      "id": "kz-order-67",
+      "title": "Приказ Министра по инвестициям и развитию РК от 29 января 2015 года № 67 «Об утверждении Правил распределения ресурса нумерации и выделения номеров, а также их изъятия» (ред. приказа № 135/НҚ от 13.04.2020)",
+      "url": "https://zakon.uchet.kz/rus/docs/V1500010445",
+      "adiletUrl": "https://adilet.zan.kz/rus/docs/V1500010445",
+      "note": "Allocation procedure, not the plan itself. Current revision after 2020 not verified.",
+      "type": "secondary-mirror-of-primary"
+    },
+    {
+      "id": "kt-kz-2026",
+      "title": "Kazakhstan Today, 23.06.2026: ITU OB No. 1341 assigned +7 0, +7 6, +7 7 to Kazakhstan",
+      "url": "https://www.kt.kz/eng/international_affair/implementation_of_new_agreements_on_kazakhstan_s_1377993395.html",
+      "type": "news"
+    },
+    {
+      "id": "mts-sale-2025",
+      "title": "Forbes.kz: Kazakhtelecom completed sale of Mobile Telecom-Service (Tele2/Altel) to PIH Communication (Power International Holding, Qatar), 14.01.2025",
+      "url": "https://forbes.kz/articles/kazahtelekom-zavershil-prodazhu-tele2altel-ca9ca7",
+      "type": "news"
+    },
+    {
+      "id": "egov-800",
+      "title": "finratings.kz: 8 (800) 080-77-77 eGov contact centre added to emergency/special services list (Government resolution of 30.07.2025)",
+      "url": "https://finratings.kz/news/5799-gosuslugi-po-telefonu-v-kazakhstane-poiavilsia-novyi-nomer/",
+      "type": "news"
+    }
+  ],
+  "retrievedAt": "2026-10-22",
+  "nationalNumber": {
+    "countryCode": "7",
+    "nsnLength": 10,
+    "structure": "NDC (3 digits: ABC geographic or DEF non-geographic) + subscriber number (7 digits); for geographic numbers the 7 digits begin with a locality code, so the effective dialled 'area code' is 4–5 digits (e.g. 7172 + 6, 72772 + 5) except Almaty (727 + 7)",
+    "internationalFormat": "+7 NDC XXXXXXX (11 digits incl. country code)",
+    "domesticTrunkPrefix": "8",
+    "domesticInternationalPrefix": "8~10 (per Wikipedia; not confirmed in ITU text)",
+    "source": "itu-nnp-kz (Communication of 1.VI.2022: 'The international number consists of eleven (11) digits'; 2006: '+7 ABC X1..X7', '+7 DEF X1..X7'); kz-order-307: national number 'содержащий 10 десятичных знаков' (3-digit ABC/DEF/КДУ + 7-digit subscriber)",
+    "confidence": "high"
+  },
+  "countryRanges": {
+    "agreement": "Agreement between the Government of the Republic of Kazakhstan and the Government of the Russian Federation on the joint use of numbering for world numbering zone 7; in force 3 December 2025, indefinite, 24-month termination notice. Replaces the 2006 agreement between communications administrations.",
+    "kazakhstanExclusive": ["000-099", "600-699", "700-799"],
+    "russiaExclusive": ["200-599", "810-818", "820-821", "831", "833-836", "840-848", "850-851", "855-857", "860-863", "865-867", "869", "871-873", "877-880", "900-999"],
+    "shared": ["100-199", "800-809", "881-899"],
+    "sharedRule": "Each party assigns codes in shared ranges independently under national law and uses them only inside its own national network — i.e. a +7 1xx / +7 800-809 / +7 881-899 number cannot be attributed to KZ or RU by prefix alone.",
+    "commonReserve": ["819", "822-829", "830", "832", "837-839", "849", "852-854", "858-859", "864", "868", "870", "874-876"],
+    "kazakhstanInUse2022": {
+      "geographicABC": "710-718, 721-729 (no 719/720 in the 2022 plan)",
+      "mobileDEF": ["700", "701", "702", "705", "706", "707", "708", "747", "771", "775", "776", "777", "778"],
+      "otherNonGeographic": [
+        { "code": "750", "use": "Dial-up access to Internet services" },
+        { "code": "751", "use": "VoIP access codes; international access not available" },
+        { "code": "753", "use": "Office of the Prime Minister of the Republic of Kazakhstan" },
+        { "code": "760", "use": "Kulan — commercial satellite network" },
+        { "code": "763", "use": "Arna — commercial network" },
+        { "code": "790", "use": "Transtelecom JSC — corporate network" }
+      ]
+    },
+    "source": "itu-ob-1341 (table read from PDF column coordinates: col1 'exclusive use of the Russian Federation', col2 'exclusive use of the Republic of Kazakhstan', col3 'shared'); itu-nnp-kz",
+    "confidence": "high"
+  },
+  "mobile": [
+    { "code": "700", "originalOperator": "ТОО «Мобайл Телеком-Сервис» (Mobile Telecom-Service LLP)", "brand": "Altel (listed by ITU as 'Mobile network CDMA')", "source": "itu-nnp-kz (Communication of 1.VI.2022)", "confidence": "high (operator); medium (brand)" },
+    { "code": "701", "originalOperator": "АО «Кселл» (Kcell JSC)", "brand": "Kcell / Activ", "source": "itu-nnp-kz", "confidence": "high (operator); medium (brand split Kcell vs Activ not in primary source)" },
+    { "code": "702", "originalOperator": "АО «Кселл» (Kcell JSC)", "brand": "Kcell / Activ", "source": "itu-nnp-kz", "confidence": "high (operator); medium (brand)" },
+    { "code": "705", "originalOperator": "ТОО «КаР-Тел» (KaR-Tel LLP)", "brand": "Beeline", "source": "itu-nnp-kz", "confidence": "high" },
+    { "code": "706", "originalOperator": "ТОО «КаР-Тел» (KaR-Tel LLP)", "brand": "Beeline", "source": "itu-nnp-kz", "confidence": "high (operator); medium (brand)" },
+    { "code": "707", "originalOperator": "ТОО «Мобайл Телеком-Сервис» (Mobile Telecom-Service LLP)", "brand": "Tele2", "source": "itu-nnp-kz", "confidence": "high (operator); medium (brand)" },
+    { "code": "708", "originalOperator": "ТОО «Мобайл Телеком-Сервис» (Mobile Telecom-Service LLP)", "brand": "Altel", "source": "itu-nnp-kz", "confidence": "high (operator); medium (brand)" },
+    { "code": "747", "originalOperator": "ТОО «Мобайл Телеком-Сервис» (Mobile Telecom-Service LLP)", "brand": "Tele2", "source": "itu-nnp-kz", "confidence": "high (operator); medium (brand)" },
+    { "code": "771", "originalOperator": "ТОО «КаР-Тел» (KaR-Tel LLP)", "brand": "Beeline", "source": "itu-nnp-kz", "confidence": "high" },
+    { "code": "775", "originalOperator": "АО «Кселл» (Kcell JSC)", "brand": "Kcell / Activ", "source": "itu-nnp-kz", "confidence": "high (operator); medium (brand)" },
+    { "code": "776", "originalOperator": "ТОО «КаР-Тел» (KaR-Tel LLP)", "brand": "Beeline", "source": "itu-nnp-kz", "confidence": "high" },
+    { "code": "777", "originalOperator": "ТОО «КаР-Тел» (KaR-Tel LLP)", "brand": "Beeline", "source": "itu-nnp-kz", "confidence": "high" },
+    { "code": "778", "originalOperator": "АО «Кселл» (Kcell JSC)", "brand": "Kcell / Activ", "source": "itu-nnp-kz", "confidence": "high (operator); medium (brand)" }
+  ],
+  "mobileNotes": [
+    "Mobile number portability exists in KZ: the DEF code identifies the original (issuing) operator only.",
+    "Mobile Telecom-Service (Tele2 + Altel) was sold by Kazakhtelecom to PIH Communication LLC (Power International Holding, Qatar) on 14.01.2025 (source: mts-sale-2025).",
+    "No evidence found of any new mobile DEF code (703, 704, 709, 772-774, 779 etc.) assigned 2022–2026; the ITU KZ plan updated 2026-06-30 still carries the 2022 list. Telecom Committee reportedly said no new mobile operator before end of 2026 (inform.kz, page returned 403, seen only in search snippet)."
+  ],
+  "landline": [
+    { "areaCode": "7172", "nsnPattern": "7172XXXXXX", "subscriberDigits": 6, "city": "Астана", "cityKk": "Астана", "cityEn": "Astana", "region": "город республиканского значения", "source": "itu-nnp-kz (listed as Nur-Sultan, 717 2)", "confidence": "high" },
+    { "areaCode": "727", "nsnPattern": "727[23]XXXXXX", "subscriberDigits": 7, "city": "Алматы", "cityKk": "Алматы", "cityEn": "Almaty", "region": "город республиканского значения", "source": "itu-nnp-kz (727 2, 3 → +7 727 2XXXXXX, +7 727 3XXXXXX)", "confidence": "high" },
+    { "areaCode": "7252", "nsnPattern": "7252XXXXXX", "subscriberDigits": 6, "city": "Шымкент", "cityKk": "Шымкент", "cityEn": "Shymkent", "region": "город республиканского значения", "source": "itu-nnp-kz", "confidence": "high" },
+    { "areaCode": "7162", "nsnPattern": "7162XXXXXX", "subscriberDigits": 6, "city": "Кокшетау", "cityKk": "Көкшетау", "cityEn": "Kokshetau", "region": "Акмолинская область", "source": "itu-nnp-kz (dialling format column blank in ITU table for Kokshetau)", "confidence": "high" },
+    { "areaCode": "72772", "nsnPattern": "72772XXXXX", "subscriberDigits": 5, "city": "Конаев", "cityKk": "Қонаев", "cityEn": "Konaev", "region": "Алматинская область (центр с 2022)", "source": "itu-nnp-kz lists 'Qapshagai 727 72' (Almaty Area); rename Qapshagai→Konaev and status as regional centre are NOT in the ITU text", "confidence": "medium" },
+    { "areaCode": "7282", "nsnPattern": "7282XXXXXX", "subscriberDigits": 6, "city": "Талдыкорган", "cityKk": "Талдықорған", "cityEn": "Taldykorgan", "region": "область Жетісу (центр с 2022; в плане ITU 2022 — центр Алматинской области)", "source": "itu-nnp-kz", "confidence": "high (code); medium (region mapping)" },
+    { "areaCode": "7132", "nsnPattern": "7132XXXXXX", "subscriberDigits": 6, "city": "Актобе", "cityKk": "Ақтөбе", "cityEn": "Aktobe", "region": "Актюбинская область", "source": "itu-nnp-kz", "confidence": "high" },
+    { "areaCode": "7122", "nsnPattern": "7122XXXXXX", "subscriberDigits": 6, "city": "Атырау", "cityKk": "Атырау", "cityEn": "Atyrau", "region": "Атырауская область", "source": "itu-nnp-kz", "confidence": "high" },
+    { "areaCode": "7232", "nsnPattern": "7232XXXXXX", "subscriberDigits": 6, "city": "Усть-Каменогорск", "cityKk": "Өскемен", "cityEn": "Oskemen (Ust-Kamenogorsk)", "region": "Восточно-Казахстанская область", "source": "itu-nnp-kz", "confidence": "high" },
+    { "areaCode": "7222", "nsnPattern": "7222XXXXXX", "subscriberDigits": 6, "city": "Семей", "cityKk": "Семей", "cityEn": "Semey", "region": "область Абай (центр с 2022; в плане ITU 2022 — 'East Kazakhstan Area (former Semei area)')", "source": "itu-nnp-kz", "confidence": "high (code); medium (region mapping)" },
+    { "areaCode": "7262", "nsnPattern": "7262XXXXXX", "subscriberDigits": 6, "city": "Тараз", "cityKk": "Тараз", "cityEn": "Taraz", "region": "Жамбылская область", "source": "itu-nnp-kz", "confidence": "high" },
+    { "areaCode": "7112", "nsnPattern": "7112XXXXXX", "subscriberDigits": 6, "city": "Уральск", "cityKk": "Орал", "cityEn": "Oral (Uralsk)", "region": "Западно-Казахстанская область", "source": "itu-nnp-kz", "confidence": "high" },
+    { "areaCode": "7212", "nsnPattern": "7212XXXXXX", "subscriberDigits": 6, "city": "Караганда", "cityKk": "Қарағанды", "cityEn": "Karaganda", "region": "Карагандинская область", "source": "itu-nnp-kz", "confidence": "high" },
+    { "areaCode": "7102", "nsnPattern": "7102XXXXXX", "subscriberDigits": 6, "city": "Жезказган", "cityKk": "Жезқазған", "cityEn": "Zhezkazgan", "region": "область Ұлытау (центр с 2022; в плане ITU 2022 — 'Qaragandy Area (part joined from former Zhezqazgan area)')", "source": "itu-nnp-kz", "confidence": "high (code); medium (region mapping)" },
+    { "areaCode": "7142", "nsnPattern": "7142XXXXXX", "subscriberDigits": 6, "city": "Костанай", "cityKk": "Қостанай", "cityEn": "Kostanay", "region": "Костанайская область", "source": "itu-nnp-kz", "confidence": "high" },
+    { "areaCode": "7242", "nsnPattern": "7242XXXXXX", "subscriberDigits": 6, "city": "Кызылорда", "cityKk": "Қызылорда", "cityEn": "Kyzylorda", "region": "Кызылординская область", "source": "itu-nnp-kz", "confidence": "high" },
+    { "areaCode": "7292", "nsnPattern": "7292XXXXXX", "subscriberDigits": 6, "city": "Актау", "cityKk": "Ақтау", "cityEn": "Aktau", "region": "Мангистауская область", "source": "itu-nnp-kz", "confidence": "high" },
+    { "areaCode": "7182", "nsnPattern": "7182XXXXXX", "subscriberDigits": 6, "city": "Павлодар", "cityKk": "Павлодар", "cityEn": "Pavlodar", "region": "Павлодарская область", "source": "itu-nnp-kz", "confidence": "high" },
+    { "areaCode": "7152", "nsnPattern": "7152XXXXXX", "subscriberDigits": 6, "city": "Петропавловск", "cityKk": "Петропавл", "cityEn": "Petropavl", "region": "Северо-Казахстанская область", "source": "itu-nnp-kz", "confidence": "high" },
+    { "areaCode": "72533", "nsnPattern": "72533XXXXX", "subscriberDigits": 5, "city": "Туркестан", "cityKk": "Түркістан", "cityEn": "Turkistan", "region": "Туркестанская область", "source": "itu-nnp-kz (Turkistan 725 33)", "confidence": "high" }
+  ],
+  "landlineNotes": [
+    "ABC (3-digit) zone codes in 2022 KZ plan: 710 (Zhezkazgan/Ulytau part), 711 West Kaz., 712 Atyrau, 713 Aktobe, 714 Kostanay, 715 North Kaz., 716 Akmola, 717 Astana, 718 Pavlodar, 721 Karaganda, 722 Semey/Abai, 723 East Kaz., 724 Kyzylorda, 725 Shymkent+Turkistan, 726 Zhambyl, 727 Almaty city + parts of Almaty region, 728 Taldykorgan/Zhetisu, 729 Mangystau.",
+    "Within an ABC zone the locality code is 1 digit (6-digit subscriber) for the centre or 2 digits (5-digit subscriber) for district localities; ABC + locality + subscriber always = 10 digits.",
+    "ITU 2022 table has typos: Atbasar shown as '+7 316 43', Ekibastuz '+7 318 7/35', Toqty '718 44' dialled '718 43'. Do not copy dialling-format column blindly."
+  ],
+  "special": {
+    "freephone": "Kazakhstan uses 8 800 XXX XXXX freephone (e.g. eGov 8 (800) 080-77-77). Under the 2025 agreement 800-809 is a SHARED range: each country uses it only in its own national network, so +7 800… is not internationally routable and cannot be attributed to KZ vs RU by prefix.",
+    "shortNumbers": "Short codes (101–104, 112, 1414, 1484 etc.) are not E.164 numbers — do not treat as valid national numbers.",
+    "nonMobileNonGeoKZ": "750 (dial-up), 751 (VoIP, no international access), 753 (PM Office), 760, 763, 790 (corporate/satellite) — valid KZ ranges but not mobile and not geographic.",
+    "source": "itu-ob-1341; itu-nnp-kz; egov-800",
+    "confidence": "high (range rules); medium (8 800 usage in KZ — news source only)"
+  },
+  "unverified": [
+    "Adilet.zan.kz URL and current revision of Order No. 307 (09.09.2008) 'Правила построения системы и плана нумерации' — status 'Действует, ред. 22.02.2010' only from spinform mirror; adilet is a JS SPA with credentialed API, text not retrieved. Whether a newer numbering-plan act (MDAI/МЦРИАП 2020–2026) replaced it — not found.",
+    "Brand split inside each operator (which Kcell codes are Kcell vs Activ; which MTS codes are Tele2 vs Altel; whether 706 is Beeline or izi) — not stated in any primary source; operator sites not checked successfully.",
+    "Any new mobile DEF codes assigned 2023–2026 (none found).",
+    "Qapshagai → Konaev rename and Konaev as Almaty region centre with code 72772 — ITU still lists 'Qapshagai 727 72'.",
+    "Exact international dialling prefix from KZ (8~10 vs 00) — Wikipedia only.",
+    "Exact use of 0xx and 6xx by Kazakhstan — allocated to KZ in 2025 agreement, but no KZ assignments in 0xx/6xx are listed in the ITU KZ plan; treat as not in use.",
+    "What specific numbers KZ assigns in shared 1xx and 881-899 — none listed."
+  ]
+}
