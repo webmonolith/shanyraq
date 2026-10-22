@@ -11,6 +11,7 @@ import {
   mrpToTenge,
   type Salary,
   type SalaryOptions,
+  simplifiedTax,
   TAX_YEARS,
   vatThreshold,
 } from '../src/tax'
@@ -210,5 +211,54 @@ describe('mrpToTenge', () => {
     expect(val(mrpToTenge('0,5'))).toBe(2162.5)
     expect(mrpToTenge(1, 2019)).toEqual({ ok: false, error: 'data' })
     expect(mrpToTenge(-1)).toEqual({ ok: false, error: 'range' })
+  })
+})
+
+describe('simplifiedTax', () => {
+  it('half-year of 3 000 000 ₸ at 4 %, contributions from 1 MZP', () => {
+    expect(val(simplifiedTax(3000000))).toEqual({
+      income: 3000000,
+      rate: 4,
+      ipn: 120000,
+      limit: 2595000000,
+      monthly: { opv: 8500, so: 4250, vosms: 5950 },
+      contributions: 112200,
+      total: 232200,
+    })
+  })
+
+  it('maslikhat rate 2–6 %, declared income clamps SO to 1–7 MZP and OPV to 50 MZP', () => {
+    expect(val(simplifiedTax('1 000 000', { rate: 2 })).ipn).toBe(20000)
+    expect(val(simplifiedTax(1000000, { rate: 6, year: 2026 })).ipn).toBe(60000)
+    expect(val(simplifiedTax(0, { declared: 50000 })).monthly).toEqual({
+      opv: 5000,
+      so: 4250,
+      vosms: 5950,
+    })
+    expect(val(simplifiedTax(0, { declared: '10 000 000' })).monthly).toEqual({
+      opv: 425000,
+      so: 29750,
+      vosms: 5950,
+    })
+  })
+
+  it('errors', () => {
+    expect(simplifiedTax('x')).toEqual({ ok: false, error: 'invalid' })
+    expect(simplifiedTax(-1)).toEqual({ ok: false, error: 'range' })
+    expect(simplifiedTax(1, { rate: 1.9 })).toEqual({ ok: false, error: 'range' })
+    expect(simplifiedTax(1, { rate: 6.1 })).toEqual({ ok: false, error: 'range' })
+    expect(simplifiedTax(1, { rate: Number.NaN })).toEqual({ ok: false, error: 'range' })
+    expect(simplifiedTax(1, { year: 2019 })).toEqual({ ok: false, error: 'data' })
+    expect(simplifiedTax(1, { declared: 'x' })).toEqual({ ok: false, error: 'invalid' })
+  })
+
+  it('total = tax + six months of contributions', () => {
+    fc.assert(
+      fc.property(fc.integer({ min: 0, max: 1e10 }), fc.integer({ min: 0, max: 1e8 }), (i, d) => {
+        const s = val(simplifiedTax(i, { declared: d }))
+        const m = s.monthly
+        expect(s.total).toBe(s.ipn + 6 * (m.opv + m.so + m.vosms))
+      }),
+    )
   })
 })

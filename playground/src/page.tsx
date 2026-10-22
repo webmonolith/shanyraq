@@ -67,6 +67,11 @@ const CODE: Record<string, string> = {
     "import { calculateSalary, grossFromNet } from 'shanyraq/tax'\n\ncalculateSalary(500000).value // { opv: 50000, vosms: 10000, ipn: 31025, net: 408975, … }\ngrossFromNet(408975).value?.gross // 500000",
   vat: "import { addVAT, extractVAT } from 'shanyraq/tax'\n\naddVAT(1000).value // { net: 1000, vat: 160, gross: 1160 }\nextractVAT(1160, { rate: 16 }).value?.vat // 160",
   mrp: "import { getTaxYear, mrpToTenge } from 'shanyraq/tax'\n\ngetTaxYear(2026) // { year: 2026, mrp: 4325, mzp: 85000 }\nmrpToTenge(10).value // 43250",
+  leave:
+    "import { sickPay, vacationPay } from 'shanyraq/leave'\n\nvacationPay(3600000, '2026-07-01', 24).value // { end: '2026-07-25', workingDays: 17, pay: 248780.55, … }\nsickPay(3600000, '2026-03-02', '2026-03-06').value?.pay // 73469.4",
+  simplified:
+    "import { simplifiedTax } from 'shanyraq/tax'\n\nsimplifiedTax(3000000).value // { ipn: 120000, monthly: { opv: 8500, so: 4250, vosms: 5950 }, total: 232200, … }\nsimplifiedTax(3000000, { rate: 3 }).value?.ipn // 90000",
+  fees: "import { mrpToTenge } from 'shanyraq/tax'\n\nmrpToTenge(8).value // 34600 — паспорт, 36 страниц\nmrpToTenge(10 / 2).value // 21625 — штраф 10 МРП при оплате за 7 суток",
   money:
     "import { moneyToWords } from 'shanyraq/money'\n\nmoneyToWords(1234.5, { lang: 'kk' }) // { ok: true, value: 'Бір мың екі жүз отыз төрт теңге 50 тиын' }",
   calendar:
@@ -90,7 +95,7 @@ const GROUPS: { title: Record<Lang, string>; tools: ToolId[] }[] = [
   },
   {
     title: { ru: 'Налоги и зарплата', kk: 'Салықтар мен жалақы' },
-    tools: ['salary', 'vat', 'mrp'],
+    tools: ['salary', 'leave', 'simplified', 'vat', 'mrp', 'fees'],
   },
   {
     title: { ru: 'Тексты и даты', kk: 'Мәтін мен күндер' },

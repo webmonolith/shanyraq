@@ -7,8 +7,10 @@ import batch from './tools/batch'
 import calendar from './tools/calendar'
 import date from './tools/date'
 import faker from './tools/faker'
+import fees from './tools/fees'
 import iban from './tools/iban'
 import iin from './tools/iin'
+import leave from './tools/leave'
 import money from './tools/money'
 import mrp from './tools/mrp'
 import phone from './tools/phone'
@@ -16,6 +18,7 @@ import plate from './tools/plate'
 import regions from './tools/regions'
 import requisites from './tools/requisites'
 import salary from './tools/salary'
+import simplified from './tools/simplified'
 import translit from './tools/translit'
 import vat from './tools/vat'
 import type { ToolProps } from './ui'
@@ -33,6 +36,9 @@ const WIDGETS: Record<ToolId, ComponentType<ToolProps>> = {
   salary,
   vat,
   mrp,
+  leave,
+  simplified,
+  fees,
   money,
   calendar,
   date,

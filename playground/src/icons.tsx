@@ -132,6 +132,37 @@ const ICONS: Record<ToolId, ReactNode> = {
       )}
     </>
   ),
+  leave: (
+    <>
+      <path className="bg" d={rr(8, 14, 50, 56, 5)} />
+      <path d={rr(8, 14, 50, 56, 5)} />
+      <path d={`${wl(8, 24, 50, 24)}M18 9V18M40 9V18`} />
+      <path d={`${wl(15, 32, 22, 32)}${wl(27, 32, 34, 32)}${wl(15, 41, 22, 41)}`} />
+      <path className="f" d={wc(46, 45, 10)} />
+      <path d={wc(46, 45, 10)} />
+      <path d="M46 40V50M41 45H51" />
+    </>
+  ),
+  simplified: (
+    <>
+      <path className="f" d={wr(12, 8, 46, 56)} />
+      <path d={wr(12, 8, 46, 56)} />
+      <path d={`${wl(19, 18, 39, 18)}${wl(19, 26, 34, 26)}`} />
+      <path d="M22 47 36 33" />
+      <path d={`${wc(23.5, 35, 2.8)}${wc(34.5, 45, 2.8)}`} />
+      <circle className="k" cx="52" cy="14" r="1.6" />
+    </>
+  ),
+  fees: (
+    <>
+      <path className="f" d={wc(32, 17, 9)} />
+      <path d={wc(32, 17, 9)} />
+      <path d="M28 26 26.5 37H37.5L36 26" />
+      <path className="bg" d={rr(11, 37, 53, 47, 3)} />
+      <path d={rr(11, 37, 53, 47, 3)} />
+      <path d={wl(14, 55, 50, 55)} />
+    </>
+  ),
   money: (
     <>
       <path className="f" d={wc(32, 32, 20)} />

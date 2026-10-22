@@ -3,7 +3,7 @@
     "name": "shanyraq/i18n (one language)",
     "path": "dist/i18n/index.js",
     "import": "{ ru }",
-    "limit": "1 kB",
+    "limit": "1.1 kB",
     "gzip": true
   },
   {
@@ -81,6 +81,13 @@
     "path": "dist/tax/index.js",
     "import": "*",
     "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/leave (with calendar and MRP data)",
+    "path": "dist/leave/index.js",
+    "import": "*",
+    "limit": "3.2 kB",
     "gzip": true
   },
   {

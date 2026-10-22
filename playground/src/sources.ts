@@ -1,7 +1,9 @@
 // Server-only: links are read from data/*.json so pages cite exactly what the library is built from.
 import banks from '../../data/banks.json'
 import calendar from '../../data/calendar.json'
+import fees from '../../data/fees.json'
 import language from '../../data/language.json'
+import leave from '../../data/leave.json'
 import phone from '../../data/phone.json'
 import plates from '../../data/plates.json'
 import regions from '../../data/regions.json'
@@ -66,6 +68,9 @@ export const SOURCES: Record<ToolId, Source[]> = {
   salary: taxSource('taxCode', 'socialCode', 'osmsLaw', 'budget2026'),
   vat: taxSource('taxCode', 'budget2026'),
   mrp: taxSource('budget2026', 'taxCode', 'socialCode', 'osmsLaw'),
+  leave: [...linked(leave.source), ...taxSource('budget2026'), calendar.law],
+  simplified: taxSource('taxCode', 'socialCode', 'osmsLaw', 'budget2026'),
+  fees: [...linked(fees.source), ...taxSource('budget2026')],
   money: [lang.nbrk208, lang.law306, lang.koapKk, lang.gramota],
   calendar: [
     calendar.law,

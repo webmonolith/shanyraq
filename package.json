@@ -16,7 +16,9 @@
     "holidays",
     "calendar",
     "translit",
-    "kato"
+    "kato",
+    "salary",
+    "tax"
   ],
   "homepage": "https://github.com/webmonolith/shanyraq#readme",
   "repository": {
@@ -120,6 +122,16 @@
       "require": {
         "types": "./dist/iin/index.d.cts",
         "default": "./dist/iin/index.cjs"
+      }
+    },
+    "./leave": {
+      "import": {
+        "types": "./dist/leave/index.d.ts",
+        "default": "./dist/leave/index.js"
+      },
+      "require": {
+        "types": "./dist/leave/index.d.cts",
+        "default": "./dist/leave/index.cjs"
       }
     },
     "./money": {

@@ -1255,3 +1255,35 @@ tr.bad td:nth-child(3) {
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
 }
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0;
+}
+
+button.chip {
+  min-height: 32px;
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+}
+
+button.chip.on {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.note {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.tool td small {
+  color: var(--muted);
+  font-size: 13px;
+}

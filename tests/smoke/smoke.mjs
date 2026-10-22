@@ -9,11 +9,12 @@ import { createFaker } from 'shanyraq/faker'
 import { ru } from 'shanyraq/i18n'
 import { formatIBAN, getBank, parseIBAN } from 'shanyraq/iban'
 import { parseIIN } from 'shanyraq/iin'
+import { sickPay, vacationPay } from 'shanyraq/leave'
 import { parseAmount } from 'shanyraq/money'
 import { formatPhone } from 'shanyraq/phone'
 import { parsePlate } from 'shanyraq/plate'
 import { regionByPlateCode } from 'shanyraq/regions'
-import { addVAT, calculateSalary } from 'shanyraq/tax'
+import { addVAT, calculateSalary, simplifiedTax } from 'shanyraq/tax'
 import { parseTaxId } from 'shanyraq/taxid'
 import { toLatin } from 'shanyraq/translit'
 
@@ -39,6 +40,9 @@ assert.equal(formatDate('2026-10-22', { lang: 'kk' }).value, '2026 жылғы 22
 assert.equal(toLatin('Қазақстан'), 'Qazaqstan')
 assert.equal(calculateSalary(500000).value.net, 408975)
 assert.equal(addVAT(1000).value.gross, 1160)
+assert.equal(simplifiedTax(3000000).value.total, 232200)
+assert.equal(vacationPay(3600000, '2026-07-01').value.pay, 248780.55)
+assert.equal(sickPay(3600000, '2026-03-02', '2026-03-06').value.pay, 73469.4)
 
 const cli = new URL('../../dist/cli.js', import.meta.url).pathname
 const run = (...args) =>
