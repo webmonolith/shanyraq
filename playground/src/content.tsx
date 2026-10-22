@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { REGIONS } from 'shanyraq/regions'
 import banks from '../../data/banks.json'
 import leave from '../../data/leave.json'
+import loan from '../../data/loan.json'
 import plates from '../../data/plates.json'
 import tax from '../../data/tax.json'
 import type { Lang, ToolId } from './site'
@@ -196,6 +197,365 @@ const LimitTable: Content = ({ lang }) => (
 )
 
 // TODO(verify): kk texts need native review.
+const loanSource = (id: string) =>
+  loan.source.find((s) => s.id === id) as { title: string; url: string }
+const dmy = (iso: string) => iso.split('-').reverse().join('.')
+const pct = (v: number) => String(v).replace('.', ',')
+const range = ([lo, hi]: number[]) =>
+  lo === hi ? `${pct(lo as number)} %` : `${pct(lo as number)}–${pct(hi as number)} %`
+const rates = (v: number[] | null, ru: boolean) =>
+  !v
+    ? '—'
+    : v.length === 1
+      ? ru
+        ? `до ${pct(v[0] as number)} %`
+        : `${pct(v[0] as number)} %-ға дейін`
+      : range(v)
+type Limits = Omit<(typeof loan.limits)[0], 'mortgage'> & {
+  mortgage: { limit: number; maxLtv?: number }[]
+}
+const [limitsNow, limits2027] = loan.limits as [Limits, Limits]
+
+const GesvLimitTable: Content = ({ lang }) => {
+  const ru = lang === 'ru'
+  const ltv = ru ? 'КЗЗ' : 'LTV'
+  const mortgage = (l: Limits) =>
+    l.mortgage
+      .map((m) =>
+        m.maxLtv !== undefined
+          ? `${m.limit} % (${ltv} ≤ ${pct(m.maxLtv)})`
+          : l.mortgage.length > 1
+            ? `${m.limit} % (${ltv} > ${pct(l.mortgage[0]?.maxLtv as number)})`
+            : `${m.limit} %`,
+      )
+      .join('; ')
+  const rows: [string, (l: Limits) => string][] = [
+    [ru ? 'Беззалоговый банковский заём' : 'Кепілсіз банктік қарыз', (l) => `${l.unsecured} %`],
+    [ru ? 'Банковский заём с залогом' : 'Кепілмен банктік қарыз', (l) => `${l.secured} %`],
+    [ru ? 'Ипотечный жилищный заём' : 'Ипотекалық тұрғын үй қарызы', mortgage],
+    [ru ? 'Микрокредит МФО' : 'МҚҰ микрокредиті', (l) => `${l.microcredit} %`],
+    [
+      ru
+        ? 'Микрокредит МФО до 45 дней и до 45 МРП'
+        : 'МҚҰ микрокредиті 45 күнге дейін және 45 АЕК-ке дейін',
+      (l) =>
+        `< ${pct(l.shortMicrocredit.perDayBelow)} % / ${ru ? 'день' : 'күн'}, ≤ ${l.shortMicrocredit.limit} %`,
+    ],
+  ]
+  return (
+    <div className="table">
+      <table>
+        <thead>
+          <tr>
+            <th>{ru ? 'Заём' : 'Қарыз'}</th>
+            <th>{`${dmy(limitsNow.from)} — ${dmy(limitsNow.to as string)}`}</th>
+            <th>{ru ? `с ${dmy(limits2027.from)}` : `${dmy(limits2027.from)} бастап`}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(([name, value]) => (
+            <tr key={name}>
+              <td className="plain">{name}</td>
+              <td className="wrap">{value(limitsNow)}</td>
+              <td className="wrap">{value(limits2027)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+const ProgrammeTable: Content = ({ lang }) => {
+  const ru = lang === 'ru'
+  const tenge = (list: { where: string; tenge: number }[]) =>
+    list.map((m) => `${n(m.tenge)} ₸ — ${m.where}`).join('; ')
+  return (
+    <div className="table">
+      <table>
+        <thead>
+          <tr>
+            <th>{ru ? 'Программа' : 'Бағдарлама'}</th>
+            <th>{ru ? 'Ставка' : 'Мөлшерлеме'}</th>
+            <th>{ru ? 'Взнос, срок' : 'Жарна, мерзім'}</th>
+            <th>{ru ? 'Лимит' : 'Шек'}</th>
+            <th>{ru ? 'Условия' : 'Шарттар'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {loan.programmes.map((p) => (
+            <tr key={p.id}>
+              <td className="plain">
+                <a href={loanSource(p.source).url} rel="noopener">
+                  {p.name}
+                </a>
+              </td>
+              <td>
+                {'rateSocial' in p && p.rateSocial !== undefined
+                  ? `${pct(p.rateSocial)} / ${pct(p.rate)} %`
+                  : 'rateMax' in p && p.rateMax !== undefined
+                    ? range([p.rate, p.rateMax])
+                    : `${pct(p.rate)} %`}
+              </td>
+              <td className="wrap">
+                {'minDownPayment' in p && p.minDownPayment !== undefined
+                  ? ru
+                    ? `от ${p.minDownPayment} %, до ${p.maxYears} лет`
+                    : `${p.minDownPayment} %-дан, ${p.maxYears} жылға дейін`
+                  : '—'}
+              </td>
+              <td className="wrap">
+                {'maxPrice' in p && p.maxPrice
+                  ? `${ru ? 'стоимость жилья' : 'тұрғын үй құны'}: ${tenge(p.maxPrice)}`
+                  : 'maxLoan' in p && p.maxLoan
+                    ? `${ru ? 'заём' : 'қарыз'}: ${tenge(p.maxLoan)}`
+                    : '—'}
+              </td>
+              <td className="wrap" lang="ru">
+                {p.notes}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+const BankRateTable: Content = ({ lang }) => {
+  const ru = lang === 'ru'
+  return (
+    <div className="table" data-filter>
+      <Filter lang={lang} />
+      <table>
+        <thead>
+          <tr>
+            <th>{ru ? 'Банк, продукт' : 'Банк, өнім'}</th>
+            <th>{ru ? 'Ставка' : 'Мөлшерлеме'}</th>
+            <th>{ru ? 'ГЭСВ' : 'ЖТСМ'}</th>
+            <th>{ru ? 'До' : 'Дейін'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {loan.banks.map((b) => (
+            <tr key={b.bank + b.product}>
+              <td className="plain">
+                <a href={loanSource(b.source).url} rel="noopener">
+                  {b.bank} — {b.product}
+                </a>
+                {'note' in b && b.note && (
+                  <>
+                    <br />
+                    <small lang="ru">{b.note}</small>
+                  </>
+                )}
+              </td>
+              <td className="nowrap">{rates(b.rate, ru)}</td>
+              <td className="nowrap">{rates(b.gesv, ru)}</td>
+              <td className="wrap">
+                {[
+                  'maxTenge' in b && b.maxTenge ? `${n(b.maxTenge)} ₸` : '',
+                  'maxYears' in b && b.maxYears ? `${b.maxYears} ${ru ? 'лет' : 'жыл'}` : '',
+                ]
+                  .filter(Boolean)
+                  .join(', ') || '—'}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+const GesvFormula = () => (
+  <p>
+    <code>D − k = Σ Pᵢ / (1 + APR)^(tᵢ / 365)</code>
+  </p>
+)
+
+const LoanLimits: Content = ({ lang }) =>
+  lang === 'ru' ? (
+    <ul>
+      {loan.unverified.map((u) => (
+        <li key={u}>{u}</li>
+      ))}
+    </ul>
+  ) : (
+    <ul>
+      <li>
+        Айлық сыйақыны кітапхана қалдық × мөлшерлеме / 12 деп есептейді; банктер нақты күндер
+        бойынша есептеуі мүмкін — кесте мен ЖТСМ пайыздың жүздік үлесіне өзгеше болуы мүмкін.
+      </li>
+      <li>
+        Берілген күні болмаса, tᵢ ай нөмірі × 365/12 күн деп алынады; күні болса — күнтізбе бойынша.
+      </li>
+      <li>
+        Банк мөлшерлемелерінің кестесі — {dmy(loan.retrievedAt)} күнгі банк беттерінде жарияланғаны
+        ғана; басқа ірі банктер (Halyk, Kaspi, Freedom, Forte) мөлшерлемелерді автоматты оқуда
+        бермеді — кестеге енгізілмеді.
+      </li>
+    </ul>
+  )
+
+const BankRates: Content = ({ lang }) => (
+  <>
+    <h2>
+      {lang === 'ru'
+        ? `Ставки банков на ${dmy(loan.retrievedAt)}`
+        : `${dmy(loan.retrievedAt)} күнгі банк мөлшерлемелері`}
+    </h2>
+    <p>
+      {lang === 'ru'
+        ? 'Только то, что банк публикует на своей странице; ссылка — в названии. Ставки меняются — в калькулятор всегда можно ввести свою.'
+        : 'Банк өз бетінде жариялағаны ғана; сілтеме — атауында. Мөлшерлемелер өзгереді — калькуляторға әрдайым өз мөлшерлемеңізді енгізуге болады.'}
+    </p>
+    <BankRateTable lang={lang} />
+  </>
+)
+
+const LOAN_TEXT: Record<Lang, ReactNode> = {
+  ru: (
+    <>
+      <h2>Аннуитетный и дифференцированный платёж</h2>
+      <p>
+        Аннуитет — все платежи равны: <code>A = S × i / (1 − (1 + i)^−n)</code>, где S — сумма, i —
+        ставка за месяц (годовая / 12), n — число месяцев. В начале срока большая часть платежа
+        уходит на вознаграждение. При дифференцированном погашении основной долг гасится равными
+        частями S / n, а вознаграждение начисляется на остаток, поэтому платёж каждый месяц
+        уменьшается, а переплата меньше. Калькулятор показывает переплату при обоих способах.
+      </p>
+      <h2>Что такое ГЭСВ и как её считают</h2>
+      <p>
+        Годовая эффективная ставка вознаграждения — цена займа с учётом комиссий. Банки считают её
+        по Правилам, утверждённым постановлением АРРФР от 3 апреля 2026 года № 44 (п. 11):
+      </p>
+      <GesvFormula />
+      <p>
+        D — сумма займа, k — платежи банку при получении займа, Pᵢ — платежи клиента, tᵢ — дни со
+        дня выдачи. В расчёт входят основной долг, вознаграждение, комиссии и иные платежи,
+        связанные с выдачей и обслуживанием займа (п. 12, 14); неустойка и штрафы не входят (п. 15).
+        Ставку находят последовательными приближениями (п. 22) и округляют до сотых (п. 23). Для
+        займов от небанковских заимодателей действуют Правила НБРК № 197 — там округление до десятых
+        (п. 9).
+      </p>
+      <h2>Предельная ГЭСВ</h2>
+      <p>
+        Совместное постановление АРРФР № 84 и НБРК № 51 (апрель 2026 года) ограничивает ГЭСВ на дату
+        заключения договора. Если ГЭСВ выше предела, калькулятор предупредит.
+      </p>
+    </>
+  ),
+  kk: (
+    <>
+      <h2>Аннуитетті және сараланған төлем</h2>
+      <p>
+        Аннуитет — барлық төлем тең: <code>A = S × i / (1 − (1 + i)^−n)</code>, мұнда S — сома, i —
+        айлық мөлшерлеме (жылдық / 12), n — айлар саны. Мерзімнің басында төлемнің көп бөлігі
+        сыйақыға кетеді. Сараланған өтеуде негізгі борыш S / n тең бөліктермен өтеледі, ал сыйақы
+        қалдыққа есептеледі, сондықтан төлем ай сайын азаяды, артық төлем де аз. Калькулятор екі
+        тәсілдің де артық төлемін көрсетеді.
+      </p>
+      <h2>ЖТСМ деген не және ол қалай есептеледі</h2>
+      <p>
+        Жылдық тиімді сыйақы мөлшерлемесі — комиссияларды ескергендегі қарыздың құны. Банктер оны
+        ҚНРДА-ның 2026 жылғы 3 сәуірдегі № 44 қаулысымен бекітілген Қағидалар бойынша есептейді
+        (11-т.):
+      </p>
+      <GesvFormula />
+      <p>
+        D — қарыз сомасы, k — қарызды алған кезде банкке төлемдер, Pᵢ — клиент төлемдері, tᵢ —
+        берілген күннен бергі күндер. Есепке негізгі борыш, сыйақы, қарызды беру мен оған қызмет
+        көрсетуге байланысты комиссиялар кіреді (12, 14-т.); тұрақсыздық айыбы мен айыппұлдар
+        кірмейді (15-т.). Мөлшерлеме біртіндеп жуықтау әдісімен табылады (22-т.) және жүздік үлеске
+        дейін дөңгелектенеді (23-т.). Банк емес қарыз берушілерге ҰБ № 197 Қағидалары қолданылады —
+        онда ондық үлеске дейін (9-т.).
+      </p>
+      <h2>Шекті ЖТСМ</h2>
+      <p>
+        ҚНРДА № 84 және ҰБ № 51 бірлескен қаулысы (2026 жылғы сәуір) шарт жасалған күнгі ЖТСМ-ді
+        шектейді. ЖТСМ шектен асса, калькулятор ескертеді.
+      </p>
+    </>
+  ),
+}
+
+const EARLY: Record<Lang, ReactNode> = {
+  ru: (
+    <p>
+      Досрочный платёж вносится вместе с очередным. Дальше можно сократить срок (платёж прежний,
+      кредит закроется раньше) или уменьшить платёж (срок прежний). Сокращение срока обычно экономит
+      больше. Поле «Доплата каждый месяц» добавляет одну и ту же сумму к каждому платежу. Досрочные
+      платежи входят в расчёт ГЭСВ на даты по графику (Правила № 44, п. 22).
+    </p>
+  ),
+  kk: (
+    <p>
+      Мерзімінен бұрын төлем кезекті төлеммен бірге енгізіледі. Одан кейін мерзімді қысқартуға
+      (төлем сол күйі, несие ертерек жабылады) немесе төлемді азайтуға (мерзім сол күйі) болады.
+      Мерзімді қысқарту әдетте көбірек үнемдейді. «Ай сайынғы қосымша төлем» өрісі әр төлемге бірдей
+      соманы қосады. Мерзімінен бұрын төлемдер ЖТСМ есебіне кесте бойынша күндерге кіреді (№ 44
+      Қағидалар, 22-т.).
+    </p>
+  ),
+}
+
+const MORTGAGE_TEXT: Record<Lang, ReactNode> = {
+  ru: (
+    <>
+      <h2>Госпрограммы</h2>
+      <p>
+        Условия взяты с сайтов операторов программ на {dmy(loan.retrievedAt)}; ссылка — в названии.
+        Выберите программу в калькуляторе — подставятся её ставка и максимальный срок. У программ
+        Отбасы банка схема двухэтапная: предварительный заём, а после накопления 50 % суммы на
+        депозите — жилищный заём под 3,5–5 %. Калькулятор считает обычный заём по ставке первого
+        этапа.
+      </p>
+    </>
+  ),
+  kk: (
+    <>
+      <h2>Мемлекеттік бағдарламалар</h2>
+      <p>
+        Шарттар бағдарлама операторларының сайттарынан {dmy(loan.retrievedAt)} күні алынды; сілтеме
+        — атауында. Калькуляторда бағдарламаны таңдасаңыз, оның мөлшерлемесі мен ең ұзақ мерзімі
+        қойылады. Отбасы банк бағдарламаларында екі кезең бар: алдын ала қарыз, ал депозитте соманың
+        50 %-ы жиналғаннан кейін — 3,5–5 %-бен тұрғын үй қарызы. Калькулятор бірінші кезеңнің
+        мөлшерлемесімен қарапайым қарызды есептейді.
+      </p>
+    </>
+  ),
+}
+
+const MORTGAGE_CAP: Record<Lang, ReactNode> = {
+  ru: (
+    <>
+      <h2>Предельная ГЭСВ по ипотеке</h2>
+      <p>
+        До конца 2026 года — {limitsNow.mortgage[0]?.limit} %. С {dmy(limits2027.from)} предел
+        зависит от КЗЗ — отношения суммы займа к стоимости залога: при КЗЗ до{' '}
+        {pct(limits2027.mortgage[0]?.maxLtv as number)} включительно —{' '}
+        {limits2027.mortgage[0]?.limit} %, выше — {limits2027.mortgage[1]?.limit} %. Стоимость
+        залога — меньшая из цены по договору купли-продажи и оценки; вклад, переданный в залог, её
+        увеличивает. Калькулятор считает КЗЗ как (стоимость − взнос) / стоимость.
+      </p>
+    </>
+  ),
+  kk: (
+    <>
+      <h2>Ипотека бойынша шекті ЖТСМ</h2>
+      <p>
+        2026 жылдың соңына дейін — {limitsNow.mortgage[0]?.limit} %. {dmy(limits2027.from)} бастап
+        шек қарыз сомасының кепіл құнына арақатынасына (LTV) байланысты:{' '}
+        {pct(limits2027.mortgage[0]?.maxLtv as number)} қоса алғанға дейін —{' '}
+        {limits2027.mortgage[0]?.limit} %, одан жоғары — {limits2027.mortgage[1]?.limit} %. Кепіл
+        құны — сатып алу-сату шартындағы баға мен бағалаудың азы; кепілге берілген салым оны
+        арттырады. Калькулятор арақатынасты (құны − жарна) / құны деп есептейді.
+      </p>
+    </>
+  ),
+}
+
 export const CONTENT: Record<ToolId, Content> = {
   iin: both(
     <>
@@ -910,6 +1270,29 @@ export const CONTENT: Record<ToolId, Content> = {
         тұлғалар мен ЖК айыппұлдары, қайталанған құқық бұзушылықтар, баждан босату (667–671-баптар).
       </p>
     </>,
+  ),
+  loan: ({ lang }) => (
+    <>
+      {LOAN_TEXT[lang]}
+      <GesvLimitTable lang={lang} />
+      <h2>{lang === 'ru' ? 'Досрочное погашение' : 'Мерзімінен бұрын өтеу'}</h2>
+      {EARLY[lang]}
+      <BankRates lang={lang} />
+      <h2>{lang === 'ru' ? 'Ограничения' : 'Шектеулер'}</h2>
+      <LoanLimits lang={lang} />
+    </>
+  ),
+  mortgage: ({ lang }) => (
+    <>
+      {MORTGAGE_TEXT[lang]}
+      <ProgrammeTable lang={lang} />
+      {MORTGAGE_CAP[lang]}
+      <GesvLimitTable lang={lang} />
+      <BankRates lang={lang} />
+      {LOAN_TEXT[lang]}
+      <h2>{lang === 'ru' ? 'Ограничения' : 'Шектеулер'}</h2>
+      <LoanLimits lang={lang} />
+    </>
   ),
   money: both(
     <>

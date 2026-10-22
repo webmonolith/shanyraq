@@ -11,7 +11,9 @@ import fees from './tools/fees'
 import iban from './tools/iban'
 import iin from './tools/iin'
 import leave from './tools/leave'
+import loan from './tools/loan'
 import money from './tools/money'
+import mortgage from './tools/mortgage'
 import mrp from './tools/mrp'
 import phone from './tools/phone'
 import plate from './tools/plate'
@@ -39,6 +41,8 @@ const WIDGETS: Record<ToolId, ComponentType<ToolProps>> = {
   leave,
   simplified,
   fees,
+  loan,
+  mortgage,
   money,
   calendar,
   date,

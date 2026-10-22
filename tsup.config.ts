@@ -9,6 +9,7 @@ const subpaths = [
   'iban',
   'iin',
   'leave',
+  'loan',
   'money',
   'phone',
   'plate',

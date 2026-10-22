@@ -10,6 +10,7 @@ import { ru } from 'shanyraq/i18n'
 import { formatIBAN, getBank, parseIBAN } from 'shanyraq/iban'
 import { parseIIN } from 'shanyraq/iin'
 import { sickPay, vacationPay } from 'shanyraq/leave'
+import { gesvLimit, loanSchedule } from 'shanyraq/loan'
 import { parseAmount } from 'shanyraq/money'
 import { formatPhone } from 'shanyraq/phone'
 import { parsePlate } from 'shanyraq/plate'
@@ -43,6 +44,8 @@ assert.equal(addVAT(1000).value.gross, 1160)
 assert.equal(simplifiedTax(3000000).value.total, 232200)
 assert.equal(vacationPay(3600000, '2026-07-01').value.pay, 248780.55)
 assert.equal(sickPay(3600000, '2026-03-02', '2026-03-06').value.pay, 73469.4)
+assert.equal(loanSchedule(1000000, 20, 12).value.apr, 21.94)
+assert.equal(gesvLimit('mortgage', '2027-01-01', 0.7).value, 20)
 
 const cli = new URL('../../dist/cli.js', import.meta.url).pathname
 const run = (...args) =>

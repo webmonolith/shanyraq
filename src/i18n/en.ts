@@ -63,4 +63,10 @@ export const en: Messages = {
     date: 'Invalid date, expected YYYY-MM-DD',
     data: 'No MRP or calendar data for this year',
   },
+  loan: {
+    invalid: 'Enter the loan amount as a number',
+    range: 'Amount, rate, term or payment is out of range',
+    date: 'Invalid date, expected YYYY-MM-DD',
+    data: 'No ГЭСВ cap data for this date',
+  },
 }

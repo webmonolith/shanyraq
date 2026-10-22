@@ -348,3 +348,38 @@ write(
   })} as const
 `,
 )
+
+interface LoanData {
+  gesv: { decimals: number }
+  limits: {
+    from: string
+    to?: string
+    unsecured: number
+    secured: number
+    mortgage: { maxLtv?: number; limit: number }[]
+    microcredit: number
+    shortMicrocredit: { limit: number }
+  }[]
+}
+
+const loan = read<LoanData>('loan')
+
+write(
+  'loan/generated.ts',
+  'data/loan.json',
+  `/** ГЭСВ caps, percent; \`mortgage\` is [max loan-to-value or 0 for any, cap]. */
+export const LIMITS = ${json(
+    loan.limits.map((l) => ({
+      from: l.from,
+      to: l.to ?? '9999-12-31',
+      unsecured: l.unsecured,
+      secured: l.secured,
+      mortgage: l.mortgage.map((m) => [m.maxLtv ?? 0, m.limit]),
+      microcredit: l.microcredit,
+      shortMicrocredit: l.shortMicrocredit.limit,
+    })),
+  )}
+
+export const GESV_DECIMALS = ${loan.gesv.decimals}
+`,
+)

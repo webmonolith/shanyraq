@@ -18,7 +18,9 @@
     "translit",
     "kato",
     "salary",
-    "tax"
+    "tax",
+    "loan",
+    "mortgage"
   ],
   "homepage": "https://github.com/webmonolith/shanyraq#readme",
   "repository": {
@@ -132,6 +134,16 @@
       "require": {
         "types": "./dist/leave/index.d.cts",
         "default": "./dist/leave/index.cjs"
+      }
+    },
+    "./loan": {
+      "import": {
+        "types": "./dist/loan/index.d.ts",
+        "default": "./dist/loan/index.js"
+      },
+      "require": {
+        "types": "./dist/loan/index.d.cts",
+        "default": "./dist/loan/index.cjs"
       }
     },
     "./money": {

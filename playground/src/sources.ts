@@ -4,6 +4,7 @@ import calendar from '../../data/calendar.json'
 import fees from '../../data/fees.json'
 import language from '../../data/language.json'
 import leave from '../../data/leave.json'
+import loan from '../../data/loan.json'
 import phone from '../../data/phone.json'
 import plates from '../../data/plates.json'
 import regions from '../../data/regions.json'
@@ -71,6 +72,8 @@ export const SOURCES: Record<ToolId, Source[]> = {
   leave: [...linked(leave.source), ...taxSource('budget2026'), calendar.law],
   simplified: taxSource('taxCode', 'socialCode', 'osmsLaw', 'budget2026'),
   fees: [...linked(fees.source), ...taxSource('budget2026')],
+  loan: linked(loan.source.filter((s) => s.id !== 'programme72025' && !/Nauryz|Otau/.test(s.id))),
+  mortgage: linked(loan.source),
   money: [lang.nbrk208, lang.law306, lang.koapKk, lang.gramota],
   calendar: [
     calendar.law,

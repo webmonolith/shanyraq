@@ -2,7 +2,7 @@ import { execFile } from 'node:child_process'
 import { mkdir, rm, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { promisify } from 'node:util'
-import { LOGO_PATH } from '../src/icons'
+import { LOGO_HORN, logoSvg } from '../src/icons'
 import { ogName, pages, TOOLS } from '../src/site'
 
 // 1200×630 link previews (page heading on a plain card) and PWA icons, one Chrome process per shot;
@@ -23,7 +23,7 @@ body{margin:0;width:1200px;height:630px;overflow:hidden;background:#fff;color:#1
 h1{margin:16px 0 0;font-weight:700;font-size:68px;line-height:1.08;letter-spacing:-.02em;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .site{margin-top:32px;font-size:24px;color:#5b6766}`
 
-const mark = `<svg viewBox="0 0 32 32"><path fill-rule="evenodd" d="${LOGO_PATH}"/></svg>`
+const mark = logoSvg()
 
 const card = (lang: string, heading: string, tag: string) => `<!doctype html>
 <html lang="${lang}"><head><meta charset="utf-8"><style>${style}</style></head>
@@ -34,12 +34,12 @@ const card = (lang: string, heading: string, tag: string) => `<!doctype html>
   <div class="site">shanyraq.webmonolith.kz</div>
 </div></body></html>`
 
-// Full-bleed square: the logo stays inside the 80% safe zone of maskable icons.
+// Full-bleed square: the teal page is the tile, the horn stays inside the 80% safe zone of maskable icons.
 const icon = (size: number) => `<!doctype html>
 <html><head><meta charset="utf-8"><style>
 body{margin:0;width:${size}px;height:${size}px;overflow:hidden;background:#0b7a75;display:grid;place-items:center}
-svg{width:58%;height:58%;fill:#fff}
-</style></head><body>${mark}</body></html>`
+svg{width:84%;height:84%}
+</style></head><body><svg viewBox="2 2 28 28"><path d="${LOGO_HORN}" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></body></html>`
 
 const ICONS = { 'icons/180': 180, 'icons/192': 192, 'icons/512': 512 }
 

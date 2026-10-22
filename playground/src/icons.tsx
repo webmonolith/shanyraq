@@ -163,6 +163,27 @@ const ICONS: Record<ToolId, ReactNode> = {
       <path d={wl(14, 55, 50, 55)} />
     </>
   ),
+  loan: (
+    <>
+      <path d={rr(6, 12, 48, 40, 4)} />
+      <path d={`${wl(12, 21, 30, 21)}${wl(12, 29, 24, 29)}`} />
+      <path className="f" d={wc(43, 41, 14)} />
+      <path d={wc(43, 41, 14)} />
+      <path d="M49 34.5 37 47.5" />
+      <path d={`${wc(38.5, 36, 2.6)}${wc(47.5, 46, 2.6)}`} />
+    </>
+  ),
+  mortgage: (
+    <>
+      <path className="bg" d={wr(14, 29, 50, 56)} />
+      <path d={wr(14, 29, 50, 56)} />
+      <path d="M7 31.5 32 9 57 31.5" />
+      <path className="f" d={wr(27, 39, 37, 56)} />
+      <path d={wr(27, 39, 37, 56)} />
+      <path d={wr(40.5, 34, 46, 40)} />
+      <circle className="k" cx="34.5" cy="48" r="1.4" />
+    </>
+  ),
   money: (
     <>
       <path className="f" d={wc(32, 32, 20)} />
@@ -224,19 +245,43 @@ const ICONS: Record<ToolId, ReactNode> = {
   ),
 }
 
+// Intrinsic sizes keep icons small before CSS arrives (the dev server injects styles from JS).
+const PX = { sm: 28, md: 40, lg: 52 }
+
 export const ToolIcon = ({ id, size = 'md' }: { id: ToolId; size?: 'sm' | 'md' | 'lg' }) => (
-  <svg className={`doodle doodle--${size}`} viewBox="0 0 64 64" aria-hidden="true">
+  <svg
+    className={`doodle doodle--${size}`}
+    viewBox="0 0 64 64"
+    width={PX[size]}
+    height={PX[size]}
+    aria-hidden="true"
+  >
     {ICONS[id]}
   </svg>
 )
 
-/** Shanyraq: the rim and the crossed roof bars of a yurt crown. */
-// yurt with the shanyraq crown above the roof; shared with favicon.svg and OG cards
-export const LOGO_PATH =
-  'M3.5 27V17.6Q3.5 16.4 4.6 15.8L12.2 11.4H19.8L27.4 15.8Q28.5 16.4 28.5 17.6V27ZM13.4 27V22.4a2.6 2.6 0 0 1 5.2 0V27ZM12.9 7.4h6.2a1.3 1.3 0 0 1 0 2.6h-6.2a1.3 1.3 0 0 1 0-2.6Z'
+// A ram's horn (қошқар мүйіз) cut out of a rounded tile; the cut is transparent, so one fill colours the mark.
+// Shared with favicon.svg, OG cards and PWA icons (scripts/export-og.ts).
+export const LOGO_HORN =
+  'M8.5 25C8.5 14 14.5 8.4 20.6 9.6 25.2 10.5 25.4 16.4 21.6 17.4 18.8 18.1 17.4 15.2 19.4 14'
+
+const HORN_STROKE = {
+  fill: 'none',
+  strokeWidth: 3.2,
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
+} as const
+
+/** Standalone SVG markup of the logo for files and screenshots outside React. */
+export const logoSvg = (attrs = '') =>
+  `<svg ${attrs} viewBox="0 0 32 32"><mask id="logo-cut"><rect x="2" y="2" width="28" height="28" rx="8" fill="#fff"/><path d="${LOGO_HORN}" fill="none" stroke="#000" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></mask><rect x="2" y="2" width="28" height="28" rx="8" mask="url(#logo-cut)"/></svg>`
 
 export const Logo = () => (
-  <svg className="logo" viewBox="0 0 32 32" aria-hidden="true">
-    <path fillRule="evenodd" d={LOGO_PATH} />
+  <svg className="logo" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
+    <mask id="logo-cut">
+      <rect x="2" y="2" width="28" height="28" rx="8" fill="#fff" />
+      <path d={LOGO_HORN} stroke="#000" {...HORN_STROKE} />
+    </mask>
+    <rect x="2" y="2" width="28" height="28" rx="8" mask="url(#logo-cut)" />
   </svg>
 )

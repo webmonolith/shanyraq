@@ -10,7 +10,7 @@
     "name": "shanyraq/i18n (all languages)",
     "path": "dist/i18n/index.js",
     "import": "{ messages }",
-    "limit": "2.5 kB",
+    "limit": "2.7 kB",
     "gzip": true
   },
   {
@@ -91,6 +91,13 @@
     "gzip": true
   },
   {
+    "name": "shanyraq/loan (with ГЭСВ caps)",
+    "path": "dist/loan/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
     "name": "shanyraq/date",
     "path": "dist/date/index.js",
     "import": "*",
@@ -124,7 +131,7 @@
     "path": "dist/zod/index.js",
     "import": "{ plate }",
     "ignore": ["zod"],
-    "limit": "2 kB",
+    "limit": "2.1 kB",
     "gzip": true
   },
   {
@@ -132,7 +139,7 @@
     "path": "dist/zod/index.js",
     "import": "{ iban }",
     "ignore": ["zod"],
-    "limit": "4.5 kB",
+    "limit": "4.6 kB",
     "gzip": true
   },
   {
