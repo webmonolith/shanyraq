@@ -1,5 +1,6 @@
 import fc from 'fast-check'
 import { describe, expect, it } from 'vitest'
+import data from '../data/phone.json'
 import { formatPhone, isValidPhone, type PhoneInfo, parsePhone } from '../src/phone'
 import { digitString } from './helpers'
 
@@ -176,5 +177,22 @@ describe('formatPhone', () => {
       ),
       { numRuns: 10_000 },
     )
+  })
+})
+
+describe('data/phone.json#localities', () => {
+  const items = data.localities.items
+
+  it('gives every locality a 10-digit national number', () => {
+    for (const i of items) expect(i.code.length + i.subscriberDigits, i.itu).toBe(10)
+  })
+
+  it('lists every city the library resolves, and parsePhone agrees', () => {
+    for (const l of data.landline) {
+      expect(items.some((i) => i.code === l.areaCode)).toBe(true)
+      expect(
+        info(`8${l.nsnPattern.replace(/\[(\d)\d*\]/, '$1').replace(/X/g, '5')}`).areaCode,
+      ).toBe(l.areaCode)
+    }
   })
 })

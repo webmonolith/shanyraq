@@ -6,6 +6,7 @@ import { formatPhone, parsePhone } from 'shanyraq/phone'
 import { parsePlate } from 'shanyraq/plate'
 import { getRegion } from 'shanyraq/regions'
 import { parseTaxId } from 'shanyraq/taxid'
+import { track } from '../analytics'
 import { Check, Choice, Field, Status, type ToolProps } from '../ui'
 
 type Kind = 'taxid' | 'phone' | 'iban' | 'plate'
@@ -197,6 +198,7 @@ const readColumn = (text: string, column: number): string[] => {
 const csvCell = (s: string) => (/[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s)
 
 const download = (rows: Checked[], t: Texts) => {
+  track('export_csv')
   const lines = [
     t.head.slice(1),
     ...rows.map((r) => [r.input, r.ok ? t.yes : t.no, r.value, r.details]),

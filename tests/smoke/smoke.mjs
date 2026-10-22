@@ -5,15 +5,18 @@ import { getMessage, isValidIIN, messages, moneyToWords, parsePhone } from 'shan
 import { isValidBIN } from 'shanyraq/bin'
 import { countWorkingDays, isDayOff } from 'shanyraq/calendar'
 import { formatDate } from 'shanyraq/date'
+import { taxDeadlines } from 'shanyraq/deadlines'
 import { createFaker } from 'shanyraq/faker'
 import { ru } from 'shanyraq/i18n'
 import { formatIBAN, getBank, parseIBAN } from 'shanyraq/iban'
 import { parseIIN } from 'shanyraq/iin'
+import { sickPay, vacationPay } from 'shanyraq/leave'
+import { gesvLimit, loanSchedule } from 'shanyraq/loan'
 import { parseAmount } from 'shanyraq/money'
 import { formatPhone } from 'shanyraq/phone'
 import { parsePlate } from 'shanyraq/plate'
 import { regionByPlateCode } from 'shanyraq/regions'
-import { addVAT, calculateSalary } from 'shanyraq/tax'
+import { addVAT, calculateSalary, simplifiedTax } from 'shanyraq/tax'
 import { parseTaxId } from 'shanyraq/taxid'
 import { toLatin } from 'shanyraq/translit'
 
@@ -39,6 +42,12 @@ assert.equal(formatDate('2026-10-22', { lang: 'kk' }).value, '2026 жылғы 22
 assert.equal(toLatin('Қазақстан'), 'Qazaqstan')
 assert.equal(calculateSalary(500000).value.net, 408975)
 assert.equal(addVAT(1000).value.gross, 1160)
+assert.equal(simplifiedTax(3000000).value.total, 232200)
+assert.equal(vacationPay(3600000, '2026-07-01').value.pay, 248780.55)
+assert.equal(sickPay(3600000, '2026-03-02', '2026-03-06').value.pay, 73469.4)
+assert.equal(loanSchedule(1000000, 20, 12).value.apr, 21.94)
+assert.equal(taxDeadlines(2026, { regime: 'simplified', tags: [] }).value[0].date, '2026-02-16')
+assert.equal(gesvLimit('mortgage', '2027-01-01', 0.7).value, 20)
 
 const cli = new URL('../../dist/cli.js', import.meta.url).pathname
 const run = (...args) =>

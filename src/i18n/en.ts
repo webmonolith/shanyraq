@@ -57,4 +57,20 @@ export const en: Messages = {
     range: 'Amount, rate or month is out of range',
     data: 'No MRP, minimum wage or rate data for this year',
   },
+  leave: {
+    invalid: 'Enter the earnings as a number',
+    range: 'Amount, number of days or period is out of range',
+    date: 'Invalid date, expected YYYY-MM-DD',
+    data: 'No MRP or calendar data for this year',
+  },
+  loan: {
+    invalid: 'Enter the loan amount as a number',
+    range: 'Amount, rate, term or payment is out of range',
+    date: 'Invalid date, expected YYYY-MM-DD',
+    data: 'No ГЭСВ cap data for this date',
+  },
+  deadlines: {
+    range: 'Year is out of range',
+    data: 'No working-day calendar data for this year',
+  },
 }

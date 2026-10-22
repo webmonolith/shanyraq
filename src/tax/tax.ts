@@ -231,3 +231,68 @@ export const vatThreshold = (year: number = LATEST): number | undefined => {
   const y = YEARS[year]
   return y && R.vatThresholdMrp * y.mrp
 }
+
+export interface SimplifiedOptions {
+  /** Year of MRP and MZP; default — the latest year in the data. */
+  year?: number
+  /** Percent; 4 by default, a maslikhat may set 2–6 (Tax Code art. 726). */
+  rate?: number
+  /** Monthly income declared for own pension and social contributions; default — 1 MZP. */
+  declared?: number | string
+}
+
+/** Half-year payments of an entrepreneur on the simplified declaration (form 910), whole tenge. */
+export interface SimplifiedTax {
+  /** Income for the half-year. */
+  income: number
+  /** Percent applied. */
+  rate: number
+  /** Personal income tax for the half-year. */
+  ipn: number
+  /** Annual income limit of the regime, 600 000 MRP. */
+  limit: number
+  /** Monthly payments for oneself. */
+  monthly: { opv: number; so: number; vosms: number }
+  /** The monthly payments over six months. */
+  contributions: number
+  /** Income tax plus contributions for the half-year. */
+  total: number
+}
+
+/**
+ * Income tax and own social payments of an entrepreneur on the simplified declaration for a half-year.
+ * @example
+ * simplifiedTax(3000000).value // { ipn: 120000, monthly: { opv: 8500, so: 4250, vosms: 5950 }, total: 232200, … }
+ */
+export const simplifiedTax = (
+  income: number | string,
+  options: SimplifiedOptions = {},
+): Result<SimplifiedTax, TaxError> => {
+  const i = amount(income, MAX_SALARY)
+  if (!i.ok) return i
+  const { year = LATEST, rate = R.simplified * 100 } = options
+  const y = YEARS[year]
+  if (!y) return err('data')
+  const base = R.simplified * 100
+  const change = base * R.simplifiedMaxChange
+  if (!(rate >= base - change && rate <= base + change)) return err('range')
+  const d = amount(options.declared ?? y.mzp, MAX_SALARY)
+  if (!d.ok) return d
+  const { mzp, mrp } = y
+  const monthly = {
+    opv: round(R.selfOpv * Math.min(d.value, R.selfOpvMaxMzp * mzp)),
+    so: round(R.selfSo * clamp(d.value, R.selfSoMinMzp * mzp, R.selfSoMaxMzp * mzp)),
+    vosms: round(R.selfVosms * R.selfVosmsBaseMzp * mzp),
+  }
+  const ipn = round((i.value * rate) / 100)
+  const contributions = 6 * (monthly.opv + monthly.so + monthly.vosms)
+  return ok({
+    income: i.value,
+    rate,
+    ipn,
+    limit: R.simplifiedLimitMrp * mrp,
+    monthly,
+    contributions,
+    total: ipn + contributions,
+  })
+}

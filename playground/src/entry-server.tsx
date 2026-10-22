@@ -5,17 +5,24 @@ import { PageView } from './page'
 import { ogName, type Page, pageByPath, type ToolId } from './site'
 import batch from './tools/batch'
 import calendar from './tools/calendar'
+import codes from './tools/codes'
 import date from './tools/date'
+import deadlines from './tools/deadlines'
 import faker from './tools/faker'
+import fees from './tools/fees'
 import iban from './tools/iban'
 import iin from './tools/iin'
+import leave from './tools/leave'
+import loan from './tools/loan'
 import money from './tools/money'
+import mortgage from './tools/mortgage'
 import mrp from './tools/mrp'
 import phone from './tools/phone'
 import plate from './tools/plate'
 import regions from './tools/regions'
 import requisites from './tools/requisites'
 import salary from './tools/salary'
+import simplified from './tools/simplified'
 import translit from './tools/translit'
 import vat from './tools/vat'
 import type { ToolProps } from './ui'
@@ -25,6 +32,7 @@ export { ogName, pages, SITE } from './site'
 const WIDGETS: Record<ToolId, ComponentType<ToolProps>> = {
   iin,
   phone,
+  codes,
   iban,
   plate,
   regions,
@@ -33,6 +41,12 @@ const WIDGETS: Record<ToolId, ComponentType<ToolProps>> = {
   salary,
   vat,
   mrp,
+  leave,
+  simplified,
+  deadlines,
+  fees,
+  loan,
+  mortgage,
   money,
   calendar,
   date,

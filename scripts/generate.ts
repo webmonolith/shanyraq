@@ -266,6 +266,16 @@ interface TaxData {
   oosms: { rate: number; maxMzp: number }
   sn: { rate: number; minMrp: number }
   vat: { rate: number; registrationThresholdMrp: number }
+  simplified: {
+    rate: number
+    maxChange: number
+    incomeLimitMrp: number
+    self: {
+      opv: { rate: number; maxMzp: number }
+      so: { rate: number; minMzp: number; maxMzp: number }
+      vosms: { rate: number; baseMzp: number }
+    }
+  }
 }
 
 const tax = read<TaxData>('tax')
@@ -306,6 +316,105 @@ export const RATES = ${json({
     snMinMrp: tax.sn.minMrp,
     vat: pct(tax.vat.rate),
     vatThresholdMrp: tax.vat.registrationThresholdMrp,
+    simplified: pct(tax.simplified.rate),
+    simplifiedMaxChange: pct(tax.simplified.maxChange),
+    simplifiedLimitMrp: tax.simplified.incomeLimitMrp,
+    selfOpv: pct(tax.simplified.self.opv.rate),
+    selfOpvMaxMzp: tax.simplified.self.opv.maxMzp,
+    selfSo: pct(tax.simplified.self.so.rate),
+    selfSoMinMzp: tax.simplified.self.so.minMzp,
+    selfSoMaxMzp: tax.simplified.self.so.maxMzp,
+    selfVosms: pct(tax.simplified.self.vosms.rate),
+    selfVosmsBaseMzp: tax.simplified.self.vosms.baseMzp,
   })} as const
+`,
+)
+
+interface LeaveData {
+  averageWage: { periodMonths: number }
+  vacation: { minDays: number }
+  sickLeave: { monthlyCapMrp: number }
+}
+
+const leave = read<LeaveData>('leave')
+
+write(
+  'leave/generated.ts',
+  'data/leave.json',
+  `export const LEAVE = ${json({
+    periodMonths: leave.averageWage.periodMonths,
+    vacationDays: leave.vacation.minDays,
+    sickCapMrp: leave.sickLeave.monthlyCapMrp,
+  })} as const
+`,
+)
+
+interface LoanData {
+  gesv: { decimals: number }
+  limits: {
+    from: string
+    to?: string
+    unsecured: number
+    secured: number
+    mortgage: { maxLtv?: number; limit: number }[]
+    microcredit: number
+    shortMicrocredit: { limit: number }
+  }[]
+}
+
+const loan = read<LoanData>('loan')
+
+write(
+  'loan/generated.ts',
+  'data/loan.json',
+  `/** ГЭСВ caps, percent; \`mortgage\` is [max loan-to-value or 0 for any, cap]. */
+export const LIMITS = ${json(
+    loan.limits.map((l) => ({
+      from: l.from,
+      to: l.to ?? '9999-12-31',
+      unsecured: l.unsecured,
+      secured: l.secured,
+      mortgage: l.mortgage.map((m) => [m.maxLtv ?? 0, m.limit]),
+      microcredit: l.microcredit,
+      shortMicrocredit: l.shortMicrocredit.limit,
+    })),
+  )}
+
+export const GESV_DECIMALS = ${loan.gesv.decimals}
+`,
+)
+
+interface DeadlineData {
+  deadlines: {
+    id: string
+    form?: string
+    kind: 'report' | 'pay'
+    regimes: Record<string, string[]>
+    rule: {
+      type: 'monthly' | 'inMonth' | 'quarterly' | 'halfYear' | 'annual' | 'fixed'
+      day?: number
+      month?: number
+      plusDays?: number
+      dates?: { md: string; year: number; from?: string; to?: string }[]
+    }
+  }[]
+}
+
+const deadlines = read<DeadlineData>('deadlines')
+
+write(
+  'deadlines/generated.ts',
+  'data/deadlines.json',
+  `import type { Rule } from './types'
+
+export const RULES: Rule[] = ${json(
+    deadlines.deadlines.map(({ id, form, kind, regimes, rule }) => ({
+      id,
+      ...(form ? { form } : {}),
+      kind,
+      regimes,
+      rule,
+    })),
+  )}
 `,
 )

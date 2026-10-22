@@ -8,6 +8,9 @@ export type MoneyError = 'invalid' | 'range'
 export type DateError = 'format' | 'date'
 export type CalendarError = 'date' | 'range' | 'data'
 export type TaxError = 'invalid' | 'range' | 'data'
+export type LeaveError = 'invalid' | 'range' | 'date' | 'data'
+export type LoanError = 'invalid' | 'range' | 'date' | 'data'
+export type DeadlinesError = 'range' | 'data'
 
 /** Every error code of every module, keyed by module name. */
 export interface ErrorCodes {
@@ -21,4 +24,7 @@ export interface ErrorCodes {
   date: DateError
   calendar: CalendarError
   tax: TaxError
+  leave: LeaveError
+  loan: LoanError
+  deadlines: DeadlinesError
 }

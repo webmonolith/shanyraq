@@ -48,6 +48,19 @@ const ICONS: Record<ToolId, ReactNode> = {
       <path d="M49 23C51.8 26.4 51.8 31.6 49 35M53.4 18.6C58.6 24.4 58.6 33.6 53.4 39.4M15 23C12.2 26.4 12.2 31.6 15 35" />
     </>
   ),
+  codes: (
+    <>
+      <path
+        className="f"
+        d="M26 50.5C18.6 41.4 13.4 34.2 13.6 26.6 13.8 19.4 19.4 13.6 26.2 13.8 33 14 38.4 19.6 38.4 26.6 38.6 34.2 33.4 41.4 26 50.5Z"
+      />
+      <path d="M26 50.5C18.6 41.4 13.4 34.2 13.6 26.6 13.8 19.4 19.4 13.6 26.2 13.8 33 14 38.4 19.6 38.4 26.6 38.6 34.2 33.4 41.4 26 50.5Z" />
+      <path className="bg" d={wc(26, 26.4, 4.6)} />
+      <path d={wc(26, 26.4, 4.6)} />
+      <path d={wl(10, 56, 54, 56)} />
+      <path d="M44.6 21.4C47.4 24.4 47.4 29 44.6 32M49.4 17C54.4 22.4 54.4 31 49.4 36.4" />
+    </>
+  ),
   iban: (
     <>
       <path
@@ -132,6 +145,71 @@ const ICONS: Record<ToolId, ReactNode> = {
       )}
     </>
   ),
+  leave: (
+    <>
+      <path className="bg" d={rr(8, 14, 50, 56, 5)} />
+      <path d={rr(8, 14, 50, 56, 5)} />
+      <path d={`${wl(8, 24, 50, 24)}M18 9V18M40 9V18`} />
+      <path d={`${wl(15, 32, 22, 32)}${wl(27, 32, 34, 32)}${wl(15, 41, 22, 41)}`} />
+      <path className="f" d={wc(46, 45, 10)} />
+      <path d={wc(46, 45, 10)} />
+      <path d="M46 40V50M41 45H51" />
+    </>
+  ),
+  simplified: (
+    <>
+      <path className="f" d={wr(12, 8, 46, 56)} />
+      <path d={wr(12, 8, 46, 56)} />
+      <path d={`${wl(19, 18, 39, 18)}${wl(19, 26, 34, 26)}`} />
+      <path d="M22 47 36 33" />
+      <path d={`${wc(23.5, 35, 2.8)}${wc(34.5, 45, 2.8)}`} />
+      <circle className="k" cx="52" cy="14" r="1.6" />
+    </>
+  ),
+  fees: (
+    <>
+      <path className="f" d={wc(32, 17, 9)} />
+      <path d={wc(32, 17, 9)} />
+      <path d="M28 26 26.5 37H37.5L36 26" />
+      <path className="bg" d={rr(11, 37, 53, 47, 3)} />
+      <path d={rr(11, 37, 53, 47, 3)} />
+      <path d={wl(14, 55, 50, 55)} />
+    </>
+  ),
+  deadlines: (
+    <>
+      <path className="bg" d={rr(8, 12, 56, 56, 5)} />
+      <path d={rr(8, 12, 56, 56, 5)} />
+      <path d={`${wl(8, 22, 56, 22)}M20 7V16M44 7V16`} />
+      <path
+        d={`${wl(15, 31, 22, 31)}${wl(28, 31, 35, 31)}${wl(15, 40, 22, 40)}${wl(15, 49, 22, 49)}`}
+      />
+      <path className="f" d={wr(29, 37, 50, 52)} />
+      <path d={wr(29, 37, 50, 52)} />
+      <path d="M33 44.5 38 49 46 40.5" />
+    </>
+  ),
+  loan: (
+    <>
+      <path d={rr(6, 12, 48, 40, 4)} />
+      <path d={`${wl(12, 21, 30, 21)}${wl(12, 29, 24, 29)}`} />
+      <path className="f" d={wc(43, 41, 14)} />
+      <path d={wc(43, 41, 14)} />
+      <path d="M49 34.5 37 47.5" />
+      <path d={`${wc(38.5, 36, 2.6)}${wc(47.5, 46, 2.6)}`} />
+    </>
+  ),
+  mortgage: (
+    <>
+      <path className="bg" d={wr(14, 29, 50, 56)} />
+      <path d={wr(14, 29, 50, 56)} />
+      <path d="M7 31.5 32 9 57 31.5" />
+      <path className="f" d={wr(27, 39, 37, 56)} />
+      <path d={wr(27, 39, 37, 56)} />
+      <path d={wr(40.5, 34, 46, 40)} />
+      <circle className="k" cx="34.5" cy="48" r="1.4" />
+    </>
+  ),
   money: (
     <>
       <path className="f" d={wc(32, 32, 20)} />
@@ -193,19 +271,43 @@ const ICONS: Record<ToolId, ReactNode> = {
   ),
 }
 
+// Intrinsic sizes keep icons small before CSS arrives (the dev server injects styles from JS).
+const PX = { sm: 28, md: 40, lg: 52 }
+
 export const ToolIcon = ({ id, size = 'md' }: { id: ToolId; size?: 'sm' | 'md' | 'lg' }) => (
-  <svg className={`doodle doodle--${size}`} viewBox="0 0 64 64" aria-hidden="true">
+  <svg
+    className={`doodle doodle--${size}`}
+    viewBox="0 0 64 64"
+    width={PX[size]}
+    height={PX[size]}
+    aria-hidden="true"
+  >
     {ICONS[id]}
   </svg>
 )
 
-/** Shanyraq: the rim and the crossed roof bars of a yurt crown. */
-// yurt with the shanyraq crown above the roof; shared with favicon.svg and OG cards
-export const LOGO_PATH =
-  'M3.5 27V17.6Q3.5 16.4 4.6 15.8L12.2 11.4H19.8L27.4 15.8Q28.5 16.4 28.5 17.6V27ZM13.4 27V22.4a2.6 2.6 0 0 1 5.2 0V27ZM12.9 7.4h6.2a1.3 1.3 0 0 1 0 2.6h-6.2a1.3 1.3 0 0 1 0-2.6Z'
+// A ram's horn (қошқар мүйіз) cut out of a rounded tile; the cut is transparent, so one fill colours the mark.
+// Shared with favicon.svg, OG cards and PWA icons (scripts/export-og.ts).
+export const LOGO_HORN =
+  'M8.5 25C8.5 14 14.5 8.4 20.6 9.6 25.2 10.5 25.4 16.4 21.6 17.4 18.8 18.1 17.4 15.2 19.4 14'
+
+const HORN_STROKE = {
+  fill: 'none',
+  strokeWidth: 3.2,
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
+} as const
+
+/** Standalone SVG markup of the logo for files and screenshots outside React. */
+export const logoSvg = (attrs = '') =>
+  `<svg ${attrs} viewBox="0 0 32 32"><mask id="logo-cut"><rect x="2" y="2" width="28" height="28" rx="8" fill="#fff"/><path d="${LOGO_HORN}" fill="none" stroke="#000" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></mask><rect x="2" y="2" width="28" height="28" rx="8" mask="url(#logo-cut)"/></svg>`
 
 export const Logo = () => (
-  <svg className="logo" viewBox="0 0 32 32" aria-hidden="true">
-    <path fillRule="evenodd" d={LOGO_PATH} />
+  <svg className="logo" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
+    <mask id="logo-cut">
+      <rect x="2" y="2" width="28" height="28" rx="8" fill="#fff" />
+      <path d={LOGO_HORN} stroke="#000" {...HORN_STROKE} />
+    </mask>
+    <rect x="2" y="2" width="28" height="28" rx="8" mask="url(#logo-cut)" />
   </svg>
 )

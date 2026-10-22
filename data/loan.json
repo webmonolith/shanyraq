@@ -1,0 +1,712 @@
+{
+  "source": [
+    {
+      "id": "gesvRules",
+      "title": "Правила исчисления ставок вознаграждения в достоверном, годовом, эффективном, сопоставимом исчислении (реальной стоимости) по займам и вкладам, постановление Правления АРРФР от 03.04.2026 № 44",
+      "url": "https://adilet.zan.kz/rus/docs/V2600038333",
+      "retrievedVia": "https://zakon.uchet.kz/rus/docs/V2600038333 (зеркало; картинка формулы п. 11 не загружается, переменные D, k, Sj, Pi, tj, ti совпадают с формулой утратившего силу постановления НБРК от 26.03.2012 № 137 в ред. № 249 от 22.12.2017 — https://zakon.uchet.kz/rus/docs/V1700016267, картинка http://old.adilet.zan.kz/files/1596/01/0.jpg)"
+    },
+    {
+      "id": "gesvRulesNonBank",
+      "title": "Правила расчета годовой эффективной ставки вознаграждения по договору займа, постановление Правления НБРК от 27.08.2018 № 197 (ред. от 11.11.2019 № 184) — займы физлицам от заимодателей, не являющихся банками, ОБО и МФО",
+      "url": "https://adilet.zan.kz/rus/docs/V1800017464",
+      "retrievedVia": "https://zakon.uchet.kz/rus/docs/V1800017464"
+    },
+    {
+      "id": "gesvLimits",
+      "title": "Совместное постановление Правления АРРФР от 28.04.2026 № 84 и Правления НБРК от 29.04.2026 № 51 «Об определении предельных размеров годовой эффективной ставки вознаграждения по займам и микрокредитам» (ред. от 30.06.2026 № 101 / № 79)",
+      "url": "https://adilet.zan.kz/rus/docs/V2600038605",
+      "retrievedVia": "https://zakon.uchet.kz/rus/docs/V2600038605 (с изменениями на 21.07.2026)"
+    },
+    {
+      "id": "programme72025",
+      "title": "Программа ипотечного жилищного кредитования «7-20-25» — официальный сайт программы, оператор АО «Казахстанский фонд устойчивости»",
+      "url": "https://www.baspana72025.kz/ru/faq"
+    },
+    {
+      "id": "otbasyNauryz",
+      "title": "Отбасы банк — программа «Наурыз»",
+      "url": "https://hcsbk.kz/ru/to-get-a-loan/nauryz/"
+    },
+    {
+      "id": "otbasyOtau",
+      "title": "Отбасы банк — программа «Отау»",
+      "url": "https://hcsbk.kz/ru/to-get-a-loan/otau/"
+    },
+    {
+      "id": "otbasyLoans",
+      "title": "Отбасы банк — всё о займах (жилищный, промежуточный, предварительный заём)",
+      "url": "https://hcsbk.kz/ru/to-get-a-loan/all-about-loans/"
+    },
+    {
+      "id": "bccCash",
+      "title": "Банк ЦентрКредит — кредит наличными",
+      "url": "https://www.bcc.kz/personal/loans/cash-credit/"
+    },
+    {
+      "id": "bccMortgage",
+      "title": "Банк ЦентрКредит — ипотека",
+      "url": "https://www.bcc.kz/personal/loans/mortgage-loan/"
+    },
+    {
+      "id": "alatauCredits",
+      "title": "Alatau City Bank — кредиты",
+      "url": "https://alataucitybank.kz/ru/credits"
+    },
+    {
+      "id": "altynConsumer",
+      "title": "Altyn Bank — потребительский кредит",
+      "url": "https://altynbank.kz/personal/consumer-credit"
+    },
+    {
+      "id": "altynMortgage",
+      "title": "Altyn Bank — ипотека",
+      "url": "https://altynbank.kz/personal/ipoteka"
+    },
+    {
+      "id": "berekeMortgage",
+      "title": "Bereke Bank — ипотека",
+      "url": "https://berekebank.kz/ru/personal/credits/ipoteka"
+    },
+    {
+      "id": "eurasianLoans",
+      "title": "Евразийский банк — кредиты наличными",
+      "url": "https://eubank.kz/credits-loans"
+    },
+    {
+      "id": "eurasian72025",
+      "title": "Евразийский банк — ипотека 7-20-25",
+      "url": "https://eubank.kz/mortgage-7-20-25"
+    },
+    {
+      "id": "forteCredits",
+      "title": "ForteBank — кредиты",
+      "url": "https://bank.forte.kz/credits"
+    },
+    {
+      "id": "freedomCollateral",
+      "title": "Freedom Bank — кредит под залог",
+      "url": "https://cash-loans.bankffin.kz/ru"
+    },
+    {
+      "id": "freedomMortgage",
+      "title": "Freedom Bank — цифровая ипотека",
+      "url": "https://bankffin.kz/ipoteka/"
+    },
+    {
+      "id": "homeCreditOnline",
+      "title": "Home Credit Bank — кредит онлайн",
+      "url": "https://home.kz/loans/credit-online"
+    },
+    {
+      "id": "nurCollateral",
+      "title": "Нурбанк — кредит под залог",
+      "url": "https://www.nurbank.kz/ru/person/credits/collateral-loan/"
+    },
+    {
+      "id": "nurMortgage",
+      "title": "Нурбанк — ипотека",
+      "url": "https://www.nurbank.kz/ru/person/credits/mortgage/"
+    },
+    {
+      "id": "rbkCash",
+      "title": "Bank RBK — кредит наличными",
+      "url": "https://www.bankrbk.kz/individuals/loans/nuzhnyy-kredit-nalichnymi"
+    },
+    {
+      "id": "rbkMortgage",
+      "title": "Bank RBK — ипотека",
+      "url": "https://www.bankrbk.kz/individuals/mortgage"
+    },
+    {
+      "id": "vtbCash",
+      "title": "Банк ВТБ (Казахстан) — кредит наличными",
+      "url": "https://www.vtb-bank.kz/individuals/kreditovanie/credity-nalichnymi/"
+    }
+  ],
+  "retrievedAt": "2026-10-23",
+  "gesv": {
+    "formula": "gesvRules, п. 11: D − k + Σ Sj / (1 + APR)^(tj/365) = Σ Pi / (1 + APR)^(ti/365); D — сумма первого займа, k — платежи клиента банку при получении займа на дату получения, Sj — последующие выплаты клиенту, Pi — платежи клиента, tj и ti — дни со дня предоставления первого займа",
+    "included": "gesvRules, п. 12, 14: платежи по основному долгу и вознаграждению, комиссии и иные платежи, связанные с выдачей и обслуживанием займа, известные на дату договора",
+    "excluded": "gesvRules, п. 15: платежи третьим лицам (кроме перечисленных), неустойка и иные штрафные санкции",
+    "method": "gesvRules, п. 22: алгебраическим методом последовательными приближениями; произведённые выплаты — на даты фактических выплат, будущие — по графику",
+    "decimals": 2,
+    "rounding": "gesvRules, п. 23: до сотых; тысячная доля ≥ 5 — сотая увеличивается на 1",
+    "decimalsNonBank": 1,
+    "roundingNonBank": "gesvRulesNonBank, п. 9: до десятых; сотая доля ≥ 5 — десятая увеличивается на 1"
+  },
+  "limits": [
+    {
+      "from": "2026-05-16",
+      "to": "2026-12-31",
+      "unsecured": 46,
+      "secured": 35,
+      "mortgage": [
+        {
+          "limit": 25
+        }
+      ],
+      "microcredit": 46,
+      "shortMicrocredit": {
+        "limit": 179,
+        "perDayBelow": 0.3
+      },
+      "source": "gesvLimits, п. 1 (в ред. № 101/79 от 30.06.2026: ипотечные — 25 %); вводится в действие через 10 дней после опубликования, по сообщению НБРК от 12.05.2026 — с 16.05.2026"
+    },
+    {
+      "from": "2027-01-01",
+      "unsecured": 46,
+      "secured": 35,
+      "mortgage": [
+        {
+          "maxLtv": 0.7,
+          "limit": 20
+        },
+        {
+          "limit": 25
+        }
+      ],
+      "microcredit": 46,
+      "shortMicrocredit": {
+        "limit": 179,
+        "perDayBelow": 0.3
+      },
+      "source": "gesvLimits, п. 5 часть вторая: с 01.01.2027 ипотечные — 20 % при КЗЗ до 0,7 включительно, 25 % при КЗЗ свыше 0,7; КЗЗ = сумма займа / стоимость залога (меньшая из цены договора купли-продажи и оценки, плюс вклад в залоге)"
+    }
+  ],
+  "shortMicrocredit": "gesvLimits, п. 1 абзац четвёртый: микрокредиты МФО, соответствующие п. 3 приложения 5 к Требованиям к микрофинансовой деятельности (пост. АРРФР от 15.05.2026 № 92) — менее 0,3 % в день, но не более 179 %",
+  "programmes": [
+    {
+      "id": "72025",
+      "name": "7-20-25",
+      "source": "programme72025",
+      "rate": 7,
+      "minDownPayment": 20,
+      "maxYears": 25,
+      "maxPrice": [
+        {
+          "where": "Астана, Алматы и их пригородные зоны, Актау, Атырау, Шымкент",
+          "tenge": 30000000
+        },
+        {
+          "where": "Караганда",
+          "tenge": 25000000
+        },
+        {
+          "where": "остальные регионы",
+          "tenge": 20000000
+        }
+      ],
+      "notes": "Только новое жильё от застройщика, введённое в эксплуатацию; первоначальный взнос — от 20 % стоимости залога; ГЭСВ около 7,2 % при сроке 25 лет (по сайту программы); программа действует до 2029 года включительно; один раз на заёмщика"
+    },
+    {
+      "id": "nauryz",
+      "name": "Наурыз (Отбасы банк)",
+      "source": "otbasyNauryz",
+      "rate": 9,
+      "rateSocial": 7,
+      "minDownPayment": 20,
+      "maxYears": 19,
+      "maxLoan": [
+        {
+          "where": "Астана, Алматы",
+          "tenge": 36000000
+        },
+        {
+          "where": "остальные регионы",
+          "tenge": 30000000
+        }
+      ],
+      "notes": "7 % (ГЭСВ 7,1–9,6 %) — социально уязвимые слои, состоящие на учёте нуждающихся в жилье; 9 % (ГЭСВ 9,4–13 %) — остальные. Взнос от 10 % при первичном жилье в чистовой отделке. Предварительный заём; после накопления 50 % суммы займа ставка снижается до 3,5–5 %. Депозит в Отбасы банке от 2 млн ₸, отбор по баллам"
+    },
+    {
+      "id": "otau",
+      "name": "Отау (Отбасы банк)",
+      "source": "otbasyOtau",
+      "rate": 9,
+      "rateSocial": 7,
+      "minDownPayment": 20,
+      "maxYears": 19,
+      "maxLoan": [
+        {
+          "where": "Астана, Алматы",
+          "tenge": 36000000
+        },
+        {
+          "where": "остальные регионы",
+          "tenge": 30000000
+        }
+      ],
+      "notes": "Ставки и снижение до 3,5–5 % после накопления 50 % — как в «Наурыз»; депозит от 1 млн ₸"
+    },
+    {
+      "id": "otbasyHousing",
+      "name": "Жилищный заём (Отбасы банк)",
+      "source": "otbasyLoans",
+      "rate": 3.5,
+      "rateMax": 5,
+      "maxLoan": [
+        {
+          "where": "без гарантии физлица",
+          "tenge": 100000000
+        }
+      ],
+      "notes": "3,5 % (ГЭСВ 3,6–4,4 %) — 5 % (ГЭСВ 5,1–6,9 %) после накопления на депозите жилстройсбережений; под гарантию физлица — до 3 млн ₸"
+    }
+  ],
+  "banks": [
+    {
+      "bank": "Alatau City Bank",
+      "product": "Онлайн кредит",
+      "source": "alatauCredits",
+      "rate": [
+        28,
+        30
+      ],
+      "gesv": [
+        31.4,
+        35.1
+      ],
+      "maxTenge": 8000000,
+      "maxYears": 5
+    },
+    {
+      "bank": "Alatau City Bank",
+      "product": "Деньги до зарплаты",
+      "source": "alatauCredits",
+      "rate": [
+        37,
+        37
+      ],
+      "gesv": [
+        35,
+        36.74
+      ],
+      "maxTenge": 550000,
+      "maxYears": 1
+    },
+    {
+      "bank": "Altyn Bank",
+      "product": "Потребительский кредит",
+      "source": "altynConsumer",
+      "rate": [
+        11.5,
+        35
+      ],
+      "gesv": [
+        28.82,
+        45.7
+      ],
+      "maxTenge": 8000000,
+      "maxYears": 5
+    },
+    {
+      "bank": "Altyn Bank",
+      "product": "Ипотека 7-20-25",
+      "source": "altynMortgage",
+      "rate": [
+        7,
+        7
+      ],
+      "gesv": [
+        7.23,
+        7.3
+      ]
+    },
+    {
+      "bank": "Bereke Bank",
+      "product": "Ипотека",
+      "source": "berekeMortgage",
+      "rate": [
+        21.7,
+        21.7
+      ],
+      "gesv": [
+        24.3
+      ],
+      "maxTenge": 70000000,
+      "maxYears": 15,
+      "note": "взнос от 20 %"
+    },
+    {
+      "bank": "Банк ЦентрКредит",
+      "product": "Кредит наличными",
+      "source": "bccCash",
+      "rate": [
+        14,
+        38
+      ],
+      "gesv": [
+        28.33,
+        45.42
+      ],
+      "maxTenge": 8000000,
+      "maxYears": 5
+    },
+    {
+      "bank": "Банк ЦентрКредит",
+      "product": "Ипотека",
+      "source": "bccMortgage",
+      "rate": [
+        24,
+        26
+      ],
+      "gesv": [
+        27.1,
+        29.7
+      ]
+    },
+    {
+      "bank": "Bank RBK",
+      "product": "Кредит наличными",
+      "source": "rbkCash",
+      "rate": [
+        11,
+        37
+      ],
+      "gesv": [
+        25.77,
+        46
+      ],
+      "maxTenge": 8000000,
+      "maxYears": 5
+    },
+    {
+      "bank": "Bank RBK",
+      "product": "Ипотека",
+      "source": "rbkMortgage",
+      "rate": [
+        22,
+        22.4
+      ],
+      "gesv": [
+        24.5,
+        25
+      ],
+      "maxTenge": 75000000,
+      "note": "взнос от 30 %"
+    },
+    {
+      "bank": "Bank RBK",
+      "product": "Ипотека с застройщиками-партнёрами",
+      "source": "rbkMortgage",
+      "rate": [
+        1.6,
+        19.8
+      ],
+      "gesv": [
+        1.61,
+        25
+      ],
+      "maxTenge": 75000000,
+      "note": "взнос от 20 %"
+    },
+    {
+      "bank": "Bank RBK",
+      "product": "Ипотека 7-20-25",
+      "source": "rbkMortgage",
+      "rate": [
+        7,
+        7
+      ],
+      "gesv": [
+        7.23,
+        7.3
+      ],
+      "maxTenge": 24000000,
+      "note": "приём заявок временно закрыт — лимит исчерпан"
+    },
+    {
+      "bank": "Freedom Bank",
+      "product": "Кредит под залог квартиры",
+      "source": "freedomCollateral",
+      "rate": [
+        21,
+        25
+      ],
+      "gesv": [
+        23.2,
+        32.2
+      ],
+      "maxTenge": 100000000,
+      "maxYears": 10
+    },
+    {
+      "bank": "Freedom Bank",
+      "product": "Кредит под залог автомобиля",
+      "source": "freedomCollateral",
+      "rate": [
+        21,
+        28
+      ],
+      "gesv": [
+        24.3,
+        34.5
+      ],
+      "maxTenge": 20000000,
+      "maxYears": 7
+    },
+    {
+      "bank": "Freedom Bank",
+      "product": "Цифровая ипотека",
+      "source": "freedomMortgage",
+      "rate": null,
+      "gesv": [
+        7.2,
+        24.9
+      ],
+      "maxTenge": 100000000,
+      "maxYears": 20,
+      "note": "на странице указана только эффективная ставка"
+    },
+    {
+      "bank": "ForteBank",
+      "product": "Кредит наличными",
+      "source": "forteCredits",
+      "rate": [
+        17,
+        37.9
+      ],
+      "gesv": [
+        18.7,
+        46
+      ],
+      "maxTenge": 9500000
+    },
+    {
+      "bank": "ForteBank",
+      "product": "Залоговый кредит",
+      "source": "forteCredits",
+      "rate": [
+        22,
+        24
+      ],
+      "gesv": [
+        27.56,
+        35
+      ],
+      "maxTenge": 200000000,
+      "maxYears": 10
+    },
+    {
+      "bank": "ForteBank",
+      "product": "Ипотека с залогом",
+      "source": "forteCredits",
+      "rate": [
+        21.5,
+        21.5
+      ],
+      "gesv": [
+        25
+      ],
+      "maxTenge": 200000000,
+      "maxYears": 15
+    },
+    {
+      "bank": "ForteBank",
+      "product": "Forte Ипотека",
+      "source": "forteCredits",
+      "rate": [
+        1,
+        17.2
+      ],
+      "gesv": [
+        1.25,
+        20
+      ],
+      "maxYears": 15
+    },
+    {
+      "bank": "ForteBank",
+      "product": "Ипотека под залог денег",
+      "source": "forteCredits",
+      "rate": [
+        8,
+        16.5
+      ],
+      "gesv": [
+        8.31,
+        17.81
+      ],
+      "maxTenge": 100000000,
+      "maxYears": 15
+    },
+    {
+      "bank": "Home Credit Bank",
+      "product": "Кредит онлайн",
+      "source": "homeCreditOnline",
+      "rate": [
+        19,
+        38
+      ],
+      "gesv": [
+        21.3,
+        45.9
+      ],
+      "maxTenge": 9500000,
+      "maxYears": 5
+    },
+    {
+      "bank": "Банк ВТБ (Казахстан)",
+      "product": "Кредит наличными",
+      "source": "vtbCash",
+      "rate": [
+        20,
+        38
+      ],
+      "gesv": [
+        21.9,
+        46
+      ],
+      "maxTenge": 6000000,
+      "maxYears": 5
+    },
+    {
+      "bank": "Евразийский банк",
+      "product": "Беззалоговый кредит наличными",
+      "source": "eurasianLoans",
+      "rate": [
+        36,
+        36
+      ],
+      "gesv": [
+        42.42,
+        42.73
+      ],
+      "maxTenge": 7000000,
+      "maxYears": 5
+    },
+    {
+      "bank": "Евразийский банк",
+      "product": "Кредит для надёжных клиентов",
+      "source": "eurasianLoans",
+      "rate": [
+        33,
+        33
+      ],
+      "gesv": [
+        38.28,
+        38.44
+      ],
+      "maxTenge": 7000000,
+      "maxYears": 5
+    },
+    {
+      "bank": "Евразийский банк",
+      "product": "Кредит на зарплату",
+      "source": "eurasianLoans",
+      "rate": [
+        26,
+        29
+      ],
+      "gesv": [
+        29.28,
+        33.29
+      ],
+      "maxTenge": 7000000,
+      "maxYears": 5
+    },
+    {
+      "bank": "Евразийский банк",
+      "product": "Ипотека 7-20-25",
+      "source": "eurasian72025",
+      "rate": [
+        7,
+        7
+      ],
+      "gesv": [
+        7.22,
+        7.33
+      ]
+    },
+    {
+      "bank": "Нурбанк",
+      "product": "Кредит под залог, с комиссиями",
+      "source": "nurCollateral",
+      "rate": [
+        23.5,
+        27
+      ],
+      "gesv": [
+        26.72,
+        34.53
+      ],
+      "maxTenge": 70000000
+    },
+    {
+      "bank": "Нурбанк",
+      "product": "Кредит под залог, без комиссий",
+      "source": "nurCollateral",
+      "rate": [
+        26.5,
+        29
+      ],
+      "gesv": [
+        30.29,
+        34.77
+      ],
+      "maxTenge": 70000000
+    },
+    {
+      "bank": "Нурбанк",
+      "product": "Ипотека, с комиссиями",
+      "source": "nurMortgage",
+      "rate": [
+        20,
+        21.5
+      ],
+      "gesv": [
+        22.14,
+        24.96
+      ],
+      "maxTenge": 70000000
+    },
+    {
+      "bank": "Нурбанк",
+      "product": "Ипотека, без комиссий",
+      "source": "nurMortgage",
+      "rate": [
+        22.2,
+        22.2
+      ],
+      "gesv": [
+        24.59,
+        24.93
+      ],
+      "maxTenge": 70000000
+    },
+    {
+      "bank": "Отбасы банк",
+      "product": "Предварительный заём",
+      "source": "otbasyLoans",
+      "rate": [
+        5,
+        8
+      ],
+      "gesv": [
+        5.2,
+        9.4
+      ],
+      "maxTenge": 50000000
+    },
+    {
+      "bank": "Отбасы банк",
+      "product": "Промежуточный заём",
+      "source": "otbasyLoans",
+      "rate": [
+        8.5,
+        8.5
+      ],
+      "gesv": [
+        9,
+        9.6
+      ],
+      "maxTenge": 200000000
+    }
+  ],
+  "unverified": [
+    "Вознаграждение за месяц библиотека считает как остаток × ставка / 12; банки могут начислять по фактическим дням (30/360, факт/365) — график и ГЭСВ могут отличаться на сотые доли процента.",
+    "Без даты выдачи ti берётся как номер месяца × 365/12 дней; с датой — по календарю (платёж в тот же день месяца, в коротком месяце — последний день).",
+    "Таблица ставок банков — только то, что опубликовано на страницах банков на дату retrievedAt (страницы рендерились в headless Chrome, часть — на казахском). Не включены: Halyk Bank (сайт не отдаётся автоматическому браузеру), Kaspi Bank (ставки на странице не опубликованы), Bereke Bank (кредиты наличными — только пример калькулятора), KZI Bank, Shinhan Bank (ставок на страницах нет). ГЭСВ из одного числа означает «до X %»."
+  ]
+}

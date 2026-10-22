@@ -215,4 +215,22 @@ describe('countWorkingDays', () => {
       { numRuns: 2_000 },
     )
   })
+
+  it('equals a day-by-day isWorkingDay count across year boundaries', () => {
+    const iso = (offset: number) =>
+      new Date(Date.UTC(2019, 0, 1) + offset * 864e5).toISOString().slice(0, 10)
+    fc.assert(
+      fc.property(
+        fc.integer({ min: 0, max: 9 * 365 }),
+        fc.integer({ min: 0, max: 800 }),
+        (offset, length) => {
+          let n = 0
+          for (let i = 0; i <= length; i++) if (isWorkingDay(iso(offset + i))) n++
+          const count = countWorkingDays(iso(offset), iso(offset + length))
+          return count.ok && count.value === n
+        },
+      ),
+      { numRuns: 300 },
+    )
+  })
 })
