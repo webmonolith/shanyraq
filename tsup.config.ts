@@ -12,6 +12,7 @@ const subpaths = [
   'phone',
   'plate',
   'regions',
+  'tax',
   'taxid',
   'translit',
   'zod',

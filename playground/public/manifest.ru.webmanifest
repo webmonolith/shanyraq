@@ -1,0 +1,16 @@
+{
+  "name": "shanyraq — инструменты для Казахстана",
+  "short_name": "shanyraq",
+  "description": "Проверка ИИН, IBAN, телефонов и госномеров, сумма прописью, календарь — работает без интернета.",
+  "lang": "ru",
+  "start_url": "/ru/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    { "src": "/icons/192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

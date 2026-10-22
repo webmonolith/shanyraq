@@ -3,7 +3,7 @@ import type { DivisionType, EntityType } from 'shanyraq/bin'
 import { createFaker } from 'shanyraq/faker'
 import { kk, ru } from 'shanyraq/i18n'
 import { parseTaxId } from 'shanyraq/taxid'
-import { Check, Field, Rows, Status, type ToolProps } from '../ui'
+import { Check, Field, Rows, Share, Status, type ToolProps, useQuery } from '../ui'
 
 const fake = createFaker(2026)
 const EXAMPLES = [fake.iin(), fake.bin()]
@@ -86,7 +86,7 @@ const CENTURY = { 19: 'XIX', 20: 'XX', 21: 'XXI' } as const
 
 export default function Iin({ lang }: ToolProps) {
   const t = T[lang]
-  const [value, setValue] = useState('')
+  const [value, setValue] = useQuery('q')
   const [strict, setStrict] = useState(false)
   const r = value.trim() ? parseTaxId(value, { strict }) : undefined
   return (
@@ -109,6 +109,7 @@ export default function Iin({ lang }: ToolProps) {
             </button>
           ))}
         </span>
+        {value.trim() && <Share lang={lang} />}
       </div>
       {!r ? (
         <Status>{t.hint}</Status>
@@ -118,6 +119,7 @@ export default function Iin({ lang }: ToolProps) {
         <>
           <Status ok>{t.iin}</Status>
           <Rows
+            lang={lang}
             rows={[
               [t.birthDate, r.value.birthDate ?? t.unknown],
               [t.gender, r.value.gender ? t.genders[r.value.gender] : t.unknown],
@@ -129,6 +131,7 @@ export default function Iin({ lang }: ToolProps) {
         <>
           <Status ok>{t.bin}</Status>
           <Rows
+            lang={lang}
             rows={[
               [
                 t.registered,

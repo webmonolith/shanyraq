@@ -5,6 +5,7 @@ import language from '../../data/language.json'
 import phone from '../../data/phone.json'
 import plates from '../../data/plates.json'
 import regions from '../../data/regions.json'
+import tax from '../../data/tax.json'
 import taxid from '../../data/taxid.json'
 import translit from '../../data/translit-2021.json'
 import type { ToolId } from './site'
@@ -39,6 +40,9 @@ const kurbanAit = Object.entries(calendar.kurbanAit).flatMap(([year, k]) => {
 
 const lang = language.sources
 
+const taxSource = (...ids: string[]): Source[] =>
+  tax.source.filter((s) => ids.includes(s.id)).map((s) => ({ title: s.title, url: s.url }))
+
 export const SOURCES: Record<ToolId, Source[]> = {
   iin: [
     act(taxid.acts.iinRules2023),
@@ -56,6 +60,12 @@ export const SOURCES: Record<ToolId, Source[]> = {
     fromString(banks.iban.source, 'IBAN'),
   ],
   plate: [...linked(plates.source), ...linked(regions.source.slice(0, 1))],
+  regions: linked(regions.source),
+  batch: [],
+  requisites: [],
+  salary: taxSource('taxCode', 'socialCode', 'osmsLaw', 'budget2026'),
+  vat: taxSource('taxCode', 'budget2026'),
+  mrp: taxSource('budget2026', 'taxCode', 'socialCode', 'osmsLaw'),
   money: [lang.nbrk208, lang.law306, lang.koapKk, lang.gramota],
   calendar: [
     calendar.law,

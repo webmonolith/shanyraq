@@ -7,6 +7,7 @@ export type PlateError = 'format' | 'region'
 export type MoneyError = 'invalid' | 'range'
 export type DateError = 'format' | 'date'
 export type CalendarError = 'date' | 'range' | 'data'
+export type TaxError = 'invalid' | 'range' | 'data'
 
 /** Every error code of every module, keyed by module name. */
 export interface ErrorCodes {
@@ -19,4 +20,5 @@ export interface ErrorCodes {
   money: MoneyError
   date: DateError
   calendar: CalendarError
+  tax: TaxError
 }

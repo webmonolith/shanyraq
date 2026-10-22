@@ -1,5 +1,7 @@
 import './styles.css'
 
+if (import.meta.env.PROD && 'serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js')
+
 // Only the tool widget is interactive; the rest of the page is static prerendered HTML.
 const el = document.getElementById('tool')
 if (el) {

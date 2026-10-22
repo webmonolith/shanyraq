@@ -1,7 +1,6 @@
-import { useState } from 'react'
 import { formatDate, parseDate } from 'shanyraq/date'
 import { kk, ru } from 'shanyraq/i18n'
-import { Field, Output, Rows, Status, type ToolProps } from '../ui'
+import { Field, Output, Rows, Status, type ToolProps, useQuery } from '../ui'
 
 const T = {
   ru: {
@@ -30,8 +29,8 @@ const T = {
 
 export default function DateTool({ lang }: ToolProps) {
   const t = T[lang]
-  const [date, setDate] = useState('2026-10-22')
-  const [text, setText] = useState('')
+  const [date, setDate] = useQuery('q', '2026-10-22')
+  const [text, setText] = useQuery('text')
   const variants = [
     [t.ru, { lang: 'ru' }],
     [t.kk, { lang: 'kk' }],

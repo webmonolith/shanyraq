@@ -170,6 +170,7 @@ Values can also come from stdin, one per line. Exit code is 1 when any value is 
 | `shanyraq/phone` | +7 numbers: country, mobile operator, city, formatting |
 | `shanyraq/iban` | KZ IBAN, bank directory by code and BIC |
 | `shanyraq/money` | Amounts in words (ru, kk), amount parsing |
+| `shanyraq/tax` | 2026 payroll (ИПН, ОПВ, ВОСМС, ОПВР, СО, ООСМС, СН), gross ↔ net, VAT, MRP/MZP |
 | `shanyraq/calendar` | Holidays, days off, working-day arithmetic |
 | `shanyraq/date` | Official date formats (ru, kk), parsing |
 | `shanyraq/translit` | Kazakh Cyrillic → Latin (2021 and 2018 alphabets) |

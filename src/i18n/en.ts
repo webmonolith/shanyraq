@@ -52,4 +52,9 @@ export const en: Messages = {
     range: 'Invalid date range or number of days',
     data: 'No Kurban ait or day-off transfer data for this year',
   },
+  tax: {
+    invalid: 'Enter the amount as a number',
+    range: 'Amount, rate or month is out of range',
+    data: 'No MRP, minimum wage or rate data for this year',
+  },
 }

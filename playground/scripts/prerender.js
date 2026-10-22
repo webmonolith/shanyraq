@@ -1,5 +1,8 @@
+import { createHash } from 'node:crypto'
 import { existsSync } from 'node:fs'
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
+import { join, relative } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const { render, pages, SITE } = await import('../dist-server/entry-server.js')
 const dist = new URL('../dist/', import.meta.url)
@@ -33,7 +36,61 @@ await writeFile(
   `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`,
 )
 
+// Offline: precache every page and asset except link-preview images, crawler files and the worker itself.
+const SKIP = /^(og\/|sitemap\.xml$|robots\.txt$|sw\.js$)/
+const files = (await readdir(dist, { recursive: true, withFileTypes: true }))
+  .filter((f) => f.isFile())
+  .map((f) => relative(fileURLToPath(dist), join(f.parentPath, f.name)))
+  .filter((f) => !SKIP.test(f))
+  .sort()
+const hash = createHash('sha256')
+for (const f of files) hash.update(f).update(await readFile(new URL(f, dist)))
+const urls = files.map((f) => `/${f.replace(/(^|\/)index\.html$/, '$1')}`)
+await writeFile(
+  new URL('sw.js', dist),
+  `const CACHE = 'shanyraq-${hash.digest('hex').slice(0, 12)}'
+const FILES = ${JSON.stringify(urls)}
+
+self.addEventListener('install', (e) => {
+  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()))
+})
+
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim()),
+  )
+})
+
+// Pages: network first so a deploy shows up at once, cache when offline (?q= ignored).
+// Hashed assets and the rest: cache first.
+self.addEventListener('fetch', (e) => {
+  const req = e.request
+  const url = new URL(req.url)
+  if (req.method !== 'GET' || url.origin !== location.origin) return
+  if (req.mode === 'navigate') {
+    e.respondWith(
+      fetch(req)
+        .then((res) => {
+          if (res.ok) {
+            const copy = res.clone()
+            caches.open(CACHE).then((c) => c.put(url.pathname, copy))
+          }
+          return res
+        })
+        .catch(() =>
+          caches.match(url.pathname).then((hit) => hit ?? caches.match('/404.html')),
+        ),
+    )
+    return
+  }
+  e.respondWith(caches.match(req).then((hit) => hit ?? fetch(req)))
+})
+`,
+)
+
 if (missingOg.length)
   console.warn(`⚠ no public/og image for ${missingOg.length} pages — run npm run og`)
-console.log(`prerendered ${pages.length} pages + 404`)
+console.log(`prerendered ${pages.length} pages + 404, sw.js precaches ${urls.length} files`)
 await rm(new URL('../dist-server', import.meta.url), { recursive: true })

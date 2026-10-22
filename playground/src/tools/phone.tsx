@@ -1,7 +1,7 @@
 import { type ReactNode, useState } from 'react'
 import { kk, ru } from 'shanyraq/i18n'
 import { formatPhone, parsePhone } from 'shanyraq/phone'
-import { Check, Copy, Field, Rows, Status, type ToolProps } from '../ui'
+import { Check, Field, Rows, Share, Status, type ToolProps, useQuery } from '../ui'
 
 const EXAMPLES = ['8 (701) 123-45-67', '+7 7172 55 12 34', '+7 495 123 45 67']
 
@@ -58,7 +58,7 @@ const T = {
 
 export default function Phone({ lang }: ToolProps) {
   const t = T[lang]
-  const [value, setValue] = useState('')
+  const [value, setValue] = useQuery('q')
   const [strict, setStrict] = useState(false)
   const r = value.trim() ? parsePhone(value, { strict }) : undefined
   return (
@@ -74,6 +74,7 @@ export default function Phone({ lang }: ToolProps) {
             </button>
           ))}
         </span>
+        {value.trim() && <Share lang={lang} />}
       </div>
       {!r ? (
         <Status>{t.hint}</Status>
@@ -83,6 +84,7 @@ export default function Phone({ lang }: ToolProps) {
         <>
           <Status ok>{t.valid}</Status>
           <Rows
+            lang={lang}
             rows={[
               [t.country, t.countries[r.value.country]],
               [t.type, t.types[r.value.type]],
@@ -93,16 +95,10 @@ export default function Phone({ lang }: ToolProps) {
                 ? [[t.city, `${r.value.city[lang]} (${r.value.areaCode})`] as [string, string]]
                 : []),
               ...(['international', 'national', 'e164'] as const).map(
-                (f, i): [string, ReactNode] => {
-                  const s = formatPhone(r.value, f)
-                  return [
-                    t.formats[i] as string,
-                    <span className="copyable" key={f}>
-                      <code>{s}</code>
-                      <Copy text={s} lang={lang} />
-                    </span>,
-                  ]
-                },
+                (f, i): [string, ReactNode] => [
+                  t.formats[i] as string,
+                  <code key={f}>{formatPhone(r.value, f)}</code>,
+                ],
               ),
             ]}
           />

@@ -162,6 +162,16 @@
         "default": "./dist/regions/index.cjs"
       }
     },
+    "./tax": {
+      "import": {
+        "types": "./dist/tax/index.d.ts",
+        "default": "./dist/tax/index.js"
+      },
+      "require": {
+        "types": "./dist/tax/index.d.cts",
+        "default": "./dist/tax/index.cjs"
+      }
+    },
     "./taxid": {
       "import": {
         "types": "./dist/taxid/index.d.ts",
