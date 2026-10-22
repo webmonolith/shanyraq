@@ -18,13 +18,13 @@
     "translit",
     "kato"
   ],
-  "homepage": "https://github.com/perfomancce/shanyraq#readme",
+  "homepage": "https://github.com/webmonolith/shanyraq#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/perfomancce/shanyraq.git"
+    "url": "git+https://github.com/webmonolith/shanyraq.git"
   },
   "bugs": {
-    "url": "https://github.com/perfomancce/shanyraq/issues"
+    "url": "https://github.com/webmonolith/shanyraq/issues"
   },
   "license": "MIT",
   "type": "module",
