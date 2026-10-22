@@ -765,6 +765,11 @@ tbody tr:hover td {
 }
 
 .foot .foot__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   margin: 0 auto;
   padding-top: 16px;
   padding-bottom: 28px;
@@ -1075,4 +1080,35 @@ tbody tr:hover td {
   .hub-group .tools {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+.foot__links {
+  display: grid;
+  gap: 6px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.foot__links a,
+.foot__bottom a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.gh {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  fill: currentColor;
+}
+
+.foot__bottom a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.foot__bottom a:hover {
+  color: var(--fg);
 }

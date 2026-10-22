@@ -18,6 +18,7 @@ const UI = {
     library: 'Открытая библиотека shanyraq: TypeScript, без зависимостей, MIT.',
     facts: 'Каждый факт на сайте взят из официального источника, ссылки — внизу страниц.',
     studio: 'Сделано в Monolith Studio',
+    source: 'Исходный код на GitHub',
     back: 'На главную',
     all: 'Все инструменты',
     onPage: 'На этой странице',
@@ -38,6 +39,7 @@ const UI = {
     library: 'shanyraq ашық кітапханасы: TypeScript, тәуелділіксіз, MIT.',
     facts: 'Сайттағы әр дерек ресми дереккөзден алынған, сілтемелер беттердің төменгі жағында.',
     studio: 'Monolith Studio жасаған',
+    source: 'GitHub-тағы бастапқы код',
     back: 'Басты бетке',
     all: 'Барлық құралдар',
     onPage: 'Осы бетте',
@@ -67,6 +69,8 @@ const CODE: Record<string, string> = {
 }
 
 const YEAR = new Date().getFullYear()
+const REPO = 'https://github.com/webmonolith/shanyraq'
+const STUDIO_GITHUB = 'https://github.com/webmonolith'
 
 // TODO(verify): kk group names need native review
 const GROUPS: { title: Record<Lang, string>; tools: ToolId[] }[] = [
@@ -154,6 +158,12 @@ const Header = ({ page }: { page: Page }) => {
   )
 }
 
+const GitHubMark = () => (
+  <svg className="gh" viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+  </svg>
+)
+
 const Footer = ({ lang }: { lang: Lang }) => {
   const t = UI[lang]
   return (
@@ -178,12 +188,26 @@ const Footer = ({ lang }: { lang: Lang }) => {
           <h2>{t.project}</h2>
           <p>{t.library}</p>
           <p>{t.facts}</p>
-          <p>
-            <a href="https://webmonolith.kz/">{t.studio}</a>
-          </p>
+          <ul className="foot__links">
+            <li>
+              <a href={REPO} rel="noopener">
+                <GitHubMark />
+                {t.source}
+              </a>
+            </li>
+            <li>
+              <a href="https://webmonolith.kz/">{t.studio}</a>
+            </li>
+          </ul>
         </div>
       </div>
-      <p className="foot__bottom">© {YEAR} shanyraq</p>
+      <div className="foot__bottom">
+        <span>© {YEAR} shanyraq · MIT</span>
+        <a href={STUDIO_GITHUB} rel="noopener" aria-label="Monolith Studio on GitHub">
+          <GitHubMark />
+          webmonolith
+        </a>
+      </div>
     </footer>
   )
 }
