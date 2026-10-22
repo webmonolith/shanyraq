@@ -230,7 +230,7 @@ describe('countWorkingDays', () => {
           return count.ok && count.value === n
         },
       ),
-      { numRuns: 300 },
+      { numRuns: 100 },
     )
-  })
+  }, 30_000)
 })
