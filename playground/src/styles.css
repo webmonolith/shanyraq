@@ -77,6 +77,26 @@ main,
   padding: 0 16px;
 }
 
+/* Cross-document crossfade between pages; the header stays put instead of blinking. */
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.12s;
+}
+
+.top {
+  view-transition-name: top;
+}
+
 /* header */
 
 .top {
@@ -255,7 +275,9 @@ main,
   cursor: pointer;
 }
 
-.search[hidden] {
+html:not(.js) .js-only,
+.mac .kbd-pc,
+html:not(.mac) .kbd-mac {
   display: none;
 }
 
@@ -610,6 +632,38 @@ h3 {
   resize: vertical;
 }
 
+.field input {
+  font-variant-numeric: tabular-nums;
+}
+
+/* iOS collapses an empty date input and centres its value */
+.field input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  min-width: 0;
+  text-align: left;
+}
+
+.field input::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+.field input {
+  text-overflow: ellipsis;
+}
+
+.field input::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+@media (max-width: 640px) {
+  .field input::placeholder {
+    font-size: 15px;
+  }
+}
+
 .field select {
   appearance: none;
   padding-right: 40px;
@@ -834,23 +888,72 @@ pre {
 }
 
 .days li {
-  display: grid;
-  grid-template-columns: minmax(150px, 40%) 1fr;
-  gap: 12px;
-  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 0;
   border-bottom: 1px solid var(--line);
 }
 
-.days li.shift,
-.days li.transfer {
-  color: var(--muted);
+.days li:last-child {
+  border-bottom: 0;
 }
 
-@media (max-width: 480px) {
-  .days li {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
+.leaf {
+  display: grid;
+  flex: none;
+  justify-items: center;
+  align-content: center;
+  width: 64px;
+  height: 56px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  line-height: 1.1;
+}
+
+.leaf__day {
+  font-weight: 700;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+.leaf__meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.days__text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  font-weight: 500;
+}
+
+.days__note {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.years {
+  margin: 0 0 4px;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.years legend {
+  width: 100%;
+  margin-bottom: 6px;
+  padding: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.years .chip {
+  min-height: 36px;
+  font-variant-numeric: tabular-nums;
 }
 
 /* tables */
@@ -1576,6 +1679,41 @@ tr.bad td:nth-child(3) {
   overflow-wrap: anywhere;
 }
 
+/* phones: the headline figure gets the full row, the rest become label/value lines */
+@media (max-width: 640px) {
+  .result,
+  .result--2 {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .result > div:first-child {
+    padding: 14px 16px;
+  }
+
+  .result > div:first-child b {
+    font-size: 28px;
+  }
+
+  .result > div:not(:first-child) {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+  }
+
+  .result > div:not(:first-child) small {
+    font-size: 14px;
+  }
+
+  .result > div:not(:first-child) b {
+    flex: none;
+    font-size: 17px;
+    white-space: nowrap;
+  }
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -1607,29 +1745,177 @@ button.chip.on {
   max-height: 480px;
 }
 
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 14px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.checks legend {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.deadlines h3 {
+  margin: 20px 0 8px;
+  font-size: 16px;
+}
+
+.deadlines ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.deadlines li {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 12px;
+  padding: 10px 14px;
+}
+
+.deadlines li + li {
+  border-top: 1px solid var(--line);
+}
+
+.deadlines time {
+  display: grid;
+  font-variant-numeric: tabular-nums;
+}
+
+.deadlines small {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tag.report {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.tag.pay {
+  border: 1px solid var(--line);
+}
+
 .result--2 {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .more {
-  margin-top: 12px;
-}
-
-.more summary {
-  cursor: pointer;
-  color: var(--muted);
-  font-weight: 600;
-  margin-bottom: 12px;
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
 }
 
 .schedule {
   margin: 16px 0 8px;
 }
 
+.more summary,
 .schedule summary {
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
   font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+
+.more summary {
+  color: var(--muted);
+}
+
+.more summary::-webkit-details-marker,
+.schedule summary::-webkit-details-marker {
+  display: none;
+}
+
+.tool .more summary::after,
+.tool .schedule summary::after {
+  content: "";
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background: var(--chevron) no-repeat center / 16px;
+  transition: transform 0.15s;
+}
+
+.tool .more[open] summary::after,
+.tool .schedule[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.more[open] summary {
   margin-bottom: 8px;
+  color: var(--fg);
+}
+
+.more summary:hover {
+  color: var(--fg);
+}
+
+@media (max-width: 640px) {
+  .tool {
+    padding: 14px;
+  }
+
+  /* short numbers pair up, a field left alone grows to the full row; bottoms align when a label wraps */
+  .tool .grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px 10px;
+  }
+
+  .tool .grid > * {
+    flex: 1 1 140px;
+  }
+
+  .tool .grid > .field:has(select),
+  .tool .grid > .field.wide,
+  .tool .grid > .field:has(textarea),
+  .tool .grid > :not(.field) {
+    flex-basis: 100%;
+  }
+
+  .field {
+    font-size: 13px;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    min-height: 48px;
+    padding: 10px 12px;
+    font-size: 17px;
+  }
+
+  .field select {
+    padding-right: 36px;
+    background-position: right 12px center;
+  }
+}
+
+@media (max-width: 340px) {
+  .tool .grid > * {
+    flex-basis: 100%;
+  }
 }
 
 .tool td small {

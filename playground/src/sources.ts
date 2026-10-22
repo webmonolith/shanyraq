@@ -1,6 +1,7 @@
 // Server-only: links are read from data/*.json so pages cite exactly what the library is built from.
 import banks from '../../data/banks.json'
 import calendar from '../../data/calendar.json'
+import deadlines from '../../data/deadlines.json'
 import fees from '../../data/fees.json'
 import language from '../../data/language.json'
 import leave from '../../data/leave.json'
@@ -58,6 +59,7 @@ export const SOURCES: Record<ToolId, Source[]> = {
     },
   ],
   phone: linked(phone.source),
+  codes: linked(phone.source.filter((s) => s.id === 'itu-nnp-kz')),
   iban: [
     { title: 'Справочник БИК РК, Национальный Банк РК', url: banks.source[0] as string },
     fromString(banks.iban.source, 'IBAN'),
@@ -72,6 +74,7 @@ export const SOURCES: Record<ToolId, Source[]> = {
   leave: [...linked(leave.source), ...taxSource('budget2026'), calendar.law],
   simplified: taxSource('taxCode', 'socialCode', 'osmsLaw', 'budget2026'),
   fees: [...linked(fees.source), ...taxSource('budget2026')],
+  deadlines: [...linked(deadlines.source), calendar.law],
   loan: linked(loan.source.filter((s) => s.id !== 'programme72025' && !/Nauryz|Otau/.test(s.id))),
   mortgage: linked(loan.source),
   money: [lang.nbrk208, lang.law306, lang.koapKk, lang.gramota],

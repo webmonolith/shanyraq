@@ -3,14 +3,14 @@
     "name": "shanyraq/i18n (one language)",
     "path": "dist/i18n/index.js",
     "import": "{ ru }",
-    "limit": "1.1 kB",
+    "limit": "1.2 kB",
     "gzip": true
   },
   {
     "name": "shanyraq/i18n (all languages)",
     "path": "dist/i18n/index.js",
     "import": "{ messages }",
-    "limit": "2.7 kB",
+    "limit": "2.8 kB",
     "gzip": true
   },
   {
@@ -98,6 +98,13 @@
     "gzip": true
   },
   {
+    "name": "shanyraq/deadlines (with calendar data)",
+    "path": "dist/deadlines/index.js",
+    "import": "*",
+    "limit": "3.5 kB",
+    "gzip": true
+  },
+  {
     "name": "shanyraq/date",
     "path": "dist/date/index.js",
     "import": "*",
@@ -131,7 +138,7 @@
     "path": "dist/zod/index.js",
     "import": "{ plate }",
     "ignore": ["zod"],
-    "limit": "2.1 kB",
+    "limit": "2 kB",
     "gzip": true
   },
   {
@@ -139,7 +146,7 @@
     "path": "dist/zod/index.js",
     "import": "{ iban }",
     "ignore": ["zod"],
-    "limit": "4.6 kB",
+    "limit": "4 kB",
     "gzip": true
   },
   {
@@ -147,7 +154,7 @@
     "path": "dist/zod/index.js",
     "import": "*",
     "ignore": ["zod"],
-    "limit": "7.5 kB",
+    "limit": "7 kB",
     "gzip": true
   }
 ]

@@ -59,6 +59,8 @@ const UI = {
 
 const CODE: Record<string, string> = {
   iin: "import { parseTaxId } from 'shanyraq/taxid'\n\nparseTaxId('…') // { ok: true, value: { kind: 'iin', birthDate, gender, … } }",
+  codes:
+    "import { parsePhone } from 'shanyraq/phone'\n\nconst r = parsePhone('8 7182 32 45 67')\nif (r.ok) r.value.city?.ru // 'Павлодар', r.value.areaCode — '7182'",
   phone:
     "import { parsePhone, formatPhone } from 'shanyraq/phone'\n\nconst r = parsePhone('8 701 123 45 67')\nif (r.ok) formatPhone(r.value) // '+7 701 123 45 67'",
   iban: "import { parseIBAN, getBank } from 'shanyraq/iban'\n\ngetBank('722')?.bic // 'CASPKZKA'",
@@ -79,6 +81,8 @@ const CODE: Record<string, string> = {
   simplified:
     "import { simplifiedTax } from 'shanyraq/tax'\n\nsimplifiedTax(3000000).value // { ipn: 120000, monthly: { opv: 8500, so: 4250, vosms: 5950 }, total: 232200, … }\nsimplifiedTax(3000000, { rate: 3 }).value?.ipn // 90000",
   fees: "import { mrpToTenge } from 'shanyraq/tax'\n\nmrpToTenge(8).value // 34600 — паспорт, 36 страниц\nmrpToTenge(10 / 2).value // 21625 — штраф 10 МРП при оплате за 7 суток",
+  deadlines:
+    "import { taxDeadlines } from 'shanyraq/deadlines'\n\ntaxDeadlines(2026, { regime: 'simplified', tags: ['ip'] }).value\n// [{ id: 'socialSelf', date: '2026-01-26', … }, { id: 'f910', form: '910.00', due: '2026-02-15', date: '2026-02-16', moved: true, … }, …]",
   loan: "import { loanSchedule } from 'shanyraq/loan'\n\nloanSchedule(1000000, 20, 12).value // { monthly: 92634.51, overpayment: 111614.09, apr: 21.94, … }\nloanSchedule(1000000, 20, 12, { method: 'differentiated', prepayments: [{ month: 3, amount: 300000 }] })",
   mortgage:
     "import { gesvLimit, loanSchedule } from 'shanyraq/loan'\n\nloanSchedule(20000000, 7, 300, { start: '2026-10-23' }).value // { monthly: 141355.84, apr: 7.22, … }\ngesvLimit('mortgage', '2027-01-01', 0.7).value // 20",
@@ -100,11 +104,11 @@ const REPO = 'https://github.com/webmonolith/shanyraq'
 const GROUPS: { title: Record<Lang, string>; tools: ToolId[] }[] = [
   {
     title: { ru: 'Проверка данных', kk: 'Деректерді тексеру' },
-    tools: ['iin', 'phone', 'iban', 'plate', 'regions', 'batch', 'requisites'],
+    tools: ['iin', 'phone', 'codes', 'iban', 'plate', 'regions', 'batch', 'requisites'],
   },
   {
     title: { ru: 'Зарплата, налоги, кредиты', kk: 'Жалақы, салықтар, несиелер' },
-    tools: ['salary', 'leave', 'simplified', 'vat', 'mrp', 'fees', 'loan', 'mortgage'],
+    tools: ['salary', 'leave', 'simplified', 'deadlines', 'vat', 'mrp', 'fees', 'loan', 'mortgage'],
   },
   {
     title: { ru: 'Тексты и даты', kk: 'Мәтін мен күндер' },
@@ -126,15 +130,16 @@ const Brand = ({ href }: { href: string }) => (
   </a>
 )
 
-// The button and dialog are inert until entry-client.ts unhides the button.
+// The button shows only with JS (`.js` on <html>); entry-client.ts wires it to the dialog.
 const Search = ({ page }: { page: Page }) => {
   const t = UI[page.lang]
   return (
     <>
-      <button type="button" className="search" data-search hidden>
+      <button type="button" className="search js-only" data-search>
         <SearchIcon />
         <span className="search__label">{t.search}</span>
-        <kbd>⌘K</kbd>
+        <kbd className="kbd-mac">⌘K</kbd>
+        <kbd className="kbd-pc">Ctrl K</kbd>
       </button>
       <dialog className="finder" aria-label={t.search}>
         <div className="finder__bar">
@@ -198,7 +203,13 @@ const Header = ({ page }: { page: Page }) => {
           {page.kind !== 'root' && (
             <details className="menu">
               <summary aria-label={t.tools}>
-                <svg className="menu__icon" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <svg
+                  className="menu__icon"
+                  viewBox="0 0 16 16"
+                  width="14"
+                  height="14"
+                  aria-hidden="true"
+                >
                   <rect x="1" y="1" width="5.5" height="5.5" rx="1.5" />
                   <rect x="9.5" y="1" width="5.5" height="5.5" rx="1.5" />
                   <rect x="1" y="9.5" width="5.5" height="5.5" rx="1.5" />

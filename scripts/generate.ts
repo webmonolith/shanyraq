@@ -383,3 +383,38 @@ export const LIMITS = ${json(
 export const GESV_DECIMALS = ${loan.gesv.decimals}
 `,
 )
+
+interface DeadlineData {
+  deadlines: {
+    id: string
+    form?: string
+    kind: 'report' | 'pay'
+    regimes: Record<string, string[]>
+    rule: {
+      type: 'monthly' | 'inMonth' | 'quarterly' | 'halfYear' | 'annual' | 'fixed'
+      day?: number
+      month?: number
+      plusDays?: number
+      dates?: { md: string; year: number; from?: string; to?: string }[]
+    }
+  }[]
+}
+
+const deadlines = read<DeadlineData>('deadlines')
+
+write(
+  'deadlines/generated.ts',
+  'data/deadlines.json',
+  `import type { Rule } from './types'
+
+export const RULES: Rule[] = ${json(
+    deadlines.deadlines.map(({ id, form, kind, regimes, rule }) => ({
+      id,
+      ...(form ? { form } : {}),
+      kind,
+      regimes,
+      rule,
+    })),
+  )}
+`,
+)

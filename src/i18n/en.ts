@@ -69,4 +69,8 @@ export const en: Messages = {
     date: 'Invalid date, expected YYYY-MM-DD',
     data: 'No ГЭСВ cap data for this date',
   },
+  deadlines: {
+    range: 'Year is out of range',
+    data: 'No working-day calendar data for this year',
+  },
 }

@@ -6,6 +6,8 @@
     <meta name="color-scheme" content="light dark" />
     <!-- painted before styles.css arrives (dev injects it via JS), so page switches don't flash white -->
     <style>html{background:#fff}@media (prefers-color-scheme:dark){html{background:#111413}}</style>
+    <!-- runs before the first paint, so JS-only controls are laid out from the start instead of popping in -->
+    <script>document.documentElement.className=/Mac|iPhone|iPad/.test(navigator.platform)?'js mac':'js'</script>
     <!--head-->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/icons/180.png" />

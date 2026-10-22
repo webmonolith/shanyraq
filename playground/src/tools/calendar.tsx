@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { addWorkingDays, countWorkingDays, type DayOff, getDaysOff } from 'shanyraq/calendar'
 import { formatDate } from 'shanyraq/date'
 import { kk, ru } from 'shanyraq/i18n'
-import { Choice, Field, Status, type ToolProps } from '../ui'
+import { Field, Status, type ToolProps } from '../ui'
 
 // Kurban ait is known for 2020–2027, Labour Ministry transfers for 2024–2027 (data/calendar.json).
 const YEARS = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027] as const
@@ -15,8 +15,11 @@ const T = {
     daysOff: 'Нерабочие дни помимо обычных выходных',
     incomplete:
       'Переносы по приказам Минтруда за этот год в данных не внесены — список может быть неполным.',
-    shift: (name: string) => `выходной за «${name}», выпавший на выходной`,
-    transfer: (from: string) => `перенос дня отдыха с ${from}`,
+    shift: 'выходной за праздник, выпавший на субботу или воскресенье',
+    transferTitle: 'Перенос дня отдыха',
+    transfer: (from: string) => `с ${from}`,
+    months: ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'],
+    weekdays: ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'],
     count: 'Рабочие дни между датами',
     from: 'С (включительно)',
     to: 'По (включительно)',
@@ -32,8 +35,12 @@ const T = {
     daysOff: 'Әдеттегі демалыстан басқа жұмыс істемейтін күндер',
     incomplete:
       'Бұл жылғы Еңбек министрлігі бұйрықтарымен ауыстырулар деректерге енгізілмеген — тізім толық болмауы мүмкін.',
-    shift: (name: string) => `демалысқа сәйкес келген «${name}» үшін демалыс`,
-    transfer: (from: string) => `демалыс күні ${from} күнінен ауыстырылды`,
+    // TODO(verify): kk notes and short month/weekday names need native review
+    shift: 'сенбі не жексенбіге сәйкес келген мереке үшін демалыс',
+    transferTitle: 'Демалыс күнін ауыстыру',
+    transfer: (from: string) => `${from} күнінен`,
+    months: ['қаң', 'ақп', 'нау', 'сәу', 'мам', 'мау', 'шіл', 'там', 'қыр', 'қаз', 'қар', 'жел'],
+    weekdays: ['жс', 'дс', 'сс', 'ср', 'бс', 'жм', 'сб'],
     count: 'Күндер арасындағы жұмыс күндері',
     from: 'Бастап (қоса алғанда)',
     to: 'Дейін (қоса алғанда)',
@@ -52,12 +59,21 @@ export default function Calendar({ lang }: ToolProps) {
     const r = formatDate(d, { lang })
     return r.ok ? r.value : d
   }
-  const describe = (d: DayOff): string =>
+  const describe = (d: DayOff): [title: string, note?: string] =>
     d.kind === 'holiday'
-      ? (d.holiday?.name[lang] ?? '')
+      ? [d.holiday?.name[lang] ?? '']
       : d.kind === 'shift'
-        ? t.shift(d.holiday?.name[lang] ?? '')
-        : t.transfer(long(d.from ?? ''))
+        ? [d.holiday?.name[lang] ?? '', t.shift]
+        : [t.transferTitle, t.transfer(long(d.from ?? ''))]
+  // UTC keeps the weekday identical on the server and in every visitor's time zone.
+  const leaf = (date: string) => {
+    const [y, m, day] = date.split('-').map(Number) as [number, number, number]
+    return {
+      day,
+      month: t.months[m - 1],
+      weekday: t.weekdays[new Date(Date.UTC(y, m - 1, day)).getUTCDay()],
+    }
+  }
 
   const [year, setYear] = useState<number>(DEFAULT_YEAR)
   const [from, setFrom] = useState(`${DEFAULT_YEAR}-01-01`)
@@ -82,24 +98,42 @@ export default function Calendar({ lang }: ToolProps) {
 
   return (
     <>
-      <div className="bar">
-        <Choice
-          label={t.year}
-          value={String(year)}
-          options={YEARS.map((y) => [String(y), String(y)] as const)}
-          onChange={(v) => setYear(Number(v))}
-        />
-      </div>
+      <fieldset className="chips years">
+        <legend>{t.year}</legend>
+        {YEARS.map((y) => (
+          <button
+            key={y}
+            type="button"
+            className={y === year ? 'chip on' : 'chip'}
+            aria-pressed={y === year}
+            onClick={() => setYear(y)}
+          >
+            {y}
+          </button>
+        ))}
+      </fieldset>
       <h3>{t.daysOff}</h3>
       {year < COMPLETE_FROM && <Status>{t.incomplete}</Status>}
       {off.ok ? (
         <ul className="days">
-          {off.value.map((d) => (
-            <li key={d.date + d.kind} className={d.kind}>
-              <time dateTime={d.date}>{long(d.date)}</time>
-              <span>{describe(d)}</span>
-            </li>
-          ))}
+          {off.value.map((d) => {
+            const { day, month, weekday } = leaf(d.date)
+            const [title, note] = describe(d)
+            return (
+              <li key={d.date + d.kind} className={d.kind}>
+                <time className="leaf" dateTime={d.date} title={long(d.date)}>
+                  <span className="leaf__day">{day}</span>
+                  <span className="leaf__meta">
+                    {month}, {weekday}
+                  </span>
+                </time>
+                <span className="days__text">
+                  {title}
+                  {note && <span className="days__note">{note}</span>}
+                </span>
+              </li>
+            )
+          })}
         </ul>
       ) : (
         <Status ok={false}>{t.messages[off.error]}</Status>

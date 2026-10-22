@@ -28,7 +28,6 @@ for (const box of document.querySelectorAll<HTMLElement>('[data-filter]')) {
   const input = box.querySelector('input')
   const rows = [...box.querySelectorAll<HTMLElement>('tbody tr')]
   if (!input) continue
-  input.hidden = false
   input.addEventListener('input', () => {
     const q = input.value.trim().toLowerCase()
     for (const row of rows) row.hidden = !!q && !row.textContent?.toLowerCase().includes(q)
@@ -92,11 +91,6 @@ if (opener && finder && query) {
     track('finder_open')
   }
 
-  opener.hidden = false
-  if (!/Mac|iPhone|iPad/.test(navigator.platform)) {
-    const kbd = opener.querySelector('kbd')
-    if (kbd) kbd.textContent = 'Ctrl K'
-  }
   opener.addEventListener('click', open)
   query.addEventListener('input', filter)
   for (const it of items) {

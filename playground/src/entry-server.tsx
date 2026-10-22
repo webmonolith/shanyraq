@@ -5,7 +5,9 @@ import { PageView } from './page'
 import { ogName, type Page, pageByPath, type ToolId } from './site'
 import batch from './tools/batch'
 import calendar from './tools/calendar'
+import codes from './tools/codes'
 import date from './tools/date'
+import deadlines from './tools/deadlines'
 import faker from './tools/faker'
 import fees from './tools/fees'
 import iban from './tools/iban'
@@ -30,6 +32,7 @@ export { ogName, pages, SITE } from './site'
 const WIDGETS: Record<ToolId, ComponentType<ToolProps>> = {
   iin,
   phone,
+  codes,
   iban,
   plate,
   regions,
@@ -40,6 +43,7 @@ const WIDGETS: Record<ToolId, ComponentType<ToolProps>> = {
   mrp,
   leave,
   simplified,
+  deadlines,
   fees,
   loan,
   mortgage,

@@ -15,7 +15,12 @@ const devPages = (): Plugin => ({
       const path = (req.url ?? '/').split('?')[0] as string
       if (!path.endsWith('/')) return next()
       try {
-        const html = await server.transformIndexHtml(path, await readFile(template, 'utf8'))
+        // A blocking <link> like the production build; the JS import alone would paint unstyled first.
+        const source = (await readFile(template, 'utf8')).replace(
+          '</head>',
+          '<link rel="stylesheet" href="/src/styles.css" />\n  </head>',
+        )
+        const html = await server.transformIndexHtml(path, source)
         const { render } = await server.ssrLoadModule('/src/entry-server.tsx')
         const page = render(path, html, () => false)
         res.statusCode = page.status

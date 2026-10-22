@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useRef, useState } from 'react'
+import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { track } from './analytics'
 import type { Lang } from './site'
 
@@ -22,18 +22,55 @@ interface FieldProps {
   wide?: boolean
 }
 
-export const Field = ({ label, onChange, wide, type = 'text', ...rest }: FieldProps) => (
-  <label className={wide ? 'field wide' : 'field'}>
-    <span>{label}</span>
-    <input
-      {...rest}
-      type={type}
-      autoComplete="off"
-      spellCheck={false}
-      onChange={(e) => onChange(e.target.value)}
-    />
-  </label>
-)
+const SPACES = /[\s\u00a0]/g
+
+/** Groups the integer part of a typed number: `1000000,5` → `1 000 000,5`. */
+const group = (v: string) =>
+  v.replace(/^\d+/, (int) => int.replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0'))
+
+// Restores the caret after regrouping, counted in non-space characters.
+const caretAt = (text: string, count: number) => {
+  let i = 0
+  for (let n = 0; i < text.length && n < count; i++) if (!/[\s\u00a0]/.test(text[i] as string)) n++
+  return i
+}
+
+/** Decimal fields show digit groups; `onChange` always gets the value without spaces. */
+export const Field = ({ label, onChange, wide, type = 'text', value, ...rest }: FieldProps) => {
+  const grouped = rest.inputMode === 'decimal'
+  const input = useRef<HTMLInputElement>(null)
+  const caret = useRef<number | null>(null)
+  const shown = grouped ? group(value.replace(SPACES, '')) : value
+  useLayoutEffect(() => {
+    const el = input.current
+    if (!el || caret.current === null || document.activeElement !== el) return
+    const at = caretAt(shown, caret.current)
+    el.setSelectionRange(at, at)
+    caret.current = null
+  })
+  return (
+    <label className={wide ? 'field wide' : 'field'}>
+      <span>{label}</span>
+      <input
+        {...rest}
+        ref={input}
+        value={shown}
+        type={type}
+        autoComplete="off"
+        spellCheck={false}
+        enterKeyHint="done"
+        onChange={(e) => {
+          if (!grouped) return onChange(e.target.value)
+          const el = e.target
+          caret.current = el.value
+            .slice(0, el.selectionStart ?? el.value.length)
+            .replace(SPACES, '').length
+          onChange(el.value.replace(SPACES, ''))
+        }}
+      />
+    </label>
+  )
+}
 
 export const Check = ({
   label,

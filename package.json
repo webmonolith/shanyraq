@@ -20,7 +20,8 @@
     "salary",
     "tax",
     "loan",
-    "mortgage"
+    "mortgage",
+    "tax-calendar"
   ],
   "homepage": "https://github.com/webmonolith/shanyraq#readme",
   "repository": {
@@ -84,6 +85,16 @@
       "require": {
         "types": "./dist/date/index.d.cts",
         "default": "./dist/date/index.cjs"
+      }
+    },
+    "./deadlines": {
+      "import": {
+        "types": "./dist/deadlines/index.d.ts",
+        "default": "./dist/deadlines/index.js"
+      },
+      "require": {
+        "types": "./dist/deadlines/index.d.cts",
+        "default": "./dist/deadlines/index.cjs"
       }
     },
     "./faker": {
@@ -231,6 +242,7 @@
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
+    "bench": "npm run build && vitest bench --run --dir bench --reporter=default --experimental.viteModuleRunner=false",
     "test:watch": "vitest",
     "coverage": "vitest run --coverage",
     "smoke": "node tests/smoke/smoke.mjs && node tests/smoke/smoke.cjs",

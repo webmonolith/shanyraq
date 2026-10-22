@@ -1,74 +1,8 @@
-import { type DateInput, dayNumber, isoDate, toDay, weekday, yearOf } from '../core/date'
+import { type DateInput, dayNumber, isoDate, toDay, yearOf } from '../core/date'
 import type { CalendarError } from '../core/errors'
 import { err, ok, type Result } from '../core/result'
-import { HOLIDAYS, KURBAN_AIT, TRANSFERS } from './generated'
-import type { CalendarOptions, DayOff, Holiday } from './types'
-
-interface Year {
-  off: Map<number, DayOff>
-  /** Weekend days turned into working days by transfers. */
-  working: Set<number>
-  complete: boolean
-}
-
-const isWeekend = (day: number): boolean => weekday(day) % 6 === 0
-
-const isOff = (y: Year, day: number): boolean =>
-  y.off.has(day) || (isWeekend(day) && !y.working.has(day))
-
-const buildYear = (year: number, options: CalendarOptions): Year => {
-  const data = options.years?.[year]
-  const kurbanAit = data?.kurbanAit ?? KURBAN_AIT[year]
-  const transfers = data?.transfers?.map((t): [string, string] => [t.from, t.to]) ?? TRANSFERS[year]
-  const holidays: [day: number, holiday: Holiday, shift: boolean][] = []
-  for (const [id, month, date, days, type, shift, since, until, ru, kk, en] of HOLIDAYS) {
-    const start = date
-      ? dayNumber(year, month, date)
-      : kurbanAit === undefined
-        ? undefined
-        : toDay(kurbanAit)
-    if (start === undefined) continue
-    const holiday: Holiday = { id, type, name: { ru, kk, en } }
-    for (let day = start; day < start + days; day++) {
-      const iso = isoDate(day)
-      if ((!since || iso >= since) && (!until || iso <= until))
-        holidays.push([day, holiday, shift === 1])
-    }
-  }
-  holidays.sort((a, b) => a[0] - b[0])
-  const y: Year = { off: new Map(), working: new Set(), complete: !!kurbanAit && !!transfers }
-  for (const [day, holiday] of holidays)
-    y.off.set(day, { date: isoDate(day), kind: 'holiday', holiday })
-  for (const [from, to] of transfers ?? []) {
-    const f = toDay(from)
-    const t = toDay(to)
-    if (f === undefined || t === undefined) continue
-    y.working.add(f)
-    y.off.set(t, { date: to, kind: 'transfer', from })
-  }
-  // Holidays law art. 5: a holiday on a weekend gives the next working day off.
-  for (const [day, holiday, shift] of holidays) {
-    if (!shift || !isWeekend(day)) continue
-    let next = day + 1
-    while (isOff(y, next)) next++
-    y.off.set(next, { date: isoDate(next), kind: 'shift', holiday })
-  }
-  return y
-}
-
-const lookup = (options: CalendarOptions) => {
-  const cache = new Map<number, Year>()
-  return (day: number): Year | CalendarError => {
-    const year = yearOf(day)
-    if (year < 1000 || year > 9999) return 'range'
-    let y = cache.get(year)
-    if (!y) {
-      y = buildYear(year, options)
-      cache.set(year, y)
-    }
-    return options.strict && !y.complete ? 'data' : y
-  }
-}
+import { buildYear, isOff, isWeekend, lookup } from './days'
+import type { CalendarOptions, DayOff } from './types'
 
 /**
  * Days off of a year besides ordinary weekends: holidays (also on weekends), weekend shifts and
@@ -145,11 +79,19 @@ export const countWorkingDays = (
   if (a === undefined || b === undefined) return err('date')
   if (a > b) return err('range')
   const get = lookup(options)
-  let n = 0
-  for (let day = a; day <= b; day++) {
-    const y = get(day)
+  const days = b - a + 1
+  let n = Math.floor(days / 7) * 5
+  for (let day = b - (days % 7) + 1; day <= b; day++) if (!isWeekend(day)) n++
+  // Only days of the year itself count, as when each day looks up its own year.
+  for (let year = yearOf(a); year <= yearOf(b); year++) {
+    const first = dayNumber(year, 1, 1) as number
+    const y = get(first)
     if (typeof y === 'string') return err(y)
-    if (!isOff(y, day)) n++
+    const lo = Math.max(a, first)
+    const hi = Math.min(b, dayNumber(year, 12, 31) as number)
+    for (const day of y.off.keys()) if (day >= lo && day <= hi && !isWeekend(day)) n--
+    for (const day of y.working)
+      if (day >= lo && day <= hi && isWeekend(day) && !y.off.has(day)) n++
   }
   return ok(n)
 }
