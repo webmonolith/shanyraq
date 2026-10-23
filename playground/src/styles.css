@@ -1036,6 +1036,13 @@ td code {
   white-space: nowrap;
 }
 
+/* long range labels («2 001–3 000 куб. см») would push the last column off a phone screen */
+@media (max-width: 480px) {
+  td:first-child {
+    white-space: normal;
+  }
+}
+
 .tool .table {
   max-height: none;
   background: var(--bg);
