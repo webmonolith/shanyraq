@@ -27,7 +27,7 @@ const money = (n: number) => `${fmt(n, 2)} ₸`
 const k = (n: number) => String(n).replace('.', ',')
 
 type Mode = 'estimate' | 'value' | 'land'
-const MODES: Mode[] = ['estimate', 'value', 'land']
+const MODES: Mode[] = ['estimate', 'value']
 const KINDS: PropertyKind[] = ['dwelling', 'storage', 'garage']
 const LAND_KINDS: LandKind[] = ['housing', 'yard', 'garden']
 const FLOORS = ['middle', 'first', 'last'] as const
@@ -63,7 +63,6 @@ const T = {
     modes: [
       ['estimate', 'по параметрам жилья'],
       ['value', 'по стоимости из уведомления'],
-      ['land', 'налог на землю'],
     ] as const,
     settlement: 'Населённый пункт',
     kind: 'Объект',
@@ -142,7 +141,6 @@ const T = {
     modes: [
       ['estimate', 'тұрғын үй параметрлері бойынша'],
       ['value', 'хабарламадағы құны бойынша'],
-      ['land', 'жер салығы'],
     ] as const,
     settlement: 'Елді мекен',
     kind: 'Объект',
@@ -218,10 +216,10 @@ const T = {
   },
 }
 
-export default function PropertyTool({ lang }: ToolProps) {
+export function PropertyTool({ lang, land: isLand }: ToolProps & { land: boolean }) {
   const t = T[lang]
   const [modeQ, setMode] = useQuery('mode', 'estimate')
-  const mode = pick(MODES, modeQ)
+  const mode: Mode = isLand ? 'land' : pick(MODES, modeQ)
   const [sQ, setS] = useQuery('s', 'almaty')
   const s = pick(
     settlements.list.map((x) => x.id as Settlement),
@@ -298,7 +296,7 @@ export default function PropertyTool({ lang }: ToolProps) {
   return (
     <>
       <div className="grid">
-        <Choice label={t.mode} value={mode} options={t.modes} onChange={setMode} />
+        {!isLand && <Choice label={t.mode} value={mode} options={t.modes} onChange={setMode} />}
         {mode === 'estimate' && (
           <Choice label={t.kind} value={kind} options={t.kinds} onChange={setKind} />
         )}
@@ -425,4 +423,8 @@ export default function PropertyTool({ lang }: ToolProps) {
       )}
     </>
   )
+}
+
+export default function Property({ lang }: ToolProps) {
+  return <PropertyTool lang={lang} land={false} />
 }

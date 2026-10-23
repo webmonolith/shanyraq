@@ -114,6 +114,18 @@ const property: Messages['property'] = {
   data: 'Нет МРП за этот или предыдущий год',
 }
 
+const inheritance: Messages['inheritance'] = {
+  invalid: 'Введите стоимость имущества числом',
+  range: 'Число наследников или стоимость вне допустимого диапазона',
+}
+
+const pension: Messages['pension'] = {
+  invalid: 'Введите доход числом',
+  range: 'Доход, стаж, пол или вид досрочной пенсии вне допустимого диапазона',
+  date: 'Неверная дата, ожидается ГГГГ-ММ-ДД',
+  data: 'Нет прожиточного минимума, МРП или минимальной пенсии за этот год',
+}
+
 const deadlines: Messages['deadlines'] = {
   range: 'Год вне допустимого диапазона',
   data: 'Нет данных производственного календаря за этот год',
@@ -138,6 +150,8 @@ export const ru: Messages = {
   family,
   vehicle,
   property,
+  inheritance,
+  pension,
 }
 
 export {

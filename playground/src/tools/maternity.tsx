@@ -8,11 +8,6 @@ const money = (n: number) => `${fmt(n, 2)} ₸`
 // TODO(verify): kk texts need native review.
 const T = {
   ru: {
-    kind: 'Выплата',
-    kinds: [
-      ['maternity', 'по беременности и родам (декретные)'],
-      ['childcare', 'по уходу за ребёнком до 1,5 лет'],
-    ] as const,
     income: 'Средняя зарплата в месяц, ₸',
     object: 'Доход, с которого платились соцотчисления, ₸',
     basis: 'Сумма',
@@ -55,11 +50,6 @@ const T = {
     messages: ru.family,
   },
   kk: {
-    kind: 'Төлем',
-    kinds: [
-      ['maternity', 'жүктілік және босану бойынша (декреттік)'],
-      ['childcare', 'бала 1,5 жасқа толғанға дейін күтім бойынша'],
-    ] as const,
     income: 'Айлық орташа жалақы, ₸',
     object: 'Әлеуметтік аударымдар төленген табыс, ₸',
     basis: 'Сома',
@@ -103,10 +93,8 @@ const T = {
   },
 }
 
-export default function Maternity({ lang }: ToolProps) {
+export function FamilyTool({ lang, kind }: ToolProps & { kind: 'maternity' | 'childcare' }) {
   const t = T[lang]
-  const [kindQ, setKind] = useQuery('kind', 'maternity')
-  const kind = kindQ === 'childcare' ? 'childcare' : 'maternity'
   const [income, setIncome] = useQuery('q', '400000')
   const [basisQ, setBasis] = useQuery('basis', 'gross')
   const basis = basisQ === 'object' ? 'object' : 'gross'
@@ -132,7 +120,6 @@ export default function Maternity({ lang }: ToolProps) {
   return (
     <>
       <div className="grid">
-        <Choice label={t.kind} value={kind} options={t.kinds} onChange={setKind} />
         <Field
           label={basis === 'gross' ? t.income : t.object}
           value={income}
@@ -212,4 +199,8 @@ export default function Maternity({ lang }: ToolProps) {
       )}
     </>
   )
+}
+
+export default function Maternity({ lang }: ToolProps) {
+  return <FamilyTool lang={lang} kind="maternity" />
 }

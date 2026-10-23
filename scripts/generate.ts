@@ -441,6 +441,89 @@ write(
 `,
 )
 
+interface PensionData {
+  age: {
+    men: number
+    women: [string, number][]
+    early: Record<string, { men?: number; women?: number }>
+  }
+  basic: { rules: { from: number; base: number; step: number; max: number }[]; freeYears: number }
+  solidary: {
+    percent: number
+    maxPercent: number
+    stepPercent: number
+    fullYears: { men: number; women: number }
+    minPartialYears: number
+    incomeCapMrp: number
+  }
+  budget: Record<string, { minPension: number; minBasic: number } | string>
+}
+
+const pension = read<PensionData>('pension')
+const taxData = read<{
+  years: Record<string, { mrp: number; mzp: number; subsistenceMinimum: number }>
+  opv: { rate: number; maxMzp: number }
+  opvr: { rates: Record<string, number>; minMzp: number; maxMzp: number }
+}>('tax')
+
+write(
+  'pension/generated.ts',
+  'data/pension.json and data/tax.json',
+  `export const AGE = ${json({ men: pension.age.men, women: pension.age.women, early: pension.age.early })} as const
+
+export const BASIC = ${json({ rules: pension.basic.rules, freeYears: pension.basic.freeYears })} as const
+
+export const SOLIDARY = ${json({ ...pension.solidary, source: undefined })} as const
+
+/** Per year: МРП, МЗП, прожиточный минимум, minimum pension and minimum basic payment. */
+export const YEARS: Record<number, { mrp: number; mzp: number; pm: number; minPension: number; minBasic: number }> = ${json(
+    Object.fromEntries(
+      Object.entries(taxData.years).map(([y, v]) => {
+        const b = pension.budget[y]
+        if (!b || typeof b === 'string')
+          throw new Error(`data/pension.json: no budget figures for ${y}`)
+        return [y, { mrp: v.mrp, mzp: v.mzp, pm: v.subsistenceMinimum, ...b }]
+      }),
+    ),
+  )}
+
+export const CONTRIBUTIONS = ${json({
+    opv: taxData.opv.rate,
+    maxMzp: taxData.opv.maxMzp,
+    opvr: taxData.opvr.rates,
+    opvrMinMzp: taxData.opvr.minMzp,
+  })} as const
+`,
+)
+
+interface InheritanceData {
+  orders: { order: number; heirs: string[]; represented?: string }[]
+  obligatory: { share: [number, number] }
+  marital: { share: [number, number] }
+}
+
+const inheritance = read<InheritanceData>('inheritance')
+
+write(
+  'inheritance/generated.ts',
+  'data/inheritance.json',
+  `import type { Heir } from './inheritance'
+
+export const ORDERS: { order: number; heirs: Heir[]; represented?: Heir }[] = ${json(
+    inheritance.orders.map(({ order, heirs, represented }) => ({
+      order,
+      heirs,
+      ...(represented ? { represented } : {}),
+    })),
+  )}
+
+export const INHERITANCE = ${json({
+    obligatory: inheritance.obligatory.share,
+    marital: inheritance.marital.share,
+  })} as const
+`,
+)
+
 interface ProcedureData {
   deadlines: { id: string; period: Record<string, number> }[]
 }

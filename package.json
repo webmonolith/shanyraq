@@ -30,7 +30,9 @@
     "childcare",
     "vehicle-tax",
     "property-tax",
-    "recycling-fee"
+    "recycling-fee",
+    "inheritance",
+    "pension"
   ],
   "homepage": "https://github.com/webmonolith/shanyraq#readme",
   "repository": {
@@ -94,6 +96,26 @@
       "require": {
         "types": "./dist/family/index.d.cts",
         "default": "./dist/family/index.cjs"
+      }
+    },
+    "./inheritance": {
+      "import": {
+        "types": "./dist/inheritance/index.d.ts",
+        "default": "./dist/inheritance/index.js"
+      },
+      "require": {
+        "types": "./dist/inheritance/index.d.cts",
+        "default": "./dist/inheritance/index.cjs"
+      }
+    },
+    "./pension": {
+      "import": {
+        "types": "./dist/pension/index.d.ts",
+        "default": "./dist/pension/index.js"
+      },
+      "require": {
+        "types": "./dist/pension/index.d.cts",
+        "default": "./dist/pension/index.cjs"
       }
     },
     "./property": {

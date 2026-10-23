@@ -1,9 +1,20 @@
 import type { ReactNode } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { CONTENT } from './content'
+import { formatDate } from 'shanyraq/date'
+import { ABOUT_TEXT, CONTENT } from './content'
 import { Logo, ToolIcon } from './icons'
-import { hubPath, LANGS, type Lang, type Page, TOOLS, type ToolId, toolPath } from './site'
-import { SOURCES } from './sources'
+import {
+  aboutPath,
+  CONTACT,
+  hubPath,
+  LANGS,
+  type Lang,
+  type Page,
+  TOOLS,
+  type ToolId,
+  toolPath,
+} from './site'
+import { CHECKED, SOURCES } from './sources'
 
 const UI = {
   ru: {
@@ -28,6 +39,11 @@ const UI = {
     searchHint: 'ИИН, зарплата, НДС, латиница…',
     notFound: 'Ничего не найдено',
     close: 'Закрыть',
+    checked: 'Данные проверены',
+    checkedSources: 'источники внизу страницы',
+    about: 'О проекте',
+    contacts: 'Связаться',
+    mistake: 'Нашли ошибку в расчёте? Напишите — исправим.',
   },
   kk: {
     langName: 'Қазақша',
@@ -54,6 +70,12 @@ const UI = {
     searchHint: 'ЖСН, жалақы, ҚҚС, латын…',
     notFound: 'Ештеңе табылмады',
     close: 'Жабу',
+    // TODO(verify): kk wording
+    checked: 'Деректер тексерілді',
+    checkedSources: 'дереккөздер беттің төменгі жағында',
+    about: 'Жоба туралы',
+    contacts: 'Байланыс',
+    mistake: 'Есептен қате таптыңыз ба? Жазыңыз — түзетеміз.',
   },
 }
 
@@ -77,23 +99,34 @@ const CODE: Record<string, string> = {
   vat: "import { addVAT, extractVAT } from 'shanyraq/tax'\n\naddVAT(1000).value // { net: 1000, vat: 160, gross: 1160 }\nextractVAT(1160, { rate: 16 }).value?.vat // 160",
   mrp: "import { getTaxYear, mrpToTenge } from 'shanyraq/tax'\n\ngetTaxYear(2026) // { year: 2026, mrp: 4325, mzp: 85000 }\nmrpToTenge(10).value // 43250",
   leave:
-    "import { sickPay, vacationPay } from 'shanyraq/leave'\n\nvacationPay(3600000, '2026-07-01', 24).value // { end: '2026-07-25', workingDays: 17, pay: 248780.55, … }\nsickPay(3600000, '2026-03-02', '2026-03-06').value?.pay // 73469.4",
+    "import { vacationPay } from 'shanyraq/leave'\n\nvacationPay(3600000, '2026-07-01', 24).value // { end: '2026-07-25', workingDays: 17, pay: 248780.55, … }",
+  sick: "import { sickPay } from 'shanyraq/leave'\n\nsickPay(3600000, '2026-03-02', '2026-03-06').value?.pay // 73469.4",
   dismissal:
     "import { dismissalPay } from 'shanyraq/leave'\n\ndismissalPay(3600000, '2026-06-30', { unusedDays: 12, reason: 'reduction' }).value\n// { payBy: '2026-07-03', compensation: { workingDays: 8, pay: 118032.8, … }, severance: { months: 1, pay: 324590.2, … }, pay: 442623 }",
   maternity:
-    "import { childcarePay, maternityPay } from 'shanyraq/family'\n\nmaternityPay(500000).value // { average: 450000, days: 126, amount: 1890000, opv: 189000, net: 1701000, … }\nchildcarePay(500000).value // { byIncome: 180000, min: 27680, max: 238000, amount: 180000, net: 162000, … }",
+    "import { maternityPay } from 'shanyraq/family'\n\nmaternityPay(500000).value // { average: 450000, days: 126, amount: 1890000, opv: 189000, net: 1701000, … }",
+  childcare:
+    "import { childcarePay } from 'shanyraq/family'\n\nchildcarePay(500000).value // { byIncome: 180000, min: 27680, max: 238000, amount: 180000, net: 162000, … }",
   alimony:
     "import { alimony, alimonyPenalty } from 'shanyraq/alimony'\n\nalimony(500000, { children: 2, gross: true }).value // { base: 408975, percent: 33.33, amount: 136325, kept: 272650, … }\nalimonyPenalty(100000, '2026-01-31', '2026-03-02').value // { days: 30, penalty: 3000 }",
   procedure:
     "import { procedureTerm } from 'shanyraq/procedure'\n\nprocedureTerm('2026-01-31', 'appeal').value // { start: '2026-02-01', due: '2026-02-28', end: '2026-03-02', moved: true }\nprocedureTerm('2026-03-18', { workingDays: 10 }).value?.end // '2026-04-06'",
+  pension:
+    "import { agePension, basicPension, retirementAge } from 'shanyraq/pension'\n\nretirementAge('1967-01-15', 'female').value // { age: 61.5, date: '2028-07-15' }\nbasicPension(30).value // { percent: 110, amount: 55936 }\nagePension(300000, 12, 'female').value // { income: 237875, percent: 60, ratio: 0.6, amount: 85635, … }",
+  inheritance:
+    "import { inheritanceShares } from 'shanyraq/inheritance'\n\ninheritanceShares({ spouse: true, children: 2, grandchildren: [2] }, { estate: 40000000 }).value.heirs\n// spouse 1/4, children 1/4 each, grandchildren 1/8 each (10 000 000 and 5 000 000 ₸)\ninheritanceShares({ spouse: true, children: 3 }, { obligatory: { children: 1 } }).value.obligatory // [{ heir: 'children', share: [1, 8], … }]",
   claim:
     "import { baseRate, claimDuty, claimPenalty } from 'shanyraq/claim'\n\nbaseRate('2026-10-01') // { rate: 16.25, since: '2026-09-07', stale: false }\nclaimPenalty(1000000, '2026-01-31', '2026-10-01').value // { penalty: 108184.93, total: 1108184.93, … }\nclaimDuty(1108184.93).value?.duty // 11081.85",
+  duty: "import { claimDuty } from 'shanyraq/claim'\n\nclaimDuty(1000000).value // { percent: 1, duty: 10000, capped: false }\nclaimDuty(1000000, { courtOrder: true }).value?.duty // 5000",
   simplified:
     "import { simplifiedTax } from 'shanyraq/tax'\n\nsimplifiedTax(3000000).value // { ipn: 120000, monthly: { opv: 8500, so: 4250, vosms: 5950 }, total: 232200, … }\nsimplifiedTax(3000000, { rate: 3 }).value?.ipn // 90000",
   vehicle:
-    "import { recyclingFee, registrationFee, vehicleTax } from 'shanyraq/vehicle'\n\nvehicleTax('car', { volume: 2000, made: 2015 }).value // { rate: 3, extra: 3500, coefficient: 0.7, annual: 11532.5, … }\nregistrationFee('car', 2024, 2026).value // { age: 3, rate: 50, fee: 216250 }\nrecyclingFee('car', { volume: 1600 }).value // { coefficient: 3.5, base: 216250, fee: 756875 }",
+    "import { vehicleTax } from 'shanyraq/vehicle'\n\nvehicleTax('car', { volume: 2000, made: 2015 }).value // { rate: 3, extra: 3500, coefficient: 0.7, annual: 11532.5, … }",
+  registration:
+    "import { recyclingFee, registrationFee } from 'shanyraq/vehicle'\n\nregistrationFee('car', 2024, 2026).value // { age: 3, rate: 50, fee: 216250 }\nrecyclingFee('car', { volume: 1600 }).value // { coefficient: 3.5, base: 216250, fee: 756875 }",
   property:
-    "import { landTax, propertyTax, propertyValue } from 'shanyraq/property'\n\npropertyValue({ settlement: 'almaty', area: 60, built: 2010, walls: 'panel' }).value // { wear: 11.2, physical: 0.888, mrpIndex: 1.099949, value: 3516317.4, … }\npropertyTax(15000000).value?.tax // 26100\nlandTax('yard', 1200, { settlement: 'almaty' }).value // { annual: 1400, tax: 1400 }",
+    "import { propertyTax, propertyValue } from 'shanyraq/property'\n\npropertyValue({ settlement: 'almaty', area: 60, built: 2010, walls: 'panel' }).value // { wear: 11.2, physical: 0.888, mrpIndex: 1.099949, value: 3516317.4, … }\npropertyTax(15000000).value?.tax // 26100",
+  land: "import { landTax } from 'shanyraq/property'\n\nlandTax('yard', 1200, { settlement: 'almaty' }).value // { annual: 1400, tax: 1400 }",
   fees: "import { mrpToTenge } from 'shanyraq/tax'\n\nmrpToTenge(8).value // 34600 — паспорт, 36 страниц\nmrpToTenge(10 / 2).value // 21625 — штраф 10 МРП при оплате за 7 суток",
   penalty:
     "import { taxPenalty } from 'shanyraq/claim'\n\ntaxPenalty(100000, '2026-07-31', '2026-08-10').value // { days: 10, penalty: 573.63, total: 100573.63, … }\ntaxPenalty(100000, '2026-07-31', '2026-08-10', { monitoring: true }).value?.penalty // 298.29",
@@ -114,7 +147,7 @@ const CODE: Record<string, string> = {
 }
 
 const YEAR = new Date().getFullYear()
-const REPO = 'https://github.com/webmonolith/shanyraq'
+const REPO = CONTACT.repo
 
 // TODO(verify): kk group names need native review
 const GROUPS: { title: Record<Lang, string>; tools: ToolId[] }[] = [
@@ -123,13 +156,12 @@ const GROUPS: { title: Record<Lang, string>; tools: ToolId[] }[] = [
     tools: ['iin', 'phone', 'codes', 'iban', 'plate', 'regions', 'batch', 'requisites'],
   },
   {
-    title: { ru: 'Зарплата, налоги, кредиты', kk: 'Жалақы, салықтар, несиелер' },
+    title: { ru: 'Зарплата и пособия', kk: 'Жалақы мен жәрдемақылар' },
+    tools: ['salary', 'leave', 'sick', 'dismissal', 'maternity', 'childcare', 'pension', 'alimony'],
+  },
+  {
+    title: { ru: 'Налоги и сборы', kk: 'Салықтар мен алымдар' },
     tools: [
-      'salary',
-      'leave',
-      'dismissal',
-      'maternity',
-      'alimony',
       'simplified',
       'deadlines',
       'penalty',
@@ -137,15 +169,15 @@ const GROUPS: { title: Record<Lang, string>; tools: ToolId[] }[] = [
       'mrp',
       'fees',
       'vehicle',
+      'registration',
       'property',
-      'loan',
-      'mortgage',
+      'land',
     ],
   },
-  // TODO(verify): kk group name
+  { title: { ru: 'Кредиты', kk: 'Несиелер' }, tools: ['loan', 'mortgage'] },
   {
     title: { ru: 'Суд и право', kk: 'Сот және құқық' },
-    tools: ['procedure', 'claim'],
+    tools: ['procedure', 'claim', 'duty', 'inheritance'],
   },
   {
     title: { ru: 'Тексты и даты', kk: 'Мәтін мен күндер' },
@@ -305,8 +337,80 @@ const GitHubMark = () => (
   </svg>
 )
 
-// The single developer tool shares a column with the text tools so the footer stays three columns wide.
-const FOOT_COLUMNS = [GROUPS.slice(0, 1), GROUPS.slice(1, 2), GROUPS.slice(2)]
+// Three columns of roughly equal height: data + credits + dev, salary + court + texts, taxes.
+const FOOT_COLUMNS = [[0, 3, 6], [1, 4, 5], [2]].map((column) =>
+  column.map((i) => GROUPS[i] as (typeof GROUPS)[number]),
+)
+
+const WhatsAppMark = () => (
+  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <path
+      fill="currentColor"
+      d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"
+    />
+  </svg>
+)
+
+const MailMark = () => (
+  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinejoin="round"
+      d="M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5ZM3.5 6l8.5 7 8.5-7"
+    />
+  </svg>
+)
+
+const InfoMark = () => (
+  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.8" />
+    <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M12 11v5.5" />
+    <circle cx="12" cy="7.6" r="1.2" fill="currentColor" />
+  </svg>
+)
+
+const Socials = ({ lang }: { lang: Lang }) => (
+  <ul className="socials">
+    <li>
+      <a
+        href={`https://wa.me/${CONTACT.whatsapp}`}
+        rel="noopener"
+        aria-label="WhatsApp"
+        title="WhatsApp"
+      >
+        <WhatsAppMark />
+      </a>
+    </li>
+    <li>
+      <a href={`mailto:${CONTACT.email}`} aria-label={CONTACT.email} title={CONTACT.email}>
+        <MailMark />
+      </a>
+    </li>
+    <li>
+      <a href={REPO} rel="noopener" aria-label={UI[lang].source} title={UI[lang].source}>
+        <GitHubMark />
+      </a>
+    </li>
+  </ul>
+)
+
+const Contacts = ({ lang }: { lang: Lang }) => (
+  <ul className="contacts">
+    <li>
+      <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+    </li>
+    <li>
+      <a href={`https://wa.me/${CONTACT.whatsapp}`} rel="noopener">
+        WhatsApp {CONTACT.whatsappText}
+      </a>
+    </li>
+    <li>
+      <a href={aboutPath(lang)}>{UI[lang].about}</a>
+    </li>
+  </ul>
+)
 
 const Footer = ({ lang }: { lang: Lang }) => {
   const t = UI[lang]
@@ -316,12 +420,22 @@ const Footer = ({ lang }: { lang: Lang }) => {
         <div className="foot__about">
           <Brand href={hubPath(lang)} />
           <p className="foot__tagline">{t.tagline}</p>
-          <p>{t.facts}</p>
-          <p className="foot__privacy">{t.privacy}</p>
-          <a className="foot__repo" href={REPO} rel="noopener">
-            <GitHubMark />
-            {t.source}
-          </a>
+          <div className="foot__contacts">
+            <a href={`https://wa.me/${CONTACT.whatsapp}`} rel="noopener">
+              {CONTACT.whatsappText}
+            </a>
+            <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          </div>
+          <Socials lang={lang} />
+          <p className="foot__small">
+            {t.privacy} {t.facts} {t.mistake}
+          </p>
+          <p className="foot__links">
+            <a href={aboutPath(lang)}>{t.about}</a>
+            <a href={REPO} rel="noopener">
+              {t.source}
+            </a>
+          </p>
         </div>
         <nav className="foot__nav" aria-label={t.tools}>
           {FOOT_COLUMNS.map((column, i) => (
@@ -394,6 +508,15 @@ const Side = ({ page }: { page: Page }) => {
           </ul>
         </div>
       ))}
+      <a
+        className="side__about"
+        href={aboutPath(page.lang)}
+        aria-current={page.kind === 'about' ? 'page' : undefined}
+      >
+        <InfoMark />
+        {t.about}
+      </a>
+      <Socials lang={page.lang} />
       <p className="side__note">{t.privacy}</p>
     </aside>
   )
@@ -486,6 +609,20 @@ export const PageView = ({ page, widget }: { page: Page; widget: string }) => {
         ))}
       </Docs>
     )
+  if (page.kind === 'about') {
+    const toc: TocItem[] = []
+    const article = withIds(renderToStaticMarkup(ABOUT_TEXT[page.lang]), toc)
+    return (
+      <Docs page={page} toc={toc}>
+        <h1>{page.h1}</h1>
+        <p className="lead">{page.description}</p>
+        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: server-rendered article with heading ids added */}
+        <article className="content" dangerouslySetInnerHTML={{ __html: article }} />
+        <h2>{t.contacts}</h2>
+        <Contacts lang={page.lang} />
+      </Docs>
+    )
+  }
   if (page.kind === 'notFound' || !page.tool)
     return (
       <Shell page={page}>
@@ -530,6 +667,8 @@ export const PageView = ({ page, widget }: { page: Page; widget: string }) => {
     ),
     toc,
   )
+  const checked = formatDate(CHECKED[id], { lang: page.lang })
+  const sourcesId = toc.find((x) => x.html === t.sources)?.id
   return (
     <Docs page={page} toc={toc}>
       <div className="kicker">
@@ -538,6 +677,17 @@ export const PageView = ({ page, widget }: { page: Page; widget: string }) => {
       </div>
       <h1>{page.h1}</h1>
       <p className="lead">{page.description}</p>
+      {checked.ok && (
+        <p className="checked">
+          {t.checked} <time dateTime={CHECKED[id]}>{checked.value}</time>
+          {sourcesId && (
+            <>
+              {' · '}
+              <a href={`#${sourcesId}`}>{t.checkedSources}</a>
+            </>
+          )}
+        </p>
+      )}
       {/* biome-ignore lint/security/noDangerouslySetInnerHtml: widget markup is rendered separately so it hydrates on its own */}
       <div id="tool" className="tool" data-tool={id} dangerouslySetInnerHTML={{ __html: widget }} />
       {/* biome-ignore lint/security/noDangerouslySetInnerHtml: server-rendered article with heading ids added */}

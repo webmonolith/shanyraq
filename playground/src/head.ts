@@ -1,4 +1,5 @@
-import { hubPath, LANGS, type Page, SITE } from './site'
+import { CONTACT, hubPath, LANGS, type Page, SITE } from './site'
+import { CHECKED } from './sources'
 
 const attr = (s: string): string =>
   s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
@@ -7,8 +8,35 @@ const json = (v: unknown): string => JSON.stringify(v).replace(/</g, '\\u003c')
 
 const LOCALE = { ru: 'ru_KZ', kk: 'kk_KZ' } as const
 
+const ORGANIZATION = {
+  '@type': 'Organization',
+  '@id': `${SITE}/#org`,
+  name: 'Monolith Studio',
+  url: 'https://webmonolith.kz/',
+  email: CONTACT.email,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer support',
+    email: CONTACT.email,
+    telephone: `+${CONTACT.whatsapp}`,
+    availableLanguage: ['ru', 'kk'],
+  },
+  sameAs: [CONTACT.repo],
+}
+
 const schema = (page: Page): object[] => {
   const url = SITE + page.path
+  if (page.kind === 'about')
+    return [
+      {
+        '@type': 'AboutPage',
+        name: page.h1,
+        url,
+        inLanguage: page.lang,
+        about: { '@id': ORGANIZATION['@id'] },
+      },
+      ORGANIZATION,
+    ]
   if (page.kind === 'root' || page.kind === 'hub')
     return [
       {
@@ -17,7 +45,9 @@ const schema = (page: Page): object[] => {
         url,
         inLanguage: page.lang,
         description: page.description,
+        publisher: { '@id': ORGANIZATION['@id'] },
       },
+      ORGANIZATION,
     ]
   return [
     {
@@ -26,7 +56,9 @@ const schema = (page: Page): object[] => {
       url,
       description: page.description,
       inLanguage: page.lang,
-      applicationCategory: 'UtilitiesApplication',
+      applicationCategory: 'FinanceApplication',
+      ...(page.tool ? { dateModified: CHECKED[page.tool] } : {}),
+      publisher: { '@id': ORGANIZATION['@id'] },
       operatingSystem: 'Any',
       isAccessibleForFree: true,
       offers: { '@type': 'Offer', price: 0, priceCurrency: 'KZT' },

@@ -100,4 +100,14 @@ export const en: Messages = {
     range: 'Area, year, share, months or coefficient is out of range',
     data: 'No MRP for this or the previous year',
   },
+  inheritance: {
+    invalid: 'Enter the property value as a number',
+    range: 'Number of heirs or value is out of range',
+  },
+  pension: {
+    invalid: 'Enter the income as a number',
+    range: 'Income, work record, gender or early retirement kind is out of range',
+    date: 'Invalid date, expected YYYY-MM-DD',
+    data: 'No subsistence minimum, MRP or minimum pension for this year',
+  },
 }
