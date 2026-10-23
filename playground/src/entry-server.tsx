@@ -3,11 +3,13 @@ import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import { head } from './head'
 import { PageView } from './page'
 import { ogName, type Page, pageByPath, type ToolId } from './site'
+import alimony from './tools/alimony'
 import batch from './tools/batch'
 import calendar from './tools/calendar'
 import codes from './tools/codes'
 import date from './tools/date'
 import deadlines from './tools/deadlines'
+import dismissal from './tools/dismissal'
 import faker from './tools/faker'
 import fees from './tools/fees'
 import iban from './tools/iban'
@@ -19,6 +21,7 @@ import mortgage from './tools/mortgage'
 import mrp from './tools/mrp'
 import phone from './tools/phone'
 import plate from './tools/plate'
+import procedure from './tools/procedure'
 import regions from './tools/regions'
 import requisites from './tools/requisites'
 import salary from './tools/salary'
@@ -42,6 +45,9 @@ const WIDGETS: Record<ToolId, ComponentType<ToolProps>> = {
   vat,
   mrp,
   leave,
+  dismissal,
+  alimony,
+  procedure,
   simplified,
   deadlines,
   fees,

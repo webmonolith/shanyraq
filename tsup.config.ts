@@ -1,6 +1,7 @@
 import { defineConfig } from 'tsup'
 
 const subpaths = [
+  'alimony',
   'bin',
   'calendar',
   'date',
@@ -14,6 +15,7 @@ const subpaths = [
   'money',
   'phone',
   'plate',
+  'procedure',
   'regions',
   'tax',
   'taxid',

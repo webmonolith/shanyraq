@@ -1,4 +1,4 @@
-import { countWorkingDays, getDaysOff } from '../calendar/calendar'
+import { addWorkingDays, countWorkingDays, getDaysOff } from '../calendar/calendar'
 import type { CalendarOptions } from '../calendar/types'
 import { type DateInput, dayNumber, isoDate, toDay, yearOf } from '../core/date'
 import type { LeaveError } from '../core/errors'
@@ -111,6 +111,38 @@ const holidaySet = (years: number[], options?: CalendarOptions): Set<string> | u
   return set
 }
 
+type Span = Omit<VacationPay, 'period' | 'dailyWage'>
+
+// Leave of `days` calendar days from `s`; holidays inside it do not count and extend it (art. 90).
+const leaveSpan = (
+  s: number,
+  days: number,
+  dailyWage: number,
+  calendar?: CalendarOptions,
+): Result<Span, LeaveError> => {
+  const startYear = yearOf(s)
+  const off = holidaySet([startYear, startYear + 1, startYear + 2], calendar)
+  if (!off) return err('range')
+  const holidays: string[] = []
+  let end = s - 1
+  for (let left = days; left > 0; ) {
+    end++
+    const iso = isoDate(end)
+    if (off.has(iso)) holidays.push(iso)
+    else left--
+  }
+  const w = countWorkingDays(isoDate(s), isoDate(end), calendar)
+  if (!w.ok) return err(w.error === 'data' ? 'data' : 'range')
+  return ok({
+    start: isoDate(s),
+    end: isoDate(end),
+    days,
+    holidays,
+    workingDays: w.value,
+    pay: tiyn(dailyWage * w.value),
+  })
+}
+
 /**
  * Pay for annual leave: average daily wage × working days inside the leave (Average Wage Rules p. 7–8).
  * `earnings` — salary accrued in the 12 calendar months before the leave month.
@@ -129,29 +161,8 @@ export const vacationPay = (
   const a = average(earnings, s, options)
   if (!a.ok) return a
   const [period, dailyWage] = a.value
-  const startYear = yearOf(s)
-  const off = holidaySet([startYear, startYear + 1, startYear + 2], options.calendar)
-  if (!off) return err('range')
-  const holidays: string[] = []
-  let end = s - 1
-  for (let left = days; left > 0; ) {
-    end++
-    const iso = isoDate(end)
-    if (off.has(iso)) holidays.push(iso)
-    else left--
-  }
-  const w = countWorkingDays(isoDate(s), isoDate(end), options.calendar)
-  if (!w.ok) return err(w.error === 'data' ? 'data' : 'range')
-  return ok({
-    start: isoDate(s),
-    end: isoDate(end),
-    days,
-    holidays,
-    workingDays: w.value,
-    period,
-    dailyWage,
-    pay: tiyn(dailyWage * w.value),
-  })
+  const l = leaveSpan(s, days, dailyWage, options.calendar)
+  return l.ok ? ok({ ...l.value, period, dailyWage }) : l
 }
 
 /**
@@ -205,4 +216,104 @@ export const sickPay = (
     capped,
     pay: tiyn(months.reduce((s, m) => s + m.pay, 0)),
   })
+}
+
+/** Ground for termination; sets the job-loss payment of Labour Code art. 131. */
+export type DismissalReason = 'liquidation' | 'reduction' | 'breach' | 'decline' | 'other'
+
+export interface DismissalOptions extends LeaveOptions {
+  /** Calendar days of unused annual leave (Labour Code art. 96). */
+  unusedDays?: number
+  /** Default `'other'` — no job-loss payment. */
+  reason?: DismissalReason
+  /** Monthly salary: pays the working days of the last month up to the dismissal day. */
+  salary?: number | string
+}
+
+export interface DismissalPay {
+  /** Last working day (day of termination). */
+  end: string
+  /** Latest payment day: the third working day after `end` (Labour Code art. 113 p. 4). */
+  payBy: string
+  period: LeavePeriod
+  dailyWage: number
+  salary?: { workingDays: number; monthWorkingDays: number; pay: number }
+  /** Unused leave counted from the next working day after `end` (Average Wage Rules p. 15). */
+  compensation?: Span
+  /** Average wage for 1 or 2 months after `end` (art. 131). */
+  severance?: { months: number; from: string; to: string; workingDays: number; pay: number }
+  pay: number
+}
+
+/**
+ * Final payout on termination: salary for the last month, unused leave compensation, job-loss payment.
+ * `earnings` — salary accrued in the 12 calendar months before the dismissal month.
+ * @example
+ * dismissalPay(3600000, '2026-06-30', { unusedDays: 12, reason: 'reduction' }).value?.pay // 442623
+ */
+export const dismissalPay = (
+  earnings: number | string,
+  end: DateInput,
+  options: DismissalOptions = {},
+): Result<DismissalPay, LeaveError> => {
+  const e = toDay(end)
+  if (e === undefined) return err('date')
+  const { unusedDays = 0, reason = 'other', salary } = options
+  if (!Number.isInteger(unusedDays) || unusedDays < 0 || unusedDays > 366) return err('range')
+  const a = average(earnings, e, options)
+  if (!a.ok) return a
+  const [period, dailyWage] = a.value
+  const payBy = addWorkingDays(isoDate(e), LEAVE.payWithinWorkingDays, options.calendar)
+  if (!payBy.ok) return err(payBy.error === 'data' ? 'data' : 'range')
+  const result: DismissalPay = { end: isoDate(e), payBy: payBy.value, period, dailyWage, pay: 0 }
+  const d = new Date(e * 864e5)
+  const y = d.getUTCFullYear()
+  const m = d.getUTCMonth() + 1
+  if (salary !== undefined) {
+    const s = earningsOf(salary)
+    if (!s.ok) return s
+    const first = monthStart(y, m)
+    const worked = countWorkingDays(isoDate(first), isoDate(e), options.calendar)
+    const all = countWorkingDays(
+      isoDate(first),
+      isoDate(first + daysInMonth(y, m) - 1),
+      options.calendar,
+    )
+    if (!worked.ok) return err(worked.error === 'data' ? 'data' : 'range')
+    if (!all.ok) return err(all.error === 'data' ? 'data' : 'range')
+    result.salary = {
+      workingDays: worked.value,
+      monthWorkingDays: all.value,
+      pay: all.value ? tiyn((s.value * worked.value) / all.value) : 0,
+    }
+  }
+  if (unusedDays) {
+    const first = addWorkingDays(isoDate(e), 1, options.calendar)
+    if (!first.ok) return err(first.error === 'data' ? 'data' : 'range')
+    const l = leaveSpan(toDay(first.value) as number, unusedDays, dailyWage, options.calendar)
+    if (!l.ok) return l
+    result.compensation = l.value
+  }
+  const months = LEAVE.severanceMonths[reason as keyof typeof LEAVE.severanceMonths] ?? 0
+  if (months) {
+    const day = e + 1
+    const n = new Date(day * 864e5)
+    const total = n.getUTCFullYear() * 12 + n.getUTCMonth() + months
+    const ty = Math.floor(total / 12)
+    const tm = (total % 12) + 1
+    const to = (dayNumber(ty, tm, Math.min(n.getUTCDate(), daysInMonth(ty, tm))) as number) - 1
+    const w = countWorkingDays(isoDate(day), isoDate(to), options.calendar)
+    if (!w.ok) return err(w.error === 'data' ? 'data' : 'range')
+    result.severance = {
+      months,
+      from: isoDate(day),
+      to: isoDate(to),
+      workingDays: w.value,
+      pay: tiyn(dailyWage * w.value),
+    }
+  }
+  result.pay = tiyn(
+    (result.salary?.pay ?? 0) + (result.compensation?.pay ?? 0) + (result.severance?.pay ?? 0),
+  )
+  return ok(result)
 }

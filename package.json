@@ -21,7 +21,9 @@
     "tax",
     "loan",
     "mortgage",
-    "tax-calendar"
+    "tax-calendar",
+    "alimony",
+    "court-deadlines"
   ],
   "homepage": "https://github.com/webmonolith/shanyraq#readme",
   "repository": {
@@ -55,6 +57,16 @@
       "require": {
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
+      }
+    },
+    "./alimony": {
+      "import": {
+        "types": "./dist/alimony/index.d.ts",
+        "default": "./dist/alimony/index.js"
+      },
+      "require": {
+        "types": "./dist/alimony/index.d.cts",
+        "default": "./dist/alimony/index.cjs"
       }
     },
     "./bin": {
@@ -185,6 +197,16 @@
       "require": {
         "types": "./dist/plate/index.d.cts",
         "default": "./dist/plate/index.cjs"
+      }
+    },
+    "./procedure": {
+      "import": {
+        "types": "./dist/procedure/index.d.ts",
+        "default": "./dist/procedure/index.js"
+      },
+      "require": {
+        "types": "./dist/procedure/index.d.cts",
+        "default": "./dist/procedure/index.cjs"
       }
     },
     "./regions": {

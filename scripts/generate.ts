@@ -334,6 +334,7 @@ interface LeaveData {
   averageWage: { periodMonths: number }
   vacation: { minDays: number }
   sickLeave: { monthlyCapMrp: number }
+  dismissal: { severanceMonths: Record<string, number>; payWithinWorkingDays: number }
 }
 
 const leave = read<LeaveData>('leave')
@@ -345,6 +346,8 @@ write(
     periodMonths: leave.averageWage.periodMonths,
     vacationDays: leave.vacation.minDays,
     sickCapMrp: leave.sickLeave.monthlyCapMrp,
+    severanceMonths: leave.dismissal.severanceMonths,
+    payWithinWorkingDays: leave.dismissal.payWithinWorkingDays,
   })} as const
 `,
 )
@@ -416,5 +419,39 @@ export const RULES: Rule[] = ${json(
       rule,
     })),
   )}
+`,
+)
+
+interface AlimonyData {
+  shares: { children: [number, number][] }
+  deduction: { keepPercent: number }
+  penalty: { percentPerDay: number }
+}
+
+const alimony = read<AlimonyData>('alimony')
+
+write(
+  'alimony/generated.ts',
+  'data/alimony.json',
+  `export const ALIMONY = ${json({
+    shares: alimony.shares.children,
+    keepPercent: alimony.deduction.keepPercent,
+    penaltyPercent: alimony.penalty.percentPerDay,
+  })} as const
+`,
+)
+
+interface ProcedureData {
+  deadlines: { id: string; period: Record<string, number> }[]
+}
+
+const procedure = read<ProcedureData>('procedure')
+
+write(
+  'procedure/generated.ts',
+  'data/procedure.json',
+  `export const PERIODS = ${json(
+    Object.fromEntries(procedure.deadlines.map((d) => [d.id, d.period])),
+  )} as const
 `,
 )

@@ -156,6 +156,37 @@ const ICONS: Record<ToolId, ReactNode> = {
       <path d="M46 40V50M41 45H51" />
     </>
   ),
+  dismissal: (
+    <>
+      <path className="f" d={wr(8, 30, 44, 56)} />
+      <path d={wr(8, 30, 44, 56)} />
+      <path d={`${wl(8, 30, 14, 22)}${wl(44, 30, 38, 22)}${wl(14, 22, 38, 22)}`} />
+      <path d={wl(20, 40, 32, 40)} />
+      <path d="M40 12H56M50 6 56 12 50 18" />
+      <circle className="k" cx="26" cy="48" r="1.6" />
+    </>
+  ),
+  alimony: (
+    <>
+      <path className="f" d={wc(22, 16, 7)} />
+      <path d={wc(22, 16, 7)} />
+      <path d="M10 44C10 32 14 26 22 26S34 32 34 40" />
+      <path className="bg" d={wc(44, 42, 13)} />
+      <path className="f" d={wc(44, 42, 13)} />
+      <path d={wc(44, 42, 13)} />
+      <path d="M39 36H49M39 40H49M44 40V50" />
+    </>
+  ),
+  procedure: (
+    <>
+      <path d="M32 8V54M20 56H44M14 16H50" />
+      <path className="f" d="M6 34 14 18 22 34Z" />
+      <path d="M6 34 14 18 22 34ZM6 34C8 39 20 39 22 34" />
+      <path className="f" d="M42 34 50 18 58 34Z" />
+      <path d="M42 34 50 18 58 34ZM42 34C44 39 56 39 58 34" />
+      <circle className="k" cx="32" cy="8" r="2" />
+    </>
+  ),
   simplified: (
     <>
       <path className="f" d={wr(12, 8, 46, 56)} />

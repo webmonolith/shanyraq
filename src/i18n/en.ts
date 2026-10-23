@@ -73,4 +73,10 @@ export const en: Messages = {
     range: 'Year is out of range',
     data: 'No working-day calendar data for this year',
   },
+  alimony: {
+    invalid: 'Enter the income as a number',
+    range: 'Income, share, amount or number of children is out of range',
+    date: 'Invalid date, expected YYYY-MM-DD',
+    data: 'No tax rates or MRP for this year',
+  },
 }

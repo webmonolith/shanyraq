@@ -1,4 +1,6 @@
 // Server-only: links are read from data/*.json so pages cite exactly what the library is built from.
+
+import alimony from '../../data/alimony.json'
 import banks from '../../data/banks.json'
 import calendar from '../../data/calendar.json'
 import deadlines from '../../data/deadlines.json'
@@ -8,6 +10,7 @@ import leave from '../../data/leave.json'
 import loan from '../../data/loan.json'
 import phone from '../../data/phone.json'
 import plates from '../../data/plates.json'
+import procedure from '../../data/procedure.json'
 import regions from '../../data/regions.json'
 import tax from '../../data/tax.json'
 import taxid from '../../data/taxid.json'
@@ -72,6 +75,12 @@ export const SOURCES: Record<ToolId, Source[]> = {
   vat: taxSource('taxCode', 'budget2026'),
   mrp: taxSource('budget2026', 'taxCode', 'socialCode', 'osmsLaw'),
   leave: [...linked(leave.source), ...taxSource('budget2026'), calendar.law],
+  dismissal: [...linked(leave.source), calendar.law],
+  procedure: [...linked(procedure.source), calendar.law],
+  alimony: [
+    ...linked(alimony.source),
+    ...taxSource('taxCode', 'socialCode', 'osmsLaw', 'budget2026'),
+  ],
   simplified: taxSource('taxCode', 'socialCode', 'osmsLaw', 'budget2026'),
   fees: [...linked(fees.source), ...taxSource('budget2026')],
   deadlines: [...linked(deadlines.source), calendar.law],

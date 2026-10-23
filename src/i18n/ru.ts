@@ -82,6 +82,13 @@ const loan: Messages['loan'] = {
   data: 'Нет данных о предельной ГЭСВ на эту дату',
 }
 
+const alimony: Messages['alimony'] = {
+  invalid: 'Введите доход числом',
+  range: 'Доход, доля, сумма или число детей вне допустимого диапазона',
+  date: 'Неверная дата, ожидается ГГГГ-ММ-ДД',
+  data: 'Нет ставок налогов или МРП за этот год',
+}
+
 const deadlines: Messages['deadlines'] = {
   range: 'Год вне допустимого диапазона',
   data: 'Нет данных производственного календаря за этот год',
@@ -101,6 +108,7 @@ export const ru: Messages = {
   leave,
   loan,
   deadlines,
+  alimony,
 }
 
 export {

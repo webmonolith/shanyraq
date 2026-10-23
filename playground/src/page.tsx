@@ -78,6 +78,12 @@ const CODE: Record<string, string> = {
   mrp: "import { getTaxYear, mrpToTenge } from 'shanyraq/tax'\n\ngetTaxYear(2026) // { year: 2026, mrp: 4325, mzp: 85000 }\nmrpToTenge(10).value // 43250",
   leave:
     "import { sickPay, vacationPay } from 'shanyraq/leave'\n\nvacationPay(3600000, '2026-07-01', 24).value // { end: '2026-07-25', workingDays: 17, pay: 248780.55, … }\nsickPay(3600000, '2026-03-02', '2026-03-06').value?.pay // 73469.4",
+  dismissal:
+    "import { dismissalPay } from 'shanyraq/leave'\n\ndismissalPay(3600000, '2026-06-30', { unusedDays: 12, reason: 'reduction' }).value\n// { payBy: '2026-07-03', compensation: { workingDays: 8, pay: 118032.8, … }, severance: { months: 1, pay: 324590.2, … }, pay: 442623 }",
+  alimony:
+    "import { alimony, alimonyPenalty } from 'shanyraq/alimony'\n\nalimony(500000, { children: 2, gross: true }).value // { base: 408975, percent: 33.33, amount: 136325, kept: 272650, … }\nalimonyPenalty(100000, '2026-01-31', '2026-03-02').value // { days: 30, penalty: 3000 }",
+  procedure:
+    "import { procedureTerm } from 'shanyraq/procedure'\n\nprocedureTerm('2026-01-31', 'appeal').value // { start: '2026-02-01', due: '2026-02-28', end: '2026-03-02', moved: true }\nprocedureTerm('2026-03-18', { workingDays: 10 }).value?.end // '2026-04-06'",
   simplified:
     "import { simplifiedTax } from 'shanyraq/tax'\n\nsimplifiedTax(3000000).value // { ipn: 120000, monthly: { opv: 8500, so: 4250, vosms: 5950 }, total: 232200, … }\nsimplifiedTax(3000000, { rate: 3 }).value?.ipn // 90000",
   fees: "import { mrpToTenge } from 'shanyraq/tax'\n\nmrpToTenge(8).value // 34600 — паспорт, 36 страниц\nmrpToTenge(10 / 2).value // 21625 — штраф 10 МРП при оплате за 7 суток",
@@ -108,7 +114,24 @@ const GROUPS: { title: Record<Lang, string>; tools: ToolId[] }[] = [
   },
   {
     title: { ru: 'Зарплата, налоги, кредиты', kk: 'Жалақы, салықтар, несиелер' },
-    tools: ['salary', 'leave', 'simplified', 'deadlines', 'vat', 'mrp', 'fees', 'loan', 'mortgage'],
+    tools: [
+      'salary',
+      'leave',
+      'dismissal',
+      'alimony',
+      'simplified',
+      'deadlines',
+      'vat',
+      'mrp',
+      'fees',
+      'loan',
+      'mortgage',
+    ],
+  },
+  // TODO(verify): kk group name
+  {
+    title: { ru: 'Суд и право', kk: 'Сот және құқық' },
+    tools: ['procedure'],
   },
   {
     title: { ru: 'Тексты и даты', kk: 'Мәтін мен күндер' },

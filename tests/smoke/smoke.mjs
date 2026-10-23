@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict'
 import { execFileSync, spawnSync } from 'node:child_process'
 import { getMessage, isValidIIN, messages, moneyToWords, parsePhone } from 'shanyraq'
+import { alimony } from 'shanyraq/alimony'
 import { isValidBIN } from 'shanyraq/bin'
 import { countWorkingDays, isDayOff } from 'shanyraq/calendar'
 import { formatDate } from 'shanyraq/date'
@@ -10,11 +11,12 @@ import { createFaker } from 'shanyraq/faker'
 import { ru } from 'shanyraq/i18n'
 import { formatIBAN, getBank, parseIBAN } from 'shanyraq/iban'
 import { parseIIN } from 'shanyraq/iin'
-import { sickPay, vacationPay } from 'shanyraq/leave'
+import { dismissalPay, sickPay, vacationPay } from 'shanyraq/leave'
 import { gesvLimit, loanSchedule } from 'shanyraq/loan'
 import { parseAmount } from 'shanyraq/money'
 import { formatPhone } from 'shanyraq/phone'
 import { parsePlate } from 'shanyraq/plate'
+import { procedureTerm } from 'shanyraq/procedure'
 import { regionByPlateCode } from 'shanyraq/regions'
 import { addVAT, calculateSalary, simplifiedTax } from 'shanyraq/tax'
 import { parseTaxId } from 'shanyraq/taxid'
@@ -45,6 +47,12 @@ assert.equal(addVAT(1000).value.gross, 1160)
 assert.equal(simplifiedTax(3000000).value.total, 232200)
 assert.equal(vacationPay(3600000, '2026-07-01').value.pay, 248780.55)
 assert.equal(sickPay(3600000, '2026-03-02', '2026-03-06').value.pay, 73469.4)
+assert.equal(procedureTerm('2026-01-31', 'appeal').value.end, '2026-03-02')
+assert.equal(alimony(500000, { children: 2, gross: true }).value.amount, 136325)
+assert.equal(
+  dismissalPay(3600000, '2026-06-30', { unusedDays: 12, reason: 'reduction' }).value.pay,
+  442623,
+)
 assert.equal(loanSchedule(1000000, 20, 12).value.apr, 21.94)
 assert.equal(taxDeadlines(2026, { regime: 'simplified', tags: [] }).value[0].date, '2026-02-16')
 assert.equal(gesvLimit('mortgage', '2027-01-01', 0.7).value, 20)
