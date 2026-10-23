@@ -13,10 +13,12 @@ import loan from '../../data/loan.json'
 import phone from '../../data/phone.json'
 import plates from '../../data/plates.json'
 import procedure from '../../data/procedure.json'
+import propertyData from '../../data/property.json'
 import regions from '../../data/regions.json'
 import tax from '../../data/tax.json'
 import taxid from '../../data/taxid.json'
 import translit from '../../data/translit-2021.json'
+import vehicleData from '../../data/vehicle.json'
 import type { ToolId } from './site'
 
 export interface Source {
@@ -80,7 +82,13 @@ export const SOURCES: Record<ToolId, Source[]> = {
   dismissal: [...linked(leave.source), calendar.law],
   procedure: [...linked(procedure.source), calendar.law],
   claim: [...linked(claim.source), ...taxSource('budget2026')],
+  penalty: [
+    ...linked(claim.taxPenalty.source),
+    ...linked(claim.source.filter((s) => s.id === 'nbrkRates')),
+  ],
   maternity: [...linked(family.source), ...taxSource('budget2026')],
+  vehicle: [...linked(vehicleData.source), ...taxSource('budget2026')],
+  property: [...linked(propertyData.source), ...taxSource('budget2026')],
   alimony: [
     ...linked(alimony.source),
     ...taxSource('taxCode', 'socialCode', 'osmsLaw', 'budget2026'),

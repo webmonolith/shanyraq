@@ -2,7 +2,7 @@ import { type DateInput, isoDate, toDay } from '../core/date'
 import type { ClaimError } from '../core/errors'
 import { err, ok, type Result } from '../core/result'
 import { getTaxYear, MAX_SALARY } from '../tax/tax'
-import { BASE_RATE, DUTY } from './generated'
+import { BASE_RATE, DUTY, TAX_PENALTY } from './generated'
 
 export interface BaseRate {
   /** Percent per year. */
@@ -50,6 +50,40 @@ export interface ClaimPenalty {
   /** `rest` + `penalty` — what can be claimed. */
   total: number
   /** Some base rate is past the last known decision. */
+  stale: boolean
+}
+
+export interface TaxPenaltyOptions {
+  /** Payments made after `due`; each one still accrues on its payment day. */
+  payments?: ClaimPayment[]
+  /** Horizontal monitoring participant: 0.65 × base rate instead of 1.25 (Tax Code art. 5 subp. 2). */
+  monitoring?: boolean
+}
+
+export interface TaxPenaltyPart {
+  /** First and last day of the stretch with the same debt and base rate. */
+  from: string
+  to: string
+  days: number
+  /** Unpaid debt on these days. */
+  amount: number
+  baseRate: number
+  /** Multiplier × base rate, percent per year. */
+  rate: number
+  penalty: number
+}
+
+export interface TaxPenalty {
+  debt: number
+  /** Unpaid on `until`. */
+  rest: number
+  /** Days with a penalty. */
+  days: number
+  parts: TaxPenaltyPart[]
+  penalty: number
+  /** `rest` + `penalty`. */
+  total: number
+  /** Some day is past the last known decision. */
   stale: boolean
 }
 
@@ -160,6 +194,73 @@ export const claimPenalty = (
   }
   const penalty = tiyn(parts.reduce((s, p) => s + p.penalty, 0))
   return ok({ debt: d.value, rest, parts, penalty, total: tiyn(rest + penalty), stale })
+}
+
+/**
+ * Penalty on late taxes and social payments: debt × 1.25 × base rate of each day / 365, from the day after `due` to the payment day inclusive (Tax Code art. 5 subp. 2).
+ * @example
+ * taxPenalty(100000, '2026-09-30', '2026-10-10').value // { days: 10, penalty: 556.51, total: 100556.51, … }
+ */
+export const taxPenalty = (
+  debt: number | string,
+  due: DateInput,
+  until: DateInput,
+  options: TaxPenaltyOptions = {},
+): Result<TaxPenalty, ClaimError> => {
+  const d = amount(debt)
+  if (!d.ok) return d
+  const from = toDay(due)
+  const to = toDay(until)
+  if (from === undefined || to === undefined) return err('date')
+  if (to < from) return err('range')
+  if (from + 1 < (toDay(TAX_PENALTY.since) as number)) return err('data')
+  const paid: { day: number; amount: number }[] = []
+  let rest = d.value
+  for (const p of options.payments ?? []) {
+    const day = toDay(p.date)
+    if (day === undefined) return err('date')
+    const a = amount(p.amount)
+    if (!a.ok) return a
+    if (day < from || day > to) return err('range')
+    rest = tiyn(rest - a.value)
+    paid.push({ day, amount: a.value })
+  }
+  if (rest < 0) return err('range')
+  paid.sort((a, b) => a.day - b.day)
+  const changes = BASE_RATE.changes.map(([since]) => toDay(since) as number)
+  const k = options.monitoring ? TAX_PENALTY.monitoring : TAX_PENALTY.multiplier
+  const parts: TaxPenaltyPart[] = []
+  let left = d.value
+  let i = 0
+  let day = from + 1
+  let stale = false
+  for (;;) {
+    while (i < paid.length && (paid[i] as { day: number }).day < day)
+      left = tiyn(left - (paid[i++] as { amount: number }).amount)
+    if (day > to || left <= 0) break
+    let next = to + 1
+    if (i < paid.length) next = Math.min(next, (paid[i] as { day: number }).day + 1)
+    const change = changes.find((c) => c > day)
+    if (change !== undefined) next = Math.min(next, change)
+    // TAX_PENALTY.since is after BASE_RATE.since, so every day has a rate.
+    const r = rateOn(day) as BaseRate
+    const days = next - day
+    const rate = Math.round(r.rate * k * 1e4) / 1e4
+    stale ||= isoDate(next - 1) > BASE_RATE.staleAfter
+    parts.push({
+      from: isoDate(day),
+      to: isoDate(next - 1),
+      days,
+      amount: left,
+      baseRate: r.rate,
+      rate,
+      penalty: tiyn((left * rate * days) / 100 / TAX_PENALTY.basis),
+    })
+    day = next
+  }
+  const penalty = tiyn(parts.reduce((s, p) => s + p.penalty, 0))
+  const days = parts.reduce((s, p) => s + p.days, 0)
+  return ok({ debt: d.value, rest, days, parts, penalty, total: tiyn(rest + penalty), stale })
 }
 
 /**

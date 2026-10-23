@@ -90,4 +90,14 @@ export const en: Messages = {
     range: 'Income, months, days or birth order is out of range',
     data: 'No MRP or MZP for this year',
   },
+  vehicle: {
+    invalid: 'Enter the engine volume, power, capacity or mass as a number',
+    range: 'Year of manufacture or months are out of range',
+    data: 'No MRP for this year',
+  },
+  property: {
+    invalid: 'Enter the value or area as a number',
+    range: 'Area, year, share, months or coefficient is out of range',
+    data: 'No MRP for this or the previous year',
+  },
 }

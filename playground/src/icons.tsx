@@ -209,6 +209,25 @@ const ICONS: Record<ToolId, ReactNode> = {
       <path d="M40 40H52M40 44H52M46 44V54" />
     </>
   ),
+  property: (
+    <>
+      <path className="f" d="M10 30 32 10 54 30V56H10Z" />
+      <path d="M10 30 32 10 54 30M14 27V56H50V27" />
+      <path className="bg" d={rr(25, 38, 39, 56, 2)} />
+      <path d={rr(25, 38, 39, 56, 2)} />
+      <path d={`${wl(6, 56, 58, 56)}M27 43H37M27 47H37M32 47V53`} />
+    </>
+  ),
+  vehicle: (
+    <>
+      <path className="f" d="M6 38 10 28 18 18H40L50 28 58 31V42H6Z" />
+      <path d="M6 38 10 28 18 18H40L50 28 58 31V42H6ZM10 28H50M28 18V28" />
+      <path className="bg" d={`${wc(18, 44, 6)}${wc(46, 44, 6)}`} />
+      <path d={`${wc(18, 44, 6)}${wc(46, 44, 6)}`} />
+      <circle className="k" cx="18" cy="44" r="1.6" />
+      <circle className="k" cx="46" cy="44" r="1.6" />
+    </>
+  ),
   simplified: (
     <>
       <path className="f" d={wr(12, 8, 46, 56)} />
@@ -240,6 +259,17 @@ const ICONS: Record<ToolId, ReactNode> = {
       <path className="f" d={wr(29, 37, 50, 52)} />
       <path d={wr(29, 37, 50, 52)} />
       <path d="M33 44.5 38 49 46 40.5" />
+    </>
+  ),
+  penalty: (
+    <>
+      <path className="bg" d={wr(8, 6, 42, 56)} />
+      <path d={wr(8, 6, 42, 56)} />
+      <path d={`${wl(15, 16, 35, 16)}${wl(15, 24, 31, 24)}${wl(15, 32, 26, 32)}`} />
+      <path className="bg" d={wc(44, 44, 14)} />
+      <path className="f" d={wc(44, 44, 14)} />
+      <path d={wc(44, 44, 14)} />
+      <path d="M44 35V44L50 48" />
     </>
   ),
   loan: (

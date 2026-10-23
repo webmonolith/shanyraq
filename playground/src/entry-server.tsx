@@ -21,15 +21,18 @@ import maternity from './tools/maternity'
 import money from './tools/money'
 import mortgage from './tools/mortgage'
 import mrp from './tools/mrp'
+import penalty from './tools/penalty'
 import phone from './tools/phone'
 import plate from './tools/plate'
 import procedure from './tools/procedure'
+import property from './tools/property'
 import regions from './tools/regions'
 import requisites from './tools/requisites'
 import salary from './tools/salary'
 import simplified from './tools/simplified'
 import translit from './tools/translit'
 import vat from './tools/vat'
+import vehicle from './tools/vehicle'
 import type { ToolProps } from './ui'
 
 export { ogName, pages, SITE } from './site'
@@ -50,10 +53,13 @@ const WIDGETS: Record<ToolId, ComponentType<ToolProps>> = {
   dismissal,
   alimony,
   procedure,
+  vehicle,
+  property,
   maternity,
   claim,
   simplified,
   deadlines,
+  penalty,
   fees,
   loan,
   mortgage,

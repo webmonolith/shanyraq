@@ -22,6 +22,8 @@ const subpaths = [
   'tax',
   'taxid',
   'translit',
+  'property',
+  'vehicle',
   'zod',
 ]
 

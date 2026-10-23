@@ -5,7 +5,7 @@ import { getMessage, isValidIIN, messages, moneyToWords, parsePhone } from 'shan
 import { alimony } from 'shanyraq/alimony'
 import { isValidBIN } from 'shanyraq/bin'
 import { countWorkingDays, isDayOff } from 'shanyraq/calendar'
-import { claimDuty, claimPenalty } from 'shanyraq/claim'
+import { claimDuty, claimPenalty, taxPenalty } from 'shanyraq/claim'
 import { formatDate } from 'shanyraq/date'
 import { taxDeadlines } from 'shanyraq/deadlines'
 import { createFaker } from 'shanyraq/faker'
@@ -19,10 +19,12 @@ import { parseAmount } from 'shanyraq/money'
 import { formatPhone } from 'shanyraq/phone'
 import { parsePlate } from 'shanyraq/plate'
 import { procedureTerm } from 'shanyraq/procedure'
+import { landTax, propertyTax, propertyValue } from 'shanyraq/property'
 import { regionByPlateCode } from 'shanyraq/regions'
 import { addVAT, calculateSalary, simplifiedTax } from 'shanyraq/tax'
 import { parseTaxId } from 'shanyraq/taxid'
 import { toLatin } from 'shanyraq/translit'
+import { recyclingFee, registrationFee, vehicleTax } from 'shanyraq/vehicle'
 
 assert.equal(getMessage('ru', 'iin', 'checksum'), 'Неверная контрольная цифра ИИН')
 assert.equal(messages.ru, ru)
@@ -53,8 +55,18 @@ assert.equal(procedureTerm('2026-01-31', 'appeal').value.end, '2026-03-02')
 assert.equal(alimony(500000, { children: 2, gross: true }).value.amount, 136325)
 assert.equal(claimPenalty(1000000, '2026-01-31', '2026-10-01').value.penalty, 108184.93)
 assert.equal(claimDuty(1108184.93).value.duty, 11081.85)
+assert.equal(taxPenalty(100000, '2026-07-31', '2026-08-10').value.penalty, 573.63)
 assert.equal(maternityPay(500000).value.amount, 1890000)
 assert.equal(childcarePay(500000).value.net, 162000)
+assert.equal(vehicleTax('car', { volume: 2000, made: 2015 }).value.annual, 11532.5)
+assert.equal(
+  propertyValue({ settlement: 'almaty', area: 60, built: 2010, walls: 'panel' }).value.value,
+  3516317.4,
+)
+assert.equal(propertyTax(15000000).value.tax, 26100)
+assert.equal(landTax('yard', 1200, { settlement: 'almaty' }).value.annual, 1400)
+assert.equal(registrationFee('car', 2024, 2026).value.fee, 216250)
+assert.equal(recyclingFee('car', { volume: 1600 }).value.fee, 756875)
 assert.equal(
   dismissalPay(3600000, '2026-06-30', { unusedDays: 12, reason: 'reduction' }).value.pay,
   442623,

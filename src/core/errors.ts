@@ -14,6 +14,8 @@ export type DeadlinesError = 'range' | 'data'
 export type AlimonyError = 'invalid' | 'range' | 'date' | 'data'
 export type ClaimError = 'invalid' | 'range' | 'date' | 'data'
 export type FamilyError = 'invalid' | 'range' | 'data'
+export type VehicleError = 'invalid' | 'range' | 'data'
+export type PropertyError = 'invalid' | 'range' | 'data'
 
 /** Every error code of every module, keyed by module name. */
 export interface ErrorCodes {
@@ -33,4 +35,6 @@ export interface ErrorCodes {
   alimony: AlimonyError
   claim: ClaimError
   family: FamilyError
+  vehicle: VehicleError
+  property: PropertyError
 }

@@ -90,7 +90,13 @@ const CODE: Record<string, string> = {
     "import { baseRate, claimDuty, claimPenalty } from 'shanyraq/claim'\n\nbaseRate('2026-10-01') // { rate: 16.25, since: '2026-09-07', stale: false }\nclaimPenalty(1000000, '2026-01-31', '2026-10-01').value // { penalty: 108184.93, total: 1108184.93, … }\nclaimDuty(1108184.93).value?.duty // 11081.85",
   simplified:
     "import { simplifiedTax } from 'shanyraq/tax'\n\nsimplifiedTax(3000000).value // { ipn: 120000, monthly: { opv: 8500, so: 4250, vosms: 5950 }, total: 232200, … }\nsimplifiedTax(3000000, { rate: 3 }).value?.ipn // 90000",
+  vehicle:
+    "import { recyclingFee, registrationFee, vehicleTax } from 'shanyraq/vehicle'\n\nvehicleTax('car', { volume: 2000, made: 2015 }).value // { rate: 3, extra: 3500, coefficient: 0.7, annual: 11532.5, … }\nregistrationFee('car', 2024, 2026).value // { age: 3, rate: 50, fee: 216250 }\nrecyclingFee('car', { volume: 1600 }).value // { coefficient: 3.5, base: 216250, fee: 756875 }",
+  property:
+    "import { landTax, propertyTax, propertyValue } from 'shanyraq/property'\n\npropertyValue({ settlement: 'almaty', area: 60, built: 2010, walls: 'panel' }).value // { wear: 11.2, physical: 0.888, mrpIndex: 1.099949, value: 3516317.4, … }\npropertyTax(15000000).value?.tax // 26100\nlandTax('yard', 1200, { settlement: 'almaty' }).value // { annual: 1400, tax: 1400 }",
   fees: "import { mrpToTenge } from 'shanyraq/tax'\n\nmrpToTenge(8).value // 34600 — паспорт, 36 страниц\nmrpToTenge(10 / 2).value // 21625 — штраф 10 МРП при оплате за 7 суток",
+  penalty:
+    "import { taxPenalty } from 'shanyraq/claim'\n\ntaxPenalty(100000, '2026-07-31', '2026-08-10').value // { days: 10, penalty: 573.63, total: 100573.63, … }\ntaxPenalty(100000, '2026-07-31', '2026-08-10', { monitoring: true }).value?.penalty // 298.29",
   deadlines:
     "import { taxDeadlines } from 'shanyraq/deadlines'\n\ntaxDeadlines(2026, { regime: 'simplified', tags: ['ip'] }).value\n// [{ id: 'socialSelf', date: '2026-01-26', … }, { id: 'f910', form: '910.00', due: '2026-02-15', date: '2026-02-16', moved: true, … }, …]",
   loan: "import { loanSchedule } from 'shanyraq/loan'\n\nloanSchedule(1000000, 20, 12).value // { monthly: 92634.51, overpayment: 111614.09, apr: 21.94, … }\nloanSchedule(1000000, 20, 12, { method: 'differentiated', prepayments: [{ month: 3, amount: 300000 }] })",
@@ -126,9 +132,12 @@ const GROUPS: { title: Record<Lang, string>; tools: ToolId[] }[] = [
       'alimony',
       'simplified',
       'deadlines',
+      'penalty',
       'vat',
       'mrp',
       'fees',
+      'vehicle',
+      'property',
       'loan',
       'mortgage',
     ],

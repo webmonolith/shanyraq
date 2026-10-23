@@ -1,6 +1,6 @@
 import fc from 'fast-check'
 import { describe, expect, it } from 'vitest'
-import { baseRate, claimDuty, claimPenalty } from '../src/claim'
+import { baseRate, claimDuty, claimPenalty, taxPenalty } from '../src/claim'
 import type { Result } from '../src/core/result'
 
 const val = <T>(r: Result<T, string>): T => {
@@ -154,6 +154,113 @@ describe('claimPenalty', () => {
           expect(v.total).toBeCloseTo(v.rest + v.penalty, 2)
         },
       ),
+    )
+  })
+})
+
+describe('taxPenalty', () => {
+  it('1.25 × base rate / 365 per day, from the day after due to the payment day', () => {
+    expect(val(taxPenalty(100000, '2026-07-31', '2026-08-10'))).toEqual({
+      debt: 100000,
+      rest: 100000,
+      days: 10,
+      parts: [
+        {
+          from: '2026-08-01',
+          to: '2026-08-10',
+          days: 10,
+          amount: 100000,
+          baseRate: 16.75,
+          rate: 20.9375,
+          penalty: 573.63,
+        },
+      ],
+      penalty: 573.63,
+      total: 100573.63,
+      stale: false,
+    })
+    expect(val(taxPenalty('100 000', '2026-09-30', '2026-10-10')).penalty).toBe(556.51)
+    expect(
+      val(taxPenalty(100000, '2026-07-31', '2026-08-10', { monitoring: true })).parts[0]?.rate,
+    ).toBe(10.8875)
+  })
+
+  it('rate of each day and partial payments split the period', () => {
+    const v = val(
+      taxPenalty(1000000, '2026-05-31', '2026-07-31', {
+        payments: [{ date: '2026-06-20', amount: 400000 }],
+      }),
+    )
+    expect(v.parts.map((p) => [p.from, p.to, p.amount, p.baseRate, p.penalty])).toEqual([
+      ['2026-06-01', '2026-06-07', 1000000, 18, 4315.07],
+      ['2026-06-08', '2026-06-20', 1000000, 17, 7568.49],
+      ['2026-06-21', '2026-07-26', 600000, 17, 12575.34],
+      ['2026-07-27', '2026-07-31', 600000, 16.75, 1720.89],
+    ])
+    expect(v).toMatchObject({ rest: 600000, days: 61, penalty: 26179.79, total: 626179.79 })
+  })
+
+  it('stops on full payment; payment on the due day; stale; nothing overdue', () => {
+    const paid = val(
+      taxPenalty(100, '2026-01-01', '2026-03-01', {
+        payments: [
+          { date: '2026-01-10', amount: 60 },
+          { date: '2026-01-01', amount: 40 },
+        ],
+      }),
+    )
+    expect(paid).toMatchObject({ rest: 0, days: 9, total: paid.penalty })
+    expect(paid.parts).toEqual([
+      {
+        from: '2026-01-02',
+        to: '2026-01-10',
+        days: 9,
+        amount: 60,
+        baseRate: 18,
+        rate: 22.5,
+        penalty: 0.33,
+      },
+    ])
+    expect(val(taxPenalty(100, '2026-10-01', '2026-11-01')).stale).toBe(true)
+    expect(val(taxPenalty(100, '2026-01-01', '2026-01-01'))).toMatchObject({
+      days: 0,
+      penalty: 0,
+      parts: [],
+    })
+    expect(val(taxPenalty(0, '2026-01-01', '2026-02-01')).parts).toEqual([])
+  })
+
+  it('errors', () => {
+    expect(taxPenalty('x', '2026-01-01', '2026-02-01')).toEqual({ ok: false, error: 'invalid' })
+    expect(taxPenalty(1, '2026-02-30', '2026-03-01')).toEqual({ ok: false, error: 'date' })
+    expect(taxPenalty(1, '2026-02-01', '2026-01-01')).toEqual({ ok: false, error: 'range' })
+    expect(taxPenalty(1, '2017-12-30', '2018-02-01')).toEqual({ ok: false, error: 'data' })
+    expect(val(taxPenalty(1000, '2017-12-31', '2018-01-01')).parts[0]?.baseRate).toBe(10.25)
+    const pay = (date: string, amount: number | string) =>
+      taxPenalty(100, '2026-01-01', '2026-02-01', { payments: [{ date, amount }] })
+    expect(pay('2026-01-10', 101)).toEqual({ ok: false, error: 'range' })
+    expect(pay('2025-12-31', 1)).toEqual({ ok: false, error: 'range' })
+    expect(pay('x', 1)).toEqual({ ok: false, error: 'date' })
+    expect(pay('2026-01-10', 'x')).toEqual({ ok: false, error: 'invalid' })
+  })
+
+  it('property: equals the sum over days of debt × 1.25 × baseRate(day) / 365', () => {
+    fc.assert(
+      fc.property(
+        fc.integer({ min: 0, max: 1e9 }),
+        fc.integer({ min: 0, max: 3100 }),
+        fc.integer({ min: 0, max: 400 }),
+        (debt, start, length) => {
+          const iso = (n: number) => new Date(Date.UTC(2018, 0, n)).toISOString().slice(0, 10)
+          const v = val(taxPenalty(debt, iso(start), iso(start + length)))
+          let sum = 0
+          for (let d = start + 1; d <= start + length; d++)
+            sum += (debt * 1.25 * (baseRate(iso(d))?.rate ?? 0)) / 100 / 365
+          expect(v.penalty).toBeCloseTo(sum, -1)
+          expect(v.days).toBe(debt > 0 ? length : 0)
+        },
+      ),
+      { numRuns: 200 },
     )
   })
 })

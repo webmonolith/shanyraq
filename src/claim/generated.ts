@@ -46,3 +46,10 @@ export const DUTY = {
   legal: { percent: 3, maxMrp: 20000 },
   courtOrderShare: 50,
 } as const
+
+export const TAX_PENALTY = {
+  multiplier: 1.25,
+  monitoring: 0.65,
+  since: '2018-01-01',
+  basis: 365,
+} as const

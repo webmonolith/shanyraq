@@ -102,6 +102,18 @@ const family: Messages['family'] = {
   data: 'Нет МРП или МЗП за этот год',
 }
 
+const vehicle: Messages['vehicle'] = {
+  invalid: 'Введите объём, мощность, грузоподъёмность или массу числом',
+  range: 'Год выпуска или число месяцев вне допустимого диапазона',
+  data: 'Нет МРП за этот год',
+}
+
+const property: Messages['property'] = {
+  invalid: 'Введите стоимость или площадь числом',
+  range: 'Площадь, год, доля, месяцы или коэффициент вне допустимого диапазона',
+  data: 'Нет МРП за этот или предыдущий год',
+}
+
 const deadlines: Messages['deadlines'] = {
   range: 'Год вне допустимого диапазона',
   data: 'Нет данных производственного календаря за этот год',
@@ -124,6 +136,8 @@ export const ru: Messages = {
   alimony,
   claim,
   family,
+  vehicle,
+  property,
 }
 
 export {
