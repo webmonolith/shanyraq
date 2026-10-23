@@ -52,6 +52,8 @@ const T = {
     force: 'Решение вступит в силу, если не обжаловано (ст. 240 п. 1)',
     note: 'Подать можно до 24:00 последнего дня — по почте или электронно; в самом суде — до конца его рабочего дня (ст. 123 п. 5–6).',
     hint: 'Выберите дату события.',
+    guess:
+      'Срок заходит в год, для которого в данных ещё нет даты Курбан айта или приказа о переносах выходных, — конец срока может сдвинуться.',
     messages: ru.calendar,
   },
   kk: {
@@ -88,6 +90,8 @@ const T = {
     force: 'Шағым берілмесе, шешім заңды күшіне енеді (240-бап 1-т.)',
     note: 'Соңғы күні сағат 24:00-ге дейін поштамен немесе электрондық түрде беруге болады; сотта тікелей — оның жұмыс күні аяқталғанға дейін (123-бап 5–6-т.).',
     hint: 'Оқиға күнін таңдаңыз.',
+    guess:
+      'Мерзім деректерде Құрбан айт күні немесе демалыс күндерін ауыстыру туралы бұйрық әлі жоқ жылға түседі — мерзімнің соңы жылжуы мүмкін.',
     messages: kk.calendar,
   },
 }
@@ -105,6 +109,8 @@ export default function Procedure({ lang }: ToolProps) {
   const period: ProcedurePeriod | ProcedureDeadline =
     kind === 'custom' ? { [unit]: Number(count.trim() || Number.NaN) } : kind
   const r = date ? procedureTerm(date, period) : undefined
+  // the same term in strict mode fails on years whose holidays are not fully known yet
+  const guess = r?.ok && !procedureTerm(date, period, { strict: true }).ok
   return (
     <>
       <div className="grid">
@@ -123,6 +129,7 @@ export default function Procedure({ lang }: ToolProps) {
         <Status ok={false}>{t.messages[r.error]}</Status>
       ) : (
         <>
+          {guess && <Status>{t.guess}</Status>}
           <div className="result">
             <div>
               <small>{t.end}</small>

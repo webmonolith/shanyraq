@@ -29,6 +29,11 @@ export const startAnalytics = (group: string) => {
     layer.push(arguments)
   }
   window.gtag('js', new Date())
+  // `config` covers only the first page_view; `set` keeps later events and history page views clean too.
+  window.gtag('set', {
+    page_location: clean(location.href),
+    page_referrer: document.referrer ? clean(document.referrer) : '',
+  })
   window.gtag('config', ID, {
     page_location: clean(location.href),
     ...(document.referrer && { page_referrer: clean(document.referrer) }),

@@ -48,6 +48,8 @@ const T = {
     total: 'От государства в месяц',
     retire: (age: number) => `Пенсия с ${String(age).replace('.', ',')} лет`,
     basic: (p: number) => `Базовая пенсия (${p} % прожиточного минимума)`,
+    basicFrom: (age: number, date: string) =>
+      `Базовая пенсия — только с ${String(age).replace('.', ',')} лет, с ${date} (Социальный кодекс, ст. 205): при досрочном выходе до этого платится одна солидарная.`,
     solidary: (p: number, ratio: number) =>
       ratio === 1
         ? `Солидарная пенсия (${p} % дохода)`
@@ -87,6 +89,8 @@ const T = {
     total: 'Мемлекеттен айына',
     retire: (age: number) => `${String(age).replace('.', ',')} жастан зейнетақы`,
     basic: (p: number) => `Базалық зейнетақы (ең төменгі күнкөріс деңгейінің ${p} %-ы)`,
+    basicFrom: (age: number, date: string) =>
+      `Базалық зейнетақы — тек ${String(age).replace('.', ',')} жастан, ${date} бастап (Әлеуметтік кодекс, 205-бап): мерзімінен бұрын шыққанда оған дейін тек ортақ зейнетақы төленеді.`,
     solidary: (p: number, ratio: number) =>
       ratio === 1
         ? `Ортақ зейнетақы (табыстың ${p} %-ы)`
@@ -133,6 +137,9 @@ export default function Pension({ lang }: ToolProps) {
     early === 'none' ? undefined : (early as EarlyRetirement),
   )
   const basic = basicPension(num(record || '0'))
+  // Basic pension starts at the general age of art. 207 p. 1 even when the solidary one starts early.
+  const general = early === 'none' ? age : retirementAge(birth, gender)
+  const later = early !== 'none' && general.ok && age.ok && general.value.date > age.value.date
   const solidary = agePension(income || 0, num(record1998 || '0'), gender)
   const enpf =
     age.ok && today && salary.trim()
@@ -197,7 +204,7 @@ export default function Pension({ lang }: ToolProps) {
           <div className="result">
             <div>
               <small>{t.total}</small>
-              <b>{fmt(basic.value.amount + solidary.value.amount)} ₸</b>
+              <b>{fmt((later ? 0 : basic.value.amount) + solidary.value.amount)} ₸</b>
             </div>
             <div>
               <small>{t.retire(age.value.age)}</small>
@@ -216,6 +223,9 @@ export default function Pension({ lang }: ToolProps) {
                 : [t.noSolidary, '0 ₸'],
             ]}
           />
+          {later && general.ok && (
+            <Status>{t.basicFrom(general.value.age, dmy(general.value.date))}</Status>
+          )}
           {solidary.value.ratio > 0 && num(income || '0') > solidary.value.income && (
             <Status>{t.capped(`${fmt(solidary.value.income)} ₸`)}</Status>
           )}

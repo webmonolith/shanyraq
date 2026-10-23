@@ -301,7 +301,10 @@ export const dismissalPay = (
     const total = n.getUTCFullYear() * 12 + n.getUTCMonth() + months
     const ty = Math.floor(total / 12)
     const tm = (total % 12) + 1
-    const to = (dayNumber(ty, tm, Math.min(n.getUTCDate(), daysInMonth(ty, tm))) as number) - 1
+    // no such date in the target month → the period ends on its last day
+    const d = n.getUTCDate()
+    const dim = daysInMonth(ty, tm)
+    const to = d > dim ? (dayNumber(ty, tm, dim) as number) : (dayNumber(ty, tm, d) as number) - 1
     const w = countWorkingDays(isoDate(day), isoDate(to), options.calendar)
     if (!w.ok) return err(w.error === 'data' ? 'data' : 'range')
     result.severance = {

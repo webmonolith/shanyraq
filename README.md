@@ -1,11 +1,17 @@
 # shanyraq
 
-Zero-dependency, tree-shakeable TypeScript utilities for Kazakhstan: IIN/BIN, phone numbers, IBAN, amounts in words, licence plates, regions, holidays and working days, dates, Kazakh Latin script.
+Zero-dependency, tree-shakeable TypeScript utilities for Kazakhstan.
 
-[Русская версия](README.ru.md) · [Online tools](https://shanyraq.webmonolith.kz)
+- **Validation:** IIN/BIN, phone numbers and city codes, IBAN and banks, licence plates, regions (KATO).
+- **Payroll and benefits:** salary taxes, vacation and sick pay, dismissal payout, maternity and childcare, pension, alimony.
+- **Taxes and loans:** VAT, simplified regime (910), tax calendar, tax penalty, vehicle and property tax, registration and recycling fees, loan schedules with the effective rate (ГЭСВ).
+- **Courts and law:** procedural deadlines, contractual penalty under Civil Code art. 353, court duty, inheritance shares.
+- **Text:** amounts in words, official date formats, holidays and working days, Kazakh Latin script.
 
-- **Sourced, not guessed.** Every rule and dataset (`data/*.json`) links to the law, order or registry it comes from, with a retrieval date.
-- **Small.** Each subpath is ≤ 2 kB gzip (data modules like `iban` and `calendar` slightly more); import only what you use.
+[Русская версия](README.ru.md) · [Online tools](https://shanyraq.webmonolith.kz) (79 pages in Russian and Kazakh, built on this package)
+
+- **Sourced, not guessed.** Every rule and dataset (`data/*.json`) links to the law, order or registry it comes from, with a retrieval date. What could not be verified is listed in each dataset's `unverified`.
+- **Small.** Most subpaths are ≤ 2 kB gzip; modules that carry data (banks, calendar, deadlines, leave) are up to 4 kB. Import only what you use.
 - **Predictable.** Pure functions, no `throw`, no global state. Parsers return `{ ok: true, value } | { ok: false, error }`.
 - **Three languages.** Error messages and formatting in Russian, Kazakh and English.
 - **Batteries.** zod schemas, a seeded faker for test data and a CLI.
@@ -115,6 +121,78 @@ toLatin('Қазақстан Республикасы') // 'Qazaqstan Respublikas
 toLatin('Қазақстан', { scheme: '2018' })
 ```
 
+### Salary and taxes
+
+```ts
+import { calculateSalary, grossFromNet, addVAT, simplifiedTax } from 'shanyraq/tax'
+import { taxDeadlines } from 'shanyraq/deadlines'
+import { taxPenalty } from 'shanyraq/claim'
+
+calculateSalary(500000)
+// { ok: true, value: { gross: 500000, opv: 50000, vosms: 10000, ipn: 31025, net: 408975, employerCost: 581400, ... } }
+grossFromNet(400000) // gross 488 668
+addVAT(100000) // { net: 100000, vat: 16000, gross: 116000 }
+
+taxDeadlines(2026, { regime: 'simplified' })
+// [{ id: 'ipnAgent', due: '2026-01-25', date: '2026-01-26', moved: true, ... }, ...]
+taxPenalty(100000, '2026-04-10', '2026-05-10') // penalty 1 849.32 at 1.25 × base rate
+```
+
+Rates are for 2026 (Tax Code No. 214-VIII, Social Code, budget law); pass `year` where a function takes it.
+
+### Leave, benefits and pension
+
+```ts
+import { vacationPay, sickPay, dismissalPay } from 'shanyraq/leave'
+import { maternityPay, childcarePay } from 'shanyraq/family'
+import { retirementAge, agePension } from 'shanyraq/pension'
+import { alimony } from 'shanyraq/alimony'
+
+vacationPay(6000000, '2026-07-01', 24)
+// { ok: true, value: { end: '2026-07-25', holidays: ['2026-07-06'], dailyWage: 24390.24, pay: 414634.08, ... } }
+maternityPay(400000) // 126 days → 1 512 000, 1 360 800 after ОПВ
+childcarePay(400000) // 40 % of the average, 144 000 a month
+retirementAge('1970-05-01', 'female') // { age: 63, date: '2033-05-01' }
+alimony(500000, { children: 2 }) // a third of net pay
+```
+
+### Loans
+
+```ts
+import { loanSchedule, effectiveRate, gesvLimit } from 'shanyraq/loan'
+
+loanSchedule(20000000, 7, 300) // 7-20-25 mortgage
+// { ok: true, value: { monthly: 141355.84, overpayment: 22406751.7, apr: 7.23, ... } }
+gesvLimit('mortgage', '2026-10-23') // { ok: true, value: 25 } — legal cap on the effective rate
+```
+
+### Courts and law
+
+```ts
+import { procedureTerm } from 'shanyraq/procedure'
+import { claimPenalty, claimDuty } from 'shanyraq/claim'
+import { inheritanceShares } from 'shanyraq/inheritance'
+
+procedureTerm('2026-10-23', 'appeal') // { start: '2026-10-24', due: '2026-11-23', ... }
+claimPenalty(1000000, '2026-01-31', '2026-10-01') // 243 days at the NBRK base rate → 108 184.93
+claimDuty(5000000) // { percent: 1, duty: 50000, capped: false }
+inheritanceShares({ spouse: true, children: 2 }, { estate: 30000000 })
+// spouse and each child 1/3 — 10 000 000 each
+```
+
+The NBRK base-rate history is built in; results after the next scheduled decision come back with `stale: true`.
+
+### Vehicles and property
+
+```ts
+import { vehicleTax, registrationFee, recyclingFee } from 'shanyraq/vehicle'
+import { propertyTax, landTax } from 'shanyraq/property'
+
+vehicleTax('car', { volume: 2000, made: 2018 }) // 3 MRP + 7 ₸ per cc over 1 500 → 16 475
+registrationFee('car', 2018) // 500 MRP → 2 162 500
+propertyTax(30000000) // 96 600
+```
+
 ### Error messages
 
 ```ts
@@ -170,7 +248,18 @@ Values can also come from stdin, one per line. Exit code is 1 when any value is 
 | `shanyraq/phone` | +7 numbers: country, mobile operator, city, formatting |
 | `shanyraq/iban` | KZ IBAN, bank directory by code and BIC |
 | `shanyraq/money` | Amounts in words (ru, kk), amount parsing |
-| `shanyraq/tax` | 2026 payroll (ИПН, ОПВ, ВОСМС, ОПВР, СО, ООСМС, СН), gross ↔ net, VAT, MRP/MZP |
+| `shanyraq/tax` | 2026 payroll (ИПН, ОПВ, ВОСМС, ОПВР, СО, ООСМС, СН), gross ↔ net, VAT, MRP/MZP, simplified regime (910) |
+| `shanyraq/deadlines` | Tax calendar: filing and payment deadlines by regime, moved off days off |
+| `shanyraq/leave` | Vacation pay, sick pay, dismissal payout (average daily wage) |
+| `shanyraq/family` | Maternity and childcare payments, birth and care allowances |
+| `shanyraq/pension` | Retirement age, basic and solidarity pension, pension contributions |
+| `shanyraq/alimony` | Alimony by share or fixed MRP, late-payment penalty |
+| `shanyraq/loan` | Annuity and differentiated schedules, prepayments, effective rate (ГЭСВ), legal caps |
+| `shanyraq/procedure` | Procedural deadlines (Civil Procedure Code) |
+| `shanyraq/claim` | NBRK base rate, penalty under Civil Code art. 353, court duty, tax penalty |
+| `shanyraq/inheritance` | Shares of heirs by law, spouse's half, obligatory share |
+| `shanyraq/vehicle` | Vehicle tax, first registration fee, recycling fee |
+| `shanyraq/property` | Property value, property tax, land tax |
 | `shanyraq/calendar` | Holidays, days off, working-day arithmetic |
 | `shanyraq/date` | Official date formats (ru, kk), parsing |
 | `shanyraq/translit` | Kazakh Cyrillic → Latin (2021 and 2018 alphabets) |

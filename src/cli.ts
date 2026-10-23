@@ -61,9 +61,19 @@ const detectLang = (): Lang => {
   return env.startsWith('kk') ? 'kk' : env.startsWith('ru') ? 'ru' : 'en'
 }
 
+// parseArgs refuses `--add -3` as ambiguous; glue negative numbers to their option.
+const argv: string[] = []
+for (const a of process.argv.slice(2)) {
+  const prev = argv[argv.length - 1]
+  if (/^-\d/.test(a) && (prev === '--add' || prev === '--seed'))
+    argv[argv.length - 1] = `${prev}=${a}`
+  else argv.push(a)
+}
+
 const parsed = (() => {
   try {
     return parseArgs({
+      args: argv,
       allowPositionals: true,
       options: {
         strict: { type: 'boolean' },

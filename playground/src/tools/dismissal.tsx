@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { kk, ru } from 'shanyraq/i18n'
 import { type DismissalReason, dismissalPay } from 'shanyraq/leave'
 import { Choice, Field, fmt, Rows, Share, Status, type ToolProps, useQuery } from '../ui'
@@ -99,7 +98,7 @@ export default function Dismissal({ lang }: ToolProps) {
   const [end, setEnd] = useQuery('end', '2026-06-30')
   const [unused, setUnused] = useQuery('days', '12')
   const [salary, setSalary] = useQuery('salary', '')
-  const [worked, setWorked] = useState('')
+  const [worked, setWorked] = useQuery('worked', '')
   const earnings = basis === 'month' && value.trim() ? String(num(value) * 12) : value
   const r = !value.trim()
     ? undefined

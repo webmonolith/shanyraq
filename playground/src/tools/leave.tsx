@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { kk, ru } from 'shanyraq/i18n'
 import { sickPay, vacationPay } from 'shanyraq/leave'
 import { getTaxYear } from 'shanyraq/tax'
@@ -77,7 +76,7 @@ export function LeaveTool({ lang, kind }: ToolProps & { kind: 'vacation' | 'sick
   const [days, setDays] = useQuery('days', '24')
   const [from, setFrom] = useQuery('from', '2026-03-02')
   const [to, setTo] = useQuery('to', '2026-03-06')
-  const [worked, setWorked] = useState('')
+  const [worked, setWorked] = useQuery('worked', '')
   const earnings = basis === 'month' && value.trim() ? String(num(value) * 12) : value
   const options = worked.trim() ? { workedDays: num(worked) } : {}
   const r = !value.trim()

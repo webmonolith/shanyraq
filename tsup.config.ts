@@ -5,6 +5,7 @@ const subpaths = [
   'bin',
   'calendar',
   'claim',
+  'customs',
   'date',
   'deadlines',
   'faker',

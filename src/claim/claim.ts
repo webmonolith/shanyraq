@@ -277,8 +277,8 @@ export const claimDuty = (
   if (!p.ok) return p
   const y = getTaxYear(options.year)
   if (!y) return err('data')
+  if (payer !== 'individual' && payer !== 'legal') return err('range')
   const rule = DUTY[payer]
-  if (!rule) return err('range')
   const share = courtOrder ? DUTY.courtOrderShare / 100 : 1
   const full = (p.value * rule.percent) / 100
   const max = rule.maxMrp * y.mrp

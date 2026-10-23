@@ -1,3 +1,4 @@
+import { HOME } from './content'
 import { CONTACT, hubPath, LANGS, type Page, SITE } from './site'
 import { CHECKED } from './sources'
 
@@ -24,8 +25,11 @@ const ORGANIZATION = {
   sameAs: [CONTACT.repo],
 }
 
+// `/` repeats the ru hub; search engines get /ru/ as the one URL.
+const canonicalPath = (page: Page): string => (page.kind === 'root' ? '/ru/' : page.path)
+
 const schema = (page: Page): object[] => {
-  const url = SITE + page.path
+  const url = SITE + canonicalPath(page)
   if (page.kind === 'about')
     return [
       {
@@ -48,6 +52,15 @@ const schema = (page: Page): object[] => {
         publisher: { '@id': ORGANIZATION['@id'] },
       },
       ORGANIZATION,
+      {
+        '@type': 'FAQPage',
+        inLanguage: page.lang,
+        mainEntity: HOME[page.lang].questions.map(([name, text]) => ({
+          '@type': 'Question',
+          name,
+          acceptedAnswer: { '@type': 'Answer', text },
+        })),
+      },
     ]
   return [
     {
@@ -75,14 +88,14 @@ const schema = (page: Page): object[] => {
 
 /** Everything that goes into <head> besides charset, viewport and assets. */
 export const head = (page: Page, og: string | undefined): string => {
-  const url = SITE + page.path
+  const url = SITE + canonicalPath(page)
   const title = page.kind === 'tool' ? `${page.title} — shanyraq` : page.title
   if (page.kind === 'notFound')
     return `<title>${attr(title)}</title>\n<meta name="robots" content="noindex" />`
   const alternates = page.alternates
     ? [
         ...LANGS.map((l) => [l, page.alternates?.[l]] as const),
-        ['x-default', page.kind === 'hub' ? '/' : page.alternates.ru] as const,
+        ['x-default', page.alternates.ru] as const,
       ]
     : [['x-default', page.path] as const]
   const image = og ? `${SITE}/og/${og}.png` : undefined
@@ -106,6 +119,11 @@ export const head = (page: Page, og: string | undefined): string => {
           '<meta property="og:image:width" content="1200" />',
           '<meta property="og:image:height" content="630" />',
           '<meta name="twitter:card" content="summary_large_image" />',
+        ]
+      : []),
+    ...(page.kind === 'root'
+      ? [
+          "<script>try{if(/^kk/i.test(navigator.language))location.replace('/kk/')}catch(e){}</script>",
         ]
       : []),
     `<script type="application/ld+json">${json({ '@context': 'https://schema.org', '@graph': schema(page) })}</script>`,

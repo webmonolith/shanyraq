@@ -84,7 +84,8 @@ const dial = (code: string, nsn: string) => {
 export default function Codes({ lang }: ToolProps) {
   const t = T[lang]
   const [q, setQ] = useQuery('q')
-  const [zone, setZone] = useQuery('z')
+  const [zoneQ, setZone] = useQuery('z')
+  const zone = ZONES.includes(zoneQ as Zone) ? zoneQ : ''
   const query = q.trim()
   const numeric = /\d/.test(query) && !/\p{L}/u.test(query)
   const nsn = numeric ? toNsn(query) : ''

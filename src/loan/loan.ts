@@ -97,6 +97,8 @@ export const effectiveRate = (
 ): Result<number, LoanError> => {
   if (!(received > 0 && received <= MAX_AMOUNT) || !payments.length) return err('range')
   if (payments.some((p) => !(p.days >= 0 && nonNegative(p.amount)))) return err('range')
+  // flows all on day 0 don't depend on the rate: any rate (or none) solves the equation
+  if (payments.every((p) => p.days === 0)) return err('range')
   const value = (x: number) =>
     payments.reduce((s, p) => s + p.amount * (1 + x) ** (-p.days / 365), 0) - received
   let lo = -0.99

@@ -6,6 +6,7 @@ import { alimony } from 'shanyraq/alimony'
 import { isValidBIN } from 'shanyraq/bin'
 import { countWorkingDays, isDayOff } from 'shanyraq/calendar'
 import { claimDuty, claimPenalty, taxPenalty } from 'shanyraq/claim'
+import { personalCarDuty } from 'shanyraq/customs'
 import { formatDate } from 'shanyraq/date'
 import { taxDeadlines } from 'shanyraq/deadlines'
 import { createFaker } from 'shanyraq/faker'
@@ -69,6 +70,11 @@ assert.equal(propertyTax(15000000).value.tax, 26100)
 assert.equal(basicPension(30).value.amount, 55936)
 assert.equal(agePension(300000, 12, 'female').value.amount, 85635)
 assert.equal(retirementAge('1963-05-10', 'male').value.date, '2026-05-10')
+assert.equal(
+  personalCarDuty(0, { volume: 2000, made: '2020-01-01', declared: '2026-10-23', eur: 500 }).value
+    .duty,
+  4800000,
+)
 assert.deepEqual(inheritanceShares({ spouse: true, children: 3 }).value.heirs[1].share, [1, 4])
 assert.equal(landTax('yard', 1200, { settlement: 'almaty' }).value.annual, 1400)
 assert.equal(registrationFee('car', 2024, 2026).value.fee, 216250)

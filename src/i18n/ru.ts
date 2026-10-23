@@ -104,7 +104,7 @@ const family: Messages['family'] = {
 
 const vehicle: Messages['vehicle'] = {
   invalid: 'Введите объём, мощность, грузоподъёмность или массу числом',
-  range: 'Год выпуска или число месяцев вне допустимого диапазона',
+  range: 'Год выпуска, число месяцев, объём или масса вне допустимого диапазона',
   data: 'Нет МРП за этот год',
 }
 
@@ -124,6 +124,12 @@ const pension: Messages['pension'] = {
   range: 'Доход, стаж, пол или вид досрочной пенсии вне допустимого диапазона',
   date: 'Неверная дата, ожидается ГГГГ-ММ-ДД',
   data: 'Нет прожиточного минимума, МРП или минимальной пенсии за этот год',
+}
+
+const customs: Messages['customs'] = {
+  invalid: 'Введите стоимость, объём двигателя и курс евро числом',
+  range: 'Стоимость, объём двигателя, курс евро или дата выпуска вне допустимого диапазона',
+  date: 'Неверная дата, ожидается ГГГГ-ММ-ДД',
 }
 
 const deadlines: Messages['deadlines'] = {
@@ -152,13 +158,29 @@ export const ru: Messages = {
   property,
   inheritance,
   pension,
+  customs,
 }
 
 export {
+  alimony as alimonyRu,
   bin as binRu,
+  calendar as calendarRu,
+  claim as claimRu,
+  customs as customsRu,
+  date as dateRu,
+  deadlines as deadlinesRu,
+  family as familyRu,
   iban as ibanRu,
   iin as iinRu,
+  inheritance as inheritanceRu,
+  leave as leaveRu,
+  loan as loanRu,
+  money as moneyRu,
+  pension as pensionRu,
   phone as phoneRu,
   plate as plateRu,
+  property as propertyRu,
+  tax as taxRu,
   taxid as taxidRu,
+  vehicle as vehicleRu,
 }

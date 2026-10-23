@@ -71,7 +71,7 @@ const PATTERNS: [Kind, RegExp][] = [
   ['iban', /\bKZ\d{2}(?:[  ]?[0-9A-Z]){16}\b/gi],
   ['bic', /\b[A-Z]{4}KZ[A-Z0-9]{2}\b/g],
   ['taxid', /(?<![\d+])\d{12}(?!\d)/g],
-  ['phone', /(?:\+7|\b8)[  \-(]*\d{3}[  \-)]*\d{3}[  -]*\d{2}[  -]*\d{2}\b/g],
+  ['phone', /(?:\+7|\b8)[  \-(]*\d{3,5}[  \-)]*\d{1,3}[  -]*\d{2}[  -]*\d{2}\b/g],
 ]
 
 const scan = (text: string, t: Texts, lang: 'ru' | 'kk'): Found[] => {
@@ -168,8 +168,9 @@ export default function Requisites({ lang }: ToolProps) {
                 </tr>
               </thead>
               <tbody>
-                {found.map((f) => (
-                  <tr key={`${f.kind}${f.raw}`} className={f.ok ? undefined : 'bad'}>
+                {found.map((f, i) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: the same IBAN or BIN often repeats in one invoice
+                  <tr key={i} className={f.ok ? undefined : 'bad'}>
                     <td>{t.kinds[f.kind]}</td>
                     <td>
                       <code>{f.ok ? f.value : f.raw}</code>

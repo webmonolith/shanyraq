@@ -9,6 +9,7 @@ import calendar from './tools/calendar'
 import childcare from './tools/childcare'
 import claim from './tools/claim'
 import codes from './tools/codes'
+import customs from './tools/customs'
 import date from './tools/date'
 import deadlines from './tools/deadlines'
 import dismissal from './tools/dismissal'
@@ -63,6 +64,7 @@ const WIDGETS: Record<ToolId, ComponentType<ToolProps>> = {
   procedure,
   vehicle,
   registration,
+  customs,
   property,
   land,
   maternity,

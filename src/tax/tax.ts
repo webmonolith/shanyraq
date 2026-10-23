@@ -158,7 +158,7 @@ export const grossFromNet = (
   const s = settings(options)
   if (!s.ok) return s
   const target = round(n.value)
-  // net grows with gross and is never above it, and never below half of it
+  // net is never above gross and never below half of it
   let lo = target
   let hi = target * 2 + 1
   while (lo < hi) {
@@ -166,7 +166,11 @@ export const grossFromNet = (
     if (salary(mid, ...s.value).net < target) lo = mid + 1
     else hi = mid
   }
-  return ok(salary(lo, ...s.value))
+  // separate rounding of ОПВ and ВОСМС makes net dip by a tenge here and there
+  let best = lo
+  for (let g = lo - 1; g >= Math.max(0, lo - 10); g--)
+    if (salary(g, ...s.value).net >= target) best = g
+  return ok(salary(best, ...s.value))
 }
 
 const vatRate = (options: VATOptions): Result<number, TaxError> => {

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { kk, ru } from 'shanyraq/i18n'
 import { calculateSalary, getTaxYear, grossFromNet } from 'shanyraq/tax'
 import { Check, Choice, Field, fmt, Rows, Share, Status, type ToolProps, useQuery } from '../ui'
@@ -100,9 +99,13 @@ const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1)
 export default function SalaryTool({ lang }: ToolProps) {
   const t = T[lang]
   const [value, setValue] = useQuery('q', '500000')
-  const [mode, setMode] = useState<'gross' | 'net'>('gross')
-  const [month, setMonth] = useState('1')
-  const [deduction, setDeduction] = useState(true)
+  const [modeQ, setMode] = useQuery('mode', 'gross')
+  const mode = modeQ === 'net' ? 'net' : 'gross'
+  const [monthQ, setMonth] = useQuery('m', '1')
+  const month = MONTHS.includes(Number(monthQ)) ? monthQ : '1'
+  const [dedQ, setDed] = useQuery('ded', '1')
+  const deduction = dedQ !== '0'
+  const setDeduction = (v: boolean) => setDed(v ? '1' : '0')
   const options = { month: Number(month), baseDeduction: deduction }
   const r = value.trim()
     ? (mode === 'gross' ? calculateSalary : grossFromNet)(value, options)
@@ -113,7 +116,8 @@ export default function SalaryTool({ lang }: ToolProps) {
         return s.ok ? [s.value] : []
       })
     : []
-  const progressive = year.some((s) => s.ipn !== year[0]?.ipn)
+  // Cumulative IPN rounded to whole tenge moves by ±1 ₸ month to month; only the 15 % band moves it more.
+  const progressive = year.some((s) => s.ipn - (year[0]?.ipn ?? 0) > 1)
   const money = (n: number) => `${fmt(n)} ₸`
   const ipnPct =
     r?.ok && r.value.taxable > 0 ? ` (${Math.round((r.value.ipn / r.value.taxable) * 100)} %)` : ''

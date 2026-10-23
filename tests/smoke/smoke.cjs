@@ -9,6 +9,7 @@ const { en } = require('shanyraq/i18n')
 const { taxDeadlines } = require('shanyraq/deadlines')
 const { isValidIBAN } = require('shanyraq/iban')
 const { isValidIIN } = require('shanyraq/iin')
+const { personalCarDuty } = require('shanyraq/customs')
 const { vacationPay } = require('shanyraq/leave')
 const { loanSchedule } = require('shanyraq/loan')
 const { moneyToWords } = require('shanyraq/money')
@@ -19,6 +20,11 @@ const { toLatin } = require('shanyraq/translit')
 
 assert.equal(getMessage('en', 'iban', 'length'), en.iban.length)
 assert.equal(isValidIIN('900101300126'), true)
+assert.equal(
+  personalCarDuty(0, { volume: 1500, made: '2022-01-01', declared: '2026-10-23', eur: 500 }).value
+    .duty,
+  1275000,
+)
 assert.equal(vacationPay(3600000, '2026-07-01').value.end, '2026-07-25')
 assert.equal(loanSchedule(1000000, 20, 12).value.monthly, 92634.51)
 assert.equal(taxDeadlines(2026).value.length > 0, true)

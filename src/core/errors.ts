@@ -18,6 +18,7 @@ export type VehicleError = 'invalid' | 'range' | 'data'
 export type PropertyError = 'invalid' | 'range' | 'data'
 export type InheritanceError = 'invalid' | 'range'
 export type PensionError = 'invalid' | 'range' | 'date' | 'data'
+export type CustomsError = 'invalid' | 'range' | 'date'
 
 /** Every error code of every module, keyed by module name. */
 export interface ErrorCodes {
@@ -41,4 +42,5 @@ export interface ErrorCodes {
   property: PropertyError
   inheritance: InheritanceError
   pension: PensionError
+  customs: CustomsError
 }

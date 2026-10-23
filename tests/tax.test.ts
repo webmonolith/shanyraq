@@ -150,6 +150,11 @@ describe('grossFromNet', () => {
     expect(val(grossFromNet(0)).gross).toBe(0)
   })
 
+  it('skips over rounding dips in net', () => {
+    // net(125) < 110 but net(124) ≥ 110
+    expect(val(grossFromNet(110)).gross).toBe(124)
+  })
+
   it('smallest gross reaching the net', () => {
     fc.assert(
       fc.property(

@@ -41,7 +41,8 @@ export const parseAmount = (input: number | bigint | string): Result<Amount, Mon
     if (!Number.isFinite(input)) return err('invalid')
     if (input < 0) return err('range')
     tenge = Math.floor(input)
-    tiyn = Math.round((input - tenge) * 100)
+    // 1.005 is stored as 1.00499…; read the tiyn as written, half up
+    tiyn = Math.round(Number(((input - tenge) * 100).toPrecision(12)))
     if (tiyn === 100) {
       tenge++
       tiyn = 0
