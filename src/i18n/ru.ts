@@ -89,6 +89,19 @@ const alimony: Messages['alimony'] = {
   data: 'Нет ставок налогов или МРП за этот год',
 }
 
+const claim: Messages['claim'] = {
+  invalid: 'Введите сумму числом',
+  range: 'Сумма, даты, ставка или оплаты вне допустимого диапазона',
+  date: 'Неверная дата, ожидается ГГГГ-ММ-ДД',
+  data: 'Нет базовой ставки или МРП на эту дату',
+}
+
+const family: Messages['family'] = {
+  invalid: 'Введите доход числом',
+  range: 'Доход, число месяцев, дней или очерёдность ребёнка вне допустимого диапазона',
+  data: 'Нет МРП или МЗП за этот год',
+}
+
 const deadlines: Messages['deadlines'] = {
   range: 'Год вне допустимого диапазона',
   data: 'Нет данных производственного календаря за этот год',
@@ -109,6 +122,8 @@ export const ru: Messages = {
   loan,
   deadlines,
   alimony,
+  claim,
+  family,
 }
 
 export {

@@ -6,6 +6,7 @@ import { ogName, type Page, pageByPath, type ToolId } from './site'
 import alimony from './tools/alimony'
 import batch from './tools/batch'
 import calendar from './tools/calendar'
+import claim from './tools/claim'
 import codes from './tools/codes'
 import date from './tools/date'
 import deadlines from './tools/deadlines'
@@ -16,6 +17,7 @@ import iban from './tools/iban'
 import iin from './tools/iin'
 import leave from './tools/leave'
 import loan from './tools/loan'
+import maternity from './tools/maternity'
 import money from './tools/money'
 import mortgage from './tools/mortgage'
 import mrp from './tools/mrp'
@@ -48,6 +50,8 @@ const WIDGETS: Record<ToolId, ComponentType<ToolProps>> = {
   dismissal,
   alimony,
   procedure,
+  maternity,
+  claim,
   simplified,
   deadlines,
   fees,

@@ -5,9 +5,11 @@ import { getMessage, isValidIIN, messages, moneyToWords, parsePhone } from 'shan
 import { alimony } from 'shanyraq/alimony'
 import { isValidBIN } from 'shanyraq/bin'
 import { countWorkingDays, isDayOff } from 'shanyraq/calendar'
+import { claimDuty, claimPenalty } from 'shanyraq/claim'
 import { formatDate } from 'shanyraq/date'
 import { taxDeadlines } from 'shanyraq/deadlines'
 import { createFaker } from 'shanyraq/faker'
+import { childcarePay, maternityPay } from 'shanyraq/family'
 import { ru } from 'shanyraq/i18n'
 import { formatIBAN, getBank, parseIBAN } from 'shanyraq/iban'
 import { parseIIN } from 'shanyraq/iin'
@@ -49,6 +51,10 @@ assert.equal(vacationPay(3600000, '2026-07-01').value.pay, 248780.55)
 assert.equal(sickPay(3600000, '2026-03-02', '2026-03-06').value.pay, 73469.4)
 assert.equal(procedureTerm('2026-01-31', 'appeal').value.end, '2026-03-02')
 assert.equal(alimony(500000, { children: 2, gross: true }).value.amount, 136325)
+assert.equal(claimPenalty(1000000, '2026-01-31', '2026-10-01').value.penalty, 108184.93)
+assert.equal(claimDuty(1108184.93).value.duty, 11081.85)
+assert.equal(maternityPay(500000).value.amount, 1890000)
+assert.equal(childcarePay(500000).value.net, 162000)
 assert.equal(
   dismissalPay(3600000, '2026-06-30', { unusedDays: 12, reason: 'reduction' }).value.pay,
   442623,

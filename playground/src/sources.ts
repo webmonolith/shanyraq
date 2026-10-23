@@ -3,7 +3,9 @@
 import alimony from '../../data/alimony.json'
 import banks from '../../data/banks.json'
 import calendar from '../../data/calendar.json'
+import claim from '../../data/claim.json'
 import deadlines from '../../data/deadlines.json'
+import family from '../../data/family.json'
 import fees from '../../data/fees.json'
 import language from '../../data/language.json'
 import leave from '../../data/leave.json'
@@ -77,6 +79,8 @@ export const SOURCES: Record<ToolId, Source[]> = {
   leave: [...linked(leave.source), ...taxSource('budget2026'), calendar.law],
   dismissal: [...linked(leave.source), calendar.law],
   procedure: [...linked(procedure.source), calendar.law],
+  claim: [...linked(claim.source), ...taxSource('budget2026')],
+  maternity: [...linked(family.source), ...taxSource('budget2026')],
   alimony: [
     ...linked(alimony.source),
     ...taxSource('taxCode', 'socialCode', 'osmsLaw', 'budget2026'),

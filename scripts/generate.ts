@@ -455,3 +455,115 @@ write(
   )} as const
 `,
 )
+
+interface ClaimData {
+  baseRate: { since: string; next: string[]; decisions: [string, number][] }
+  duty: {
+    property: Record<'individual' | 'legal', { percent: number; maxMrp: number }>
+    courtOrder: { share: number }
+  }
+}
+
+const claim = read<ClaimData>('claim')
+
+write(
+  'claim/generated.ts',
+  'data/claim.json',
+  `export const BASE_RATE = ${json({
+    since: claim.baseRate.since,
+    staleAfter: claim.baseRate.next[0],
+    changes: claim.baseRate.decisions.filter((d, i, all) => i === 0 || d[1] !== all[i - 1]?.[1]),
+  })} as const
+
+export const DUTY = ${json({
+    individual: claim.duty.property.individual,
+    legal: claim.duty.property.legal,
+    courtOrderShare: claim.duty.courtOrder.share,
+  })} as const
+`,
+)
+
+interface FamilyData {
+  maternity: { averageMonths: number; dayDivisor: number; leave: Record<string, number> }
+  childcare: { averageMonths: number; replacement: number; maxMzp: number }
+  opv: { percent: number }
+  birth: { mrp: number[] }
+  care: { mrp: number[] }
+}
+
+const family = read<FamilyData>('family')
+
+write(
+  'family/generated.ts',
+  'data/family.json',
+  `export const FAMILY = ${json({
+    maternityMonths: family.maternity.averageMonths,
+    dayDivisor: family.maternity.dayDivisor,
+    leave: family.maternity.leave,
+    childcareMonths: family.childcare.averageMonths,
+    replacement: family.childcare.replacement,
+    childcareMaxMzp: family.childcare.maxMzp,
+    opv: family.opv.percent / 100,
+    birthMrp: family.birth.mrp,
+    careMrp: family.care.mrp,
+  })} as const
+`,
+)
+
+type Brackets = (number | null)[][]
+
+interface VehicleData {
+  tax: {
+    car: { brackets: Brackets; extraFrom: number; extraPerCc: number; age: Brackets }
+    truck: { brackets: Brackets }
+    bus: { brackets: Brackets }
+    moto: { brackets: Brackets }
+    special: number
+  }
+  registration: Record<'car' | 'electric' | 'truck' | 'tractor', Brackets>
+  recycling: {
+    baseMrp: number
+    car: { electric: number[]; brackets: Brackets }
+    truck: { electric: number[]; brackets: Brackets }
+    bus: { electric: number[]; brackets: Brackets }
+  }
+}
+
+const vehicle = read<VehicleData>('vehicle')
+// `null` upper bound → Infinity, so lookups need no special case.
+const open = (b: Brackets) => b.map(([up, ...rest]) => [up ?? 'Infinity', ...rest])
+const jsonInf = (v: unknown) => json(v).replace(/"Infinity"/g, 'Infinity')
+
+write(
+  'vehicle/generated.ts',
+  'data/vehicle.json',
+  `export const TAX = ${jsonInf({
+    car: open(vehicle.tax.car.brackets),
+    extraFrom: vehicle.tax.car.extraFrom,
+    extraPerCc: vehicle.tax.car.extraPerCc,
+    age: open(vehicle.tax.car.age),
+    truck: open(vehicle.tax.truck.brackets),
+    bus: open(vehicle.tax.bus.brackets),
+    moto: open(vehicle.tax.moto.brackets),
+    special: vehicle.tax.special,
+  })} as const
+
+export const REGISTRATION = ${jsonInf(
+    Object.fromEntries(
+      Object.entries(vehicle.registration)
+        .filter((e): e is [string, Brackets] => Array.isArray(e[1]))
+        .map(([k, v]) => [k, open(v)]),
+    ),
+  )} as const
+
+export const RECYCLING = ${jsonInf({
+    baseMrp: vehicle.recycling.baseMrp,
+    car: { electric: vehicle.recycling.car.electric, brackets: open(vehicle.recycling.car.brackets) },
+    truck: {
+      electric: vehicle.recycling.truck.electric,
+      brackets: open(vehicle.recycling.truck.brackets),
+    },
+    bus: { electric: vehicle.recycling.bus.electric, brackets: open(vehicle.recycling.bus.brackets) },
+  })} as const
+`,
+)

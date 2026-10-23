@@ -166,6 +166,15 @@ const ICONS: Record<ToolId, ReactNode> = {
       <circle className="k" cx="26" cy="48" r="1.6" />
     </>
   ),
+  maternity: (
+    <>
+      <path className="f" d="M10 30C10 18 19 9 31 8V30Z" />
+      <path d="M10 30C10 18 19 9 31 8V30" />
+      <path className="f" d="M8 30H52C51 40 43 46 30 46S9 40 8 30Z" />
+      <path d="M8 30H52C51 40 43 46 30 46S9 40 8 30ZM52 30 56 17H61" />
+      <path d={`${wc(19, 53, 5)}${wc(42, 53, 5)}`} />
+    </>
+  ),
   alimony: (
     <>
       <path className="f" d={wc(22, 16, 7)} />
@@ -185,6 +194,19 @@ const ICONS: Record<ToolId, ReactNode> = {
       <path className="f" d="M42 34 50 18 58 34Z" />
       <path d="M42 34 50 18 58 34ZM42 34C44 39 56 39 58 34" />
       <circle className="k" cx="32" cy="8" r="2" />
+    </>
+  ),
+  claim: (
+    <>
+      <path className="f" d={wr(8, 6, 40, 54)} />
+      <path d={wr(8, 6, 40, 54)} />
+      <path d={`${wl(15, 16, 33, 16)}${wl(15, 24, 28, 24)}`} />
+      <path d="M16 44 30 30" />
+      <path d={`${wc(17.5, 32, 2.6)}${wc(28.5, 42, 2.6)}`} />
+      <path className="bg" d={wc(46, 46, 12)} />
+      <path className="f" d={wc(46, 46, 12)} />
+      <path d={wc(46, 46, 12)} />
+      <path d="M40 40H52M40 44H52M46 44V54" />
     </>
   ),
   simplified: (

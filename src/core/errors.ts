@@ -12,6 +12,8 @@ export type LeaveError = 'invalid' | 'range' | 'date' | 'data'
 export type LoanError = 'invalid' | 'range' | 'date' | 'data'
 export type DeadlinesError = 'range' | 'data'
 export type AlimonyError = 'invalid' | 'range' | 'date' | 'data'
+export type ClaimError = 'invalid' | 'range' | 'date' | 'data'
+export type FamilyError = 'invalid' | 'range' | 'data'
 
 /** Every error code of every module, keyed by module name. */
 export interface ErrorCodes {
@@ -29,4 +31,6 @@ export interface ErrorCodes {
   loan: LoanError
   deadlines: DeadlinesError
   alimony: AlimonyError
+  claim: ClaimError
+  family: FamilyError
 }

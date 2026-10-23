@@ -23,7 +23,11 @@
     "mortgage",
     "tax-calendar",
     "alimony",
-    "court-deadlines"
+    "court-deadlines",
+    "penalty",
+    "state-duty",
+    "maternity",
+    "childcare"
   ],
   "homepage": "https://github.com/webmonolith/shanyraq#readme",
   "repository": {
@@ -67,6 +71,26 @@
       "require": {
         "types": "./dist/alimony/index.d.cts",
         "default": "./dist/alimony/index.cjs"
+      }
+    },
+    "./claim": {
+      "import": {
+        "types": "./dist/claim/index.d.ts",
+        "default": "./dist/claim/index.js"
+      },
+      "require": {
+        "types": "./dist/claim/index.d.cts",
+        "default": "./dist/claim/index.cjs"
+      }
+    },
+    "./family": {
+      "import": {
+        "types": "./dist/family/index.d.ts",
+        "default": "./dist/family/index.js"
+      },
+      "require": {
+        "types": "./dist/family/index.d.cts",
+        "default": "./dist/family/index.cjs"
       }
     },
     "./bin": {

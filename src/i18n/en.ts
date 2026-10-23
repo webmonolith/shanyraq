@@ -79,4 +79,15 @@ export const en: Messages = {
     date: 'Invalid date, expected YYYY-MM-DD',
     data: 'No tax rates or MRP for this year',
   },
+  claim: {
+    invalid: 'Enter the amount as a number',
+    range: 'Amount, dates, rate or payments are out of range',
+    date: 'Invalid date, expected YYYY-MM-DD',
+    data: 'No base rate or MRP for this date',
+  },
+  family: {
+    invalid: 'Enter the income as a number',
+    range: 'Income, months, days or birth order is out of range',
+    data: 'No MRP or MZP for this year',
+  },
 }
