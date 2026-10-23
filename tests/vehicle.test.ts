@@ -90,6 +90,7 @@ describe('registrationFee', () => {
   it('errors', () => {
     expect(registrationFee('car', 2028, 2026)).toEqual({ ok: false, error: 'range' })
     expect(registrationFee('boat' as 'car', 2020)).toEqual({ ok: false, error: 'invalid' })
+    expect(registrationFee('toString' as 'car', 2020)).toEqual({ ok: false, error: 'invalid' })
     expect(registrationFee('car', 2020, 2020)).toEqual({ ok: false, error: 'data' })
   })
 })
@@ -117,6 +118,11 @@ describe('recyclingFee', () => {
     expect(recyclingFee('car')).toEqual({ ok: false, error: 'invalid' })
     expect(recyclingFee('truck', { mass: 60 })).toEqual({ ok: false, error: 'range' })
     expect(recyclingFee('boat' as 'car', { volume: 1 })).toEqual({ ok: false, error: 'invalid' })
+    expect(recyclingFee('baseMrp' as 'car', { volume: 1 })).toEqual({ ok: false, error: 'invalid' })
+    expect(recyclingFee('toString' as 'car', { volume: 1 })).toEqual({
+      ok: false,
+      error: 'invalid',
+    })
     expect(recyclingFee('car', { volume: 1, year: 2020 })).toEqual({ ok: false, error: 'data' })
   })
 })

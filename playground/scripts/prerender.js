@@ -29,7 +29,10 @@ const entry = (page) => {
 }
 await writeFile(
   new URL('sitemap.xml', dist),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${pages.map(entry).join('\n')}\n</urlset>\n`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${pages
+    .filter((p) => p.kind !== 'root')
+    .map(entry)
+    .join('\n')}\n</urlset>\n`,
 )
 await writeFile(
   new URL('robots.txt', dist),

@@ -200,8 +200,9 @@ export default function Claim({ lang }: ToolProps) {
                 </tr>
               </thead>
               <tbody>
-                {r.value.parts.map((p) => (
-                  <tr key={`${p.date}${p.paid}${p.amount}`}>
+                {r.value.parts.map((p, i) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: two equal payments on one day are two rows
+                  <tr key={i}>
                     <td>
                       {fmt(p.amount, 2)} ₸
                       <br />

@@ -67,7 +67,7 @@ await mkdir(`${OUT}/icons`, { recursive: true })
 
 for (const page of pages) {
   const tool = TOOLS.find((t) => t.id === page.tool)
-  const heading = page.kind === 'root' ? 'ИИН, IBAN, телефон, теңге, календарь' : page.h1
+  const heading = page.h1
   const tag = tool ? tool.module : TAG[page.lang]
   await writeFile(`${TMP}/og-${ogName(page)}.html`, card(page.lang, heading, tag))
 }

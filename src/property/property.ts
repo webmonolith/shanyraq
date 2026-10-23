@@ -1,4 +1,5 @@
 import type { PropertyError } from '../core/errors'
+import { own } from '../core/own'
 import { err, ok, type Result } from '../core/result'
 import { getTaxYear, MAX_SALARY } from '../tax/tax'
 import { LAND, RATES, SETTLEMENTS, VALUE } from './generated'
@@ -120,7 +121,9 @@ export const propertyValue = (
 ): Result<PropertyValue, PropertyError> => {
   const { kind = 'dwelling', group = 1, floor = 'middle', walls = 'other' } = options
   const { heating = 'central', zone = 1, luxury = 1 } = options
-  const settlement = SETTLEMENTS[options.settlement]
+  const settlement = own(SETTLEMENTS, options.settlement)
+    ? SETTLEMENTS[options.settlement]
+    : undefined
   const norm = VALUE.norms[group - 1]
   const year = options.year ?? (getTaxYear() as { year: number }).year
   const a = amount(options.area)
@@ -128,9 +131,9 @@ export const propertyValue = (
   if (
     !settlement ||
     !norm ||
-    !(walls in VALUE.walls) ||
-    !(heating in VALUE.heating) ||
-    !(floor in VALUE.floor) ||
+    !own(VALUE.walls, walls) ||
+    !own(VALUE.heating, heating) ||
+    !own(VALUE.floor, floor) ||
     !Number.isInteger(options.built) ||
     !within(options.built, 1800, year) ||
     !within(zone, 0.01, 10) ||
@@ -144,7 +147,8 @@ export const propertyValue = (
     if (!now || !before) return err('data')
     mrpIndex = now / before
   } else if (!within(mrpIndex, 0.5, 2)) return err('range')
-  const share = kind === 'dwelling' ? 100 : VALUE.auxiliary[kind]
+  const share =
+    kind === 'dwelling' ? 100 : own(VALUE.auxiliary, kind) ? VALUE.auxiliary[kind] : undefined
   if (share === undefined) return err('range')
   const base = (settlement[0] * share) / 100
   const wear = Math.round((year - options.built) * norm[0] * 100) / 100
@@ -223,7 +227,10 @@ export const landTax = (
   const { adjust = 0, share = 1, months = 12 } = options
   const a = amount(area)
   if (!a.ok) return a
-  const place = options.settlement === undefined ? undefined : SETTLEMENTS[options.settlement]
+  const place =
+    options.settlement === undefined || !own(SETTLEMENTS, options.settlement)
+      ? undefined
+      : SETTLEMENTS[options.settlement]
   if (
     !within(adjust, -LAND.adjust, LAND.adjust) ||
     !within(share, 0, 1) ||

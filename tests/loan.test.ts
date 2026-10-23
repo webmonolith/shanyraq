@@ -180,6 +180,10 @@ describe('loanSchedule', () => {
 describe('effectiveRate', () => {
   it('one payment a year later', () => {
     expect(effectiveRate(100000, [{ days: 365, amount: 110000 }])).toEqual({ ok: true, value: 10 })
+    expect(effectiveRate(100000, [{ days: 0, amount: 100000 }])).toEqual({
+      ok: false,
+      error: 'range',
+    })
   })
 
   it('rounds half up to the given decimals', () => {

@@ -32,7 +32,8 @@
     "property-tax",
     "recycling-fee",
     "inheritance",
-    "pension"
+    "pension",
+    "customs"
   ],
   "homepage": "https://github.com/webmonolith/shanyraq#readme",
   "repository": {
@@ -86,6 +87,16 @@
       "require": {
         "types": "./dist/claim/index.d.cts",
         "default": "./dist/claim/index.cjs"
+      }
+    },
+    "./customs": {
+      "import": {
+        "types": "./dist/customs/index.d.ts",
+        "default": "./dist/customs/index.js"
+      },
+      "require": {
+        "types": "./dist/customs/index.d.cts",
+        "default": "./dist/customs/index.cjs"
       }
     },
     "./family": {

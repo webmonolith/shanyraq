@@ -167,7 +167,14 @@ describe('dismissalPay', () => {
 
   it('month end clamps: 30 January + 1 month ends on 28 February', () => {
     const v = val(dismissalPay(1000000, '2026-01-30', { reason: 'liquidation' }))
-    expect(v.severance).toMatchObject({ from: '2026-01-31', to: '2026-02-27' })
+    expect(v.severance).toMatchObject({ from: '2026-01-31', to: '2026-02-28' })
+    const w = val(dismissalPay(1000000, '2026-01-27', { reason: 'liquidation' }))
+    expect(w.severance).toMatchObject({ from: '2026-01-28', to: '2026-02-27' })
+  })
+
+  it('a shorter next month still ends on its last day', () => {
+    const v = val(dismissalPay(3600000, '2026-03-30', { reason: 'reduction' }))
+    expect(v.severance).toMatchObject({ from: '2026-03-31', to: '2026-04-30', workingDays: 23 })
   })
 
   it('other ground, no unused days: salary only', () => {

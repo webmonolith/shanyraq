@@ -1,4 +1,5 @@
 import type { VehicleError } from '../core/errors'
+import { own } from '../core/own'
 import { err, ok, type Result } from '../core/result'
 import { getTaxYear } from '../tax/tax'
 import { RECYCLING, REGISTRATION, TAX } from './generated'
@@ -126,8 +127,8 @@ export const registrationFee = (
 ): Result<RegistrationFee, VehicleError> => {
   const y = getTaxYear(year)
   if (!y) return err('data')
+  if (!own(REGISTRATION, kind)) return err('invalid')
   const table = REGISTRATION[kind]
-  if (!table) return err('invalid')
   if (!Number.isInteger(made) || made > y.year + 1 || made < 1900) return err('range')
   const age = Math.max(1, y.year - made + 1)
   const rate = find(table, age)[1]
@@ -145,8 +146,8 @@ export const recyclingFee = (
 ): Result<RecyclingFee, VehicleError> => {
   const y = getTaxYear(options.year)
   if (!y) return err('data')
+  if ((kind as string) === 'baseMrp' || !own(RECYCLING, kind)) return err('invalid')
   const t = RECYCLING[kind]
-  if (!t) return err('invalid')
   const column = options.fromRuBy ? 2 : 1
   let row: readonly number[] | undefined
   if (options.electric) row = [0, ...t.electric]

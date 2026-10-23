@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { formatDate } from 'shanyraq/date'
-import { ABOUT_TEXT, CONTENT } from './content'
-import { Logo, ToolIcon } from './icons'
+import { ABOUT_TEXT, CONTENT, HOME } from './content'
+import { Logo, ReasonIcon, ToolIcon } from './icons'
 import {
   aboutPath,
   CONTACT,
@@ -34,7 +34,6 @@ const UI = {
     tool: 'Инструмент',
     prev: 'Назад',
     next: 'Дальше',
-    facts3: ['Данные не покидают браузер', 'Факты со ссылками на источники', 'Открытый код, MIT'],
     search: 'Найти инструмент',
     searchHint: 'ИИН, зарплата, НДС, латиница…',
     notFound: 'Ничего не найдено',
@@ -64,7 +63,6 @@ const UI = {
     tool: 'Құрал',
     prev: 'Алдыңғы',
     next: 'Келесі',
-    facts3: ['Деректер браузерден шықпайды', 'Ресми дереккөздерге сілтемелер', 'Ашық код, MIT'],
     // TODO(verify): kk search strings need native review
     search: 'Құралды іздеу',
     searchHint: 'ЖСН, жалақы, ҚҚС, латын…',
@@ -124,6 +122,8 @@ const CODE: Record<string, string> = {
     "import { vehicleTax } from 'shanyraq/vehicle'\n\nvehicleTax('car', { volume: 2000, made: 2015 }).value // { rate: 3, extra: 3500, coefficient: 0.7, annual: 11532.5, … }",
   registration:
     "import { recyclingFee, registrationFee } from 'shanyraq/vehicle'\n\nregistrationFee('car', 2024, 2026).value // { age: 3, rate: 50, fee: 216250 }\nrecyclingFee('car', { volume: 1600 }).value // { coefficient: 3.5, base: 216250, fee: 756875 }",
+  customs:
+    "import { personalCarDuty } from 'shanyraq/customs'\n\npersonalCarDuty(20000, { volume: 1998, made: '2024-05-01', declared: '2026-10-23', eur: 500 }).value\n// { age: 2, group: 'upTo3', percent: 48, perCc: 5.5, byValue: 9600, byVolume: 10989, euro: 10989, duty: 5494500 }",
   property:
     "import { propertyTax, propertyValue } from 'shanyraq/property'\n\npropertyValue({ settlement: 'almaty', area: 60, built: 2010, walls: 'panel' }).value // { wear: 11.2, physical: 0.888, mrpIndex: 1.099949, value: 3516317.4, … }\npropertyTax(15000000).value?.tax // 26100",
   land: "import { landTax } from 'shanyraq/property'\n\nlandTax('yard', 1200, { settlement: 'almaty' }).value // { annual: 1400, tax: 1400 }",
@@ -170,6 +170,7 @@ const GROUPS: { title: Record<Lang, string>; tools: ToolId[] }[] = [
       'fees',
       'vehicle',
       'registration',
+      'customs',
       'property',
       'land',
     ],
@@ -228,23 +229,28 @@ const Search = ({ page }: { page: Page }) => {
           </button>
         </div>
         <ul>
-          {ORDER.map((id) => {
-            const text = BY_ID[id].text[page.lang]
-            return (
-              <li key={id}>
-                <a
-                  href={toolPath(page.lang, id)}
-                  data-keys={[text.name, text.h1, text.description, BY_ID[id].module].join(' ')}
-                >
-                  <ToolIcon id={id} size="sm" />
-                  <span className="finder__text">
-                    <b>{text.name}</b>
-                    <small>{text.description}</small>
-                  </span>
-                </a>
-              </li>
-            )
-          })}
+          {GROUPS.flatMap((g) => [
+            <li key={g.title.ru} className="finder__group" data-group>
+              {g.title[page.lang]}
+            </li>,
+            ...g.tools.map((id) => {
+              const text = BY_ID[id].text[page.lang]
+              return (
+                <li key={id}>
+                  <a
+                    href={toolPath(page.lang, id)}
+                    data-keys={[text.name, text.h1, text.description, BY_ID[id].module].join(' ')}
+                  >
+                    <ToolIcon id={id} size="sm" />
+                    <span className="finder__text">
+                      <b>{text.name}</b>
+                      <small>{text.description}</small>
+                    </span>
+                  </a>
+                </li>
+              )
+            }),
+          ])}
         </ul>
         <p className="finder__empty" hidden>
           {t.notFound}
@@ -264,43 +270,17 @@ const SearchIcon = () => (
 const Header = ({ page }: { page: Page }) => {
   const t = UI[page.lang]
   return (
-    <header className={page.kind === 'hub' || page.kind === 'tool' ? 'top top--docs' : 'top'}>
+    <header
+      className={
+        page.kind === 'hub' || page.kind === 'root' || page.kind === 'tool'
+          ? 'top top--docs'
+          : 'top'
+      }
+    >
       <div className="top__in">
-        <Brand href={page.kind === 'root' ? '/' : hubPath(page.lang)} />
-        {page.kind !== 'root' && <Search page={page} />}
+        <Brand href={hubPath(page.lang)} />
+        <Search page={page} />
         <div className="top__right">
-          {page.kind !== 'root' && (
-            <details className="menu">
-              <summary aria-label={t.tools}>
-                <svg
-                  className="menu__icon"
-                  viewBox="0 0 16 16"
-                  width="14"
-                  height="14"
-                  aria-hidden="true"
-                >
-                  <rect x="1" y="1" width="5.5" height="5.5" rx="1.5" />
-                  <rect x="9.5" y="1" width="5.5" height="5.5" rx="1.5" />
-                  <rect x="1" y="9.5" width="5.5" height="5.5" rx="1.5" />
-                  <rect x="9.5" y="9.5" width="5.5" height="5.5" rx="1.5" />
-                </svg>
-                <span>{t.tools}</span>
-              </summary>
-              <ul>
-                {TOOLS.map((tool) => (
-                  <li key={tool.id}>
-                    <a
-                      href={toolPath(page.lang, tool.id)}
-                      aria-current={tool.id === page.tool ? 'page' : undefined}
-                    >
-                      <ToolIcon id={tool.id} size="sm" />
-                      {tool.text[page.lang].name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </details>
-          )}
           <a className="top__gh" href={REPO} rel="noopener" aria-label={t.source} title={t.source}>
             <GitHubMark />
           </a>
@@ -337,8 +317,8 @@ const GitHubMark = () => (
   </svg>
 )
 
-// Three columns of roughly equal height: data + credits + dev, salary + court + texts, taxes.
-const FOOT_COLUMNS = [[0, 3, 6], [1, 4, 5], [2]].map((column) =>
+// Blocks placed by grid areas a–d in styles.css: three columns on desktop, two balanced ones on phones.
+const FOOT_COLUMNS = [[0, 1], [2], [3, 4], [5, 6]].map((column) =>
   column.map((i) => GROUPS[i] as (typeof GROUPS)[number]),
 )
 
@@ -440,7 +420,7 @@ const Footer = ({ lang }: { lang: Lang }) => {
         <nav className="foot__nav" aria-label={t.tools}>
           {FOOT_COLUMNS.map((column, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: static columns
-            <div key={i}>
+            <div key={i} className={`foot__col foot__col--${'abcd'[i]}`}>
               {column.map((g) => (
                 <div className="foot__group" key={g.title.ru}>
                   <h2>{g.title[lang]}</h2>
@@ -480,7 +460,7 @@ const Side = ({ page }: { page: Page }) => {
       <a
         className="side__hub"
         href={hubPath(page.lang)}
-        aria-current={page.kind === 'hub' ? 'page' : undefined}
+        aria-current={page.kind === 'hub' || page.kind === 'root' ? 'page' : undefined}
       >
         <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
           <rect x="1" y="1" width="5.5" height="5.5" rx="1.5" />
@@ -559,9 +539,11 @@ const withIds = (html: string, toc: TocItem[]) =>
     return `<h2 id="${id}">${inner}</h2>`
   })
 
-const ToolList = ({ lang, only }: { lang: Lang; only?: ToolId[] }) => (
-  <ul className="tools">
-    {TOOLS.filter((tool) => !only || only.includes(tool.id)).map((tool) => (
+const START: ToolId[] = ['salary', 'leave', 'iin', 'loan', 'vehicle', 'maternity']
+
+const ToolList = ({ lang, only, start }: { lang: Lang; only?: ToolId[]; start?: boolean }) => (
+  <ul className={start ? 'tools tools--start' : 'tools'}>
+    {(only ? only.map(toolById) : TOOLS).map((tool) => (
       <li key={tool.id}>
         <a href={toolPath(lang, tool.id)}>
           <ToolIcon id={tool.id} />
@@ -577,29 +559,29 @@ const host = (url: string): string => new URL(url).hostname.replace(/^www\./, ''
 
 export const PageView = ({ page, widget }: { page: Page; widget: string }) => {
   const t = UI[page.lang]
-  if (page.kind === 'root')
-    return (
-      <Shell page={page}>
-        <h1>shanyraq</h1>
-        <div className="split">
-          {LANGS.map((l) => (
-            <section key={l} lang={l}>
-              <h2>
-                <a href={hubPath(l)}>{UI[l].langName}</a>
-              </h2>
-              <ToolList lang={l} />
-            </section>
-          ))}
-        </div>
-      </Shell>
-    )
-  if (page.kind === 'hub')
+  const home = HOME[page.lang]
+  if (page.kind === 'hub' || page.kind === 'root')
     return (
       <Docs page={page}>
         <section className="hero">
           <h1>{page.h1}</h1>
           <p className="lead">{page.description}</p>
-          <p className="hero__facts">{t.facts3.join(' · ')}</p>
+        </section>
+        <section className="hub-group">
+          <h2>{home.start}</h2>
+          <ToolList lang={page.lang} only={START} start />
+        </section>
+        <section className="hub-group">
+          <h2>{home.why}</h2>
+          <ul className="why">
+            {home.reasons.map(([title, text], i) => (
+              <li key={title}>
+                <ReasonIcon index={i} />
+                <b>{title}</b>
+                <p>{text}</p>
+              </li>
+            ))}
+          </ul>
         </section>
         {GROUPS.map((g) => (
           <section key={g.title.ru} className="hub-group">
@@ -607,6 +589,19 @@ export const PageView = ({ page, widget }: { page: Page; widget: string }) => {
             <ToolList lang={page.lang} only={g.tools} />
           </section>
         ))}
+        <section className="hub-group faq">
+          <h2>{home.faq}</h2>
+          {home.questions.map(([q, a]) => (
+            <details key={q}>
+              <summary>{q}</summary>
+              <p>{a}</p>
+            </details>
+          ))}
+          <p className="faq__more">
+            {home.more[0]}
+            <a href={aboutPath(page.lang)}>{home.more[1]}</a>.
+          </p>
+        </section>
       </Docs>
     )
   if (page.kind === 'about') {

@@ -180,18 +180,38 @@ const CHECK: Record<
   },
 }
 
-const unquote = (cell: string) =>
-  cell
-    .trim()
-    .replace(/^"(.*)"$/, '$1')
-    .replace(/""/g, '"')
+// Quoted cells keep their separators: "Иванов, Иван" or "ТОО ""Альфа; Бета""".
+const split = (line: string, sep: string): string[] => {
+  const out: string[] = []
+  let cell = ''
+  let quoted = false
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i]
+    if (quoted) {
+      if (c === '"' && line[i + 1] === '"') {
+        cell += '"'
+        i++
+      } else if (c === '"') quoted = false
+      else cell += c
+    } else if (c === '"' && !cell.trim()) quoted = true
+    else if (c === sep) {
+      out.push(cell.trim())
+      cell = ''
+    } else cell += c
+  }
+  out.push(cell.trim())
+  return out
+}
 
 /** Non-empty cells of one column; a first line without digits is a header. */
 const readColumn = (text: string, column: number): string[] => {
-  const cells = text
-    .split(/\r?\n/)
-    .map((line) => unquote(line.split(/[;,\t]/)[column - 1] ?? ''))
-    .filter(Boolean)
+  const lines = text.split(/\r?\n/)
+  const first = lines.find((l) => l.trim()) ?? ''
+  // one separator per file: the one that splits the first line into the most cells
+  const sep = [';', '\t', ','].reduce((a, b) =>
+    split(first, b).length > split(first, a).length ? b : a,
+  )
+  const cells = lines.map((line) => split(line, sep)[column - 1] ?? '').filter(Boolean)
   return cells[0] && !/\d/.test(cells[0]) ? cells.slice(1) : cells
 }
 

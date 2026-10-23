@@ -100,6 +100,16 @@ describe('propertyValue', () => {
   it('errors', () => {
     const base = { settlement: 'almaty', area: 50, built: 2000 } as const
     expect(propertyValue({ ...base, area: 'x' })).toEqual({ ok: false, error: 'invalid' })
+    for (const key of ['toString', 'constructor'])
+      for (const field of ['settlement', 'walls', 'heating', 'floor', 'kind'])
+        expect(propertyValue({ ...base, [field]: key } as never)).toEqual({
+          ok: false,
+          error: 'range',
+        })
+    expect(landTax('housing', 100, { settlement: 'toString' as 'almaty' })).toEqual({
+      ok: false,
+      error: 'range',
+    })
     expect(propertyValue({ ...base, settlement: 'paris' as 'almaty' })).toEqual({
       ok: false,
       error: 'range',

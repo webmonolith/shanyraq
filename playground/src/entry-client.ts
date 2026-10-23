@@ -34,17 +34,6 @@ for (const box of document.querySelectorAll<HTMLElement>('[data-filter]')) {
   })
 }
 
-// Close the tools menu on outside click or Escape.
-const menu = document.querySelector<HTMLDetailsElement>('.menu')
-if (menu) {
-  document.addEventListener('click', (e) => {
-    if (menu.open && !menu.contains(e.target as Node)) menu.open = false
-  })
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') menu.open = false
-  })
-}
-
 const top = document.querySelector('.top')
 if (top) {
   const onScroll = () => top.classList.toggle('top--scrolled', window.scrollY > 4)
@@ -63,6 +52,7 @@ if (opener && finder && query) {
     keys: norm(a.dataset.keys ?? ''),
   }))
   const empty = finder.querySelector<HTMLElement>('.finder__empty')
+  const groups = [...finder.querySelectorAll<HTMLElement>('[data-group]')]
   let shown = items
   let active = 0
 
@@ -79,6 +69,7 @@ if (opener && finder && query) {
     const words = norm(query.value).split(/\s+/).filter(Boolean)
     shown = items.filter((it) => words.every((w) => it.keys.includes(w)))
     for (const it of items) it.li.hidden = !shown.includes(it)
+    for (const g of groups) g.hidden = words.length > 0
     if (empty) empty.hidden = shown.length > 0
     if (shown.length) select(0)
   }

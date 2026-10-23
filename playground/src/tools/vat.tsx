@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { kk, ru } from 'shanyraq/i18n'
 import { moneyToWords } from 'shanyraq/money'
 import { addVAT, extractVAT } from 'shanyraq/tax'
@@ -57,8 +56,10 @@ const T = {
 export default function VatTool({ lang }: ToolProps) {
   const t = T[lang]
   const [value, setValue] = useQuery('q', '1000000')
-  const [mode, setMode] = useState<'without' | 'with'>('without')
-  const [rate, setRate] = useState<Rate>('16')
+  const [modeQ, setMode] = useQuery('mode', 'without')
+  const mode = modeQ === 'with' ? 'with' : 'without'
+  const [rateQ, setRate] = useQuery('rate', '16')
+  const rate = (['16', '10', '5', '0'] as Rate[]).find((x) => x === rateQ) ?? '16'
   const r = value.trim()
     ? (mode === 'without' ? addVAT : extractVAT)(value, { rate: Number(rate) })
     : undefined

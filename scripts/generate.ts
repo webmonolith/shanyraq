@@ -746,3 +746,21 @@ export const LAND = ${json({
   })} as const
 `,
 )
+
+interface CustomsData {
+  personalCar: { upTo3: Brackets; upTo5: Brackets; over5: Brackets }
+}
+
+const customs = read<CustomsData>('customs')
+
+write(
+  'customs/generated.ts',
+  'data/customs.json',
+  `/** Single rates for personal-use cars: [max value €, percent, min €/cc] up to 3 years, [max cc, €/cc] after. */
+export const PERSONAL_CAR = ${jsonInf({
+    upTo3: open(customs.personalCar.upTo3),
+    upTo5: open(customs.personalCar.upTo5),
+    over5: open(customs.personalCar.over5),
+  })} as const
+`,
+)

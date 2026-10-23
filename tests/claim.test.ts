@@ -270,6 +270,12 @@ describe('claimDuty', () => {
     expect(val(claimDuty(1000000))).toEqual({ percent: 1, duty: 10000, capped: false })
     expect(val(claimDuty('1 108 184,93')).duty).toBe(11081.85)
     expect(val(claimDuty(1000000, { payer: 'legal' })).duty).toBe(30000)
+    // keys of the duty table that are not payers
+    expect(claimDuty(100, { payer: 'courtOrderShare' as never })).toEqual({
+      ok: false,
+      error: 'range',
+    })
+    expect(claimDuty(100, { payer: 'toString' as never })).toEqual({ ok: false, error: 'range' })
     expect(val(claimDuty(1e10))).toEqual({ percent: 1, duty: 43250000, capped: true })
     expect(val(claimDuty(1e10, { payer: 'legal' })).duty).toBe(86500000)
   })

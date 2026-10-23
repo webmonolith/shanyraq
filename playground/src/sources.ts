@@ -4,6 +4,7 @@ import alimony from '../../data/alimony.json'
 import banks from '../../data/banks.json'
 import calendar from '../../data/calendar.json'
 import claim from '../../data/claim.json'
+import customsData from '../../data/customs.json'
 import deadlines from '../../data/deadlines.json'
 import family from '../../data/family.json'
 import fees from '../../data/fees.json'
@@ -103,6 +104,12 @@ export const SOURCES: Record<ToolId, Source[]> = {
   childcare: [...linked(family.source), ...taxSource('budget2026')],
   vehicle: [...linked(vehicleData.source), ...taxSource('budget2026')],
   registration: [...linked(vehicleData.source), ...linked(fees.source), ...taxSource('budget2026')],
+  customs: [
+    ...linked(customsData.source),
+    ...linked(vehicleData.source),
+    ...linked(fees.source),
+    ...taxSource('budget2026'),
+  ],
   property: [...linked(propertyData.source), ...taxSource('budget2026')],
   land: [...linked(propertyData.source), ...taxSource('budget2026')],
   alimony: [
@@ -163,6 +170,7 @@ export const CHECKED: Record<ToolId, string> = {
   fees: latest(fees, tax),
   vehicle: latest(vehicleData, tax),
   registration: latest(vehicleData, fees, tax),
+  customs: latest(customsData, vehicleData, fees, tax),
   property: latest(propertyData, tax),
   land: latest(propertyData, tax),
   deadlines: latest(deadlines, calendar),

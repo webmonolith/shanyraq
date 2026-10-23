@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import * as i18n from '../../src/i18n'
 import { en, getMessage, kk, messages, ru } from '../../src/i18n'
 
 const shape = (m: object) =>
@@ -23,5 +24,16 @@ describe('messages', () => {
     expect(getMessage('ru', 'iin', 'checksum')).toBe('Неверная контрольная цифра ИИН')
     expect(getMessage('kk', 'iin', 'checksum')).toBe('ЖСН-нің бақылау цифры қате')
     expect(getMessage('en', 'phone', 'country')).toBe('Only Kazakhstan numbers (+7) are supported')
+  })
+
+  it('per-module objects hold the same texts as the full ones', () => {
+    for (const module of Object.keys(ru)) {
+      const own = (i18n as unknown as Record<string, unknown>)[`${module}Messages`]
+      expect(own).toEqual({
+        ru: ru[module as 'iin'],
+        kk: kk[module as 'iin'],
+        en: en[module as 'iin'],
+      })
+    }
   })
 })

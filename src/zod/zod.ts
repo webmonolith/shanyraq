@@ -67,7 +67,7 @@ export const taxId = (options: TaxIdOptions & SchemaOptions = {}) =>
 /**
  * +7 phone schema; outputs E.164.
  * @example
- * phone({ strict: true }).parse('8 707 123 45 67') // '+77071234567'
+ * phone().parse('8 707 123 45 67') // '+77071234567'
  */
 export const phone = (options: PhoneOptions & SchemaOptions = {}) =>
   schema(

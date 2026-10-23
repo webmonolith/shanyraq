@@ -289,6 +289,16 @@ const ICONS: Record<ToolId, ReactNode> = {
       <circle className="k" cx="46" cy="44" r="1.6" />
     </>
   ),
+  customs: (
+    <>
+      <path d={wl(10, 4, 10, 24)} />
+      <path className="f" d={wr(10, 7, 58, 13)} />
+      <path d="M24 7 20 13M38 7 34 13M52 7 48 13" />
+      <path d="M6 49 10 39 18 31H40L50 39 58 42V53H6ZM10 39H50M28 31V39" />
+      <path className="bg" d={`${wc(18, 54, 5)}${wc(46, 54, 5)}`} />
+      <path d={`${wc(18, 54, 5)}${wc(46, 54, 5)}`} />
+    </>
+  ),
   registration: (
     <>
       <path d={wr(14, 6, 50, 30)} />
@@ -425,6 +435,47 @@ const ICONS: Record<ToolId, ReactNode> = {
 }
 
 // Intrinsic sizes keep icons small before CSS arrives (the dev server injects styles from JS).
+// Home page «why trust» cards: law book, data kept in the browser, free, open code.
+const REASONS: ReactNode[] = [
+  <>
+    <path className="f" d="M8 17C16 12.5 26 13 32 18.5V52C26 47 16 46.5 8 50.5Z" />
+    <path d="M8 17C16 12.5 26 13 32 18.5V52C26 47 16 46.5 8 50.5ZM56 17C48 12.5 38 13 32 18.5V52C38 47 48 46.5 56 50.5Z" />
+    <path d="M48 24.5C45.5 21.5 40 22.5 41 26 42 29 48.5 29.5 48 33.5 47.5 37 42.5 37.5 40.5 35" />
+    <path d="M42 28.5C39.5 30 40 32.5 42.5 33.5" />
+  </>,
+  <>
+    <path d={wr(6, 11, 58, 53)} />
+    <path d={wl(6, 20, 58, 20)} />
+    <circle className="k" cx="12" cy="15.6" r="1.6" />
+    <circle className="k" cx="17.5" cy="15.6" r="1.6" />
+    <path d="M26.5 33V29.5A5.5 5.5 0 0 1 37.5 29.5V33" />
+    <path className="f" d={rr(22.5, 33, 41.5, 47, 3)} />
+    <path d={rr(22.5, 33, 41.5, 47, 3)} />
+    <circle className="k" cx="32" cy="39" r="2" />
+    <path d={wl(32, 40, 32, 43.5)} />
+  </>,
+  <>
+    <path className="f" d="M9 33 33 9H55V31L31 55Z" />
+    <path d="M9 33 33 9H55V31L31 55Z" />
+    <path className="bg" d={wc(46, 18, 3.8)} />
+    <path d={wc(46, 18, 3.8)} />
+    <path className="bg" d={wc(29, 35, 10)} />
+    <path d={wc(29, 35, 10)} />
+    <path d="M24.5 30H33.5M24.5 33.5H33.5M29 33.5V41.5" />
+  </>,
+  <>
+    <path className="f" d={rr(7, 12, 57, 52, 8)} />
+    <path d={rr(7, 12, 57, 52, 8)} />
+    <path d="M23 23 14 32 23 41M41 23 50 32 41 41M36 20 28 44" />
+  </>,
+]
+
+export const ReasonIcon = ({ index }: { index: number }) => (
+  <svg className="doodle doodle--lg" viewBox="0 0 64 64" width="52" height="52" aria-hidden="true">
+    {REASONS[index]}
+  </svg>
+)
+
 const PX = { sm: 28, md: 40, lg: 52 }
 
 export const ToolIcon = ({ id, size = 'md' }: { id: ToolId; size?: 'sm' | 'md' | 'lg' }) => (

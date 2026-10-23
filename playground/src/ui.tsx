@@ -19,7 +19,7 @@ interface FieldProps {
   onChange: (value: string) => void
   placeholder?: string
   inputMode?: 'text' | 'numeric' | 'tel' | 'decimal'
-  type?: 'text' | 'date' | 'number'
+  type?: 'text' | 'date' | 'month' | 'number'
   wide?: boolean
 }
 
@@ -233,7 +233,7 @@ export const parsePayments = (text: string): ClaimPayment[] | number => {
   for (const [i, line] of lines.entries()) {
     if (!line.trim()) continue
     const m =
-      /^\s*(?:(\d{4}-\d{2}-\d{2})|(\d{2})\.(\d{2})\.(\d{4}))[\s;,\t]+([\d\s ]+(?:[.,]\d+)?)\s*$/.exec(
+      /^\s*(?:(\d{4}-\d{2}-\d{2})|(\d{2})\.(\d{2})\.(\d{4}))[\s;,\t]+(\d{1,3}(?:[\s ]\d{3})+(?:[.,]\d+)?|\d+(?:[.,]\d+)?)\s*$/.exec(
         line,
       )
     if (!m) return i + 1

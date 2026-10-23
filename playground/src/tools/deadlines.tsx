@@ -101,6 +101,23 @@ const periodText = (p: TaxDeadline['period']) => `${dmy(p.from)} — ${dmy(p.to)
 const ics = (list: TaxDeadline[], lang: 'ru' | 'kk', t: Texts) => {
   const stamp = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15)
   const esc = (s: string) => s.replace(/([,;\\])/g, '\\$1')
+  // RFC 5545 §3.1: lines over 75 octets are folded; Cyrillic takes 2 octets per letter
+  const fold = (line: string) => {
+    const out: string[] = []
+    let cur = ''
+    let size = 0
+    for (const ch of line) {
+      const n = new TextEncoder().encode(ch).length
+      if (size + n > (out.length ? 74 : 75)) {
+        out.push(cur)
+        cur = ''
+        size = 0
+      }
+      cur += ch
+      size += n
+    }
+    return [...out, cur].join('\r\n ')
+  }
   const events = list.map((d) => {
     const day = d.date.replace(/-/g, '')
     const title = `${d.kind === 'report' ? t.report : t.pay}: ${name(d, lang)}${d.form ? ` (${d.form})` : ''}`
@@ -109,8 +126,8 @@ const ics = (list: TaxDeadline[], lang: 'ru' | 'kk', t: Texts) => {
       `UID:${d.id}-${d.date}@shanyraq.webmonolith.kz`,
       `DTSTAMP:${stamp}Z`,
       `DTSTART;VALUE=DATE:${day}`,
-      `SUMMARY:${esc(title)}`,
-      `DESCRIPTION:${esc(`${t.period} ${periodText(d.period)}`)}`,
+      fold(`SUMMARY:${esc(title)}`),
+      fold(`DESCRIPTION:${esc(`${t.period} ${periodText(d.period)}`)}`),
       'END:VEVENT',
     ].join('\r\n')
   })
@@ -125,7 +142,8 @@ const ics = (list: TaxDeadline[], lang: 'ru' | 'kk', t: Texts) => {
   a.href = URL.createObjectURL(new Blob([body], { type: 'text/calendar;charset=utf-8' }))
   a.download = 'shanyraq-tax-deadlines.ics'
   a.click()
-  URL.revokeObjectURL(a.href)
+  // Safari starts the download after click() returns
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000)
 }
 
 export default function Deadlines({ lang }: ToolProps) {
