@@ -11,6 +11,11 @@ export type TaxError = 'invalid' | 'range' | 'data'
 export type LeaveError = 'invalid' | 'range' | 'date' | 'data'
 export type LoanError = 'invalid' | 'range' | 'date' | 'data'
 export type DeadlinesError = 'range' | 'data'
+export type AlimonyError = 'invalid' | 'range' | 'date' | 'data'
+export type ClaimError = 'invalid' | 'range' | 'date' | 'data'
+export type FamilyError = 'invalid' | 'range' | 'data'
+export type VehicleError = 'invalid' | 'range' | 'data'
+export type PropertyError = 'invalid' | 'range' | 'data'
 
 /** Every error code of every module, keyed by module name. */
 export interface ErrorCodes {
@@ -27,4 +32,9 @@ export interface ErrorCodes {
   leave: LeaveError
   loan: LoanError
   deadlines: DeadlinesError
+  alimony: AlimonyError
+  claim: ClaimError
+  family: FamilyError
+  vehicle: VehicleError
+  property: PropertyError
 }

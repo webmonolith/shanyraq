@@ -3,28 +3,36 @@ import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import { head } from './head'
 import { PageView } from './page'
 import { ogName, type Page, pageByPath, type ToolId } from './site'
+import alimony from './tools/alimony'
 import batch from './tools/batch'
 import calendar from './tools/calendar'
+import claim from './tools/claim'
 import codes from './tools/codes'
 import date from './tools/date'
 import deadlines from './tools/deadlines'
+import dismissal from './tools/dismissal'
 import faker from './tools/faker'
 import fees from './tools/fees'
 import iban from './tools/iban'
 import iin from './tools/iin'
 import leave from './tools/leave'
 import loan from './tools/loan'
+import maternity from './tools/maternity'
 import money from './tools/money'
 import mortgage from './tools/mortgage'
 import mrp from './tools/mrp'
+import penalty from './tools/penalty'
 import phone from './tools/phone'
 import plate from './tools/plate'
+import procedure from './tools/procedure'
+import property from './tools/property'
 import regions from './tools/regions'
 import requisites from './tools/requisites'
 import salary from './tools/salary'
 import simplified from './tools/simplified'
 import translit from './tools/translit'
 import vat from './tools/vat'
+import vehicle from './tools/vehicle'
 import type { ToolProps } from './ui'
 
 export { ogName, pages, SITE } from './site'
@@ -42,8 +50,16 @@ const WIDGETS: Record<ToolId, ComponentType<ToolProps>> = {
   vat,
   mrp,
   leave,
+  dismissal,
+  alimony,
+  procedure,
+  vehicle,
+  property,
+  maternity,
+  claim,
   simplified,
   deadlines,
+  penalty,
   fees,
   loan,
   mortgage,

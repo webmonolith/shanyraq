@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import type { ClaimPayment } from 'shanyraq/claim'
 import { track } from './analytics'
 import type { Lang } from './site'
 
@@ -221,3 +222,25 @@ export const Output = ({ text, lang }: { text: string; lang: Lang }) => (
     <Copy text={text} lang={lang} />
   </div>
 )
+
+export const dmy = (iso: string) => iso.split('-').reverse().join('.')
+export const num = (s: string) => Number(s.replace(/[\s ]/g, '').replace(',', '.'))
+
+/** Lines like `10.06.2026 400 000` or `2026-06-10; 400000`; returns the bad line number on failure. */
+export const parsePayments = (text: string): ClaimPayment[] | number => {
+  const out: ClaimPayment[] = []
+  const lines = text.split('\n')
+  for (const [i, line] of lines.entries()) {
+    if (!line.trim()) continue
+    const m =
+      /^\s*(?:(\d{4}-\d{2}-\d{2})|(\d{2})\.(\d{2})\.(\d{4}))[\s;,\t]+([\d\s ]+(?:[.,]\d+)?)\s*$/.exec(
+        line,
+      )
+    if (!m) return i + 1
+    out.push({
+      date: m[1] ?? `${m[4]}-${m[3]}-${m[2]}`,
+      amount: (m[5] as string).replace(/[\s ]/g, ''),
+    })
+  }
+  return out
+}

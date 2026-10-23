@@ -78,9 +78,25 @@ const CODE: Record<string, string> = {
   mrp: "import { getTaxYear, mrpToTenge } from 'shanyraq/tax'\n\ngetTaxYear(2026) // { year: 2026, mrp: 4325, mzp: 85000 }\nmrpToTenge(10).value // 43250",
   leave:
     "import { sickPay, vacationPay } from 'shanyraq/leave'\n\nvacationPay(3600000, '2026-07-01', 24).value // { end: '2026-07-25', workingDays: 17, pay: 248780.55, … }\nsickPay(3600000, '2026-03-02', '2026-03-06').value?.pay // 73469.4",
+  dismissal:
+    "import { dismissalPay } from 'shanyraq/leave'\n\ndismissalPay(3600000, '2026-06-30', { unusedDays: 12, reason: 'reduction' }).value\n// { payBy: '2026-07-03', compensation: { workingDays: 8, pay: 118032.8, … }, severance: { months: 1, pay: 324590.2, … }, pay: 442623 }",
+  maternity:
+    "import { childcarePay, maternityPay } from 'shanyraq/family'\n\nmaternityPay(500000).value // { average: 450000, days: 126, amount: 1890000, opv: 189000, net: 1701000, … }\nchildcarePay(500000).value // { byIncome: 180000, min: 27680, max: 238000, amount: 180000, net: 162000, … }",
+  alimony:
+    "import { alimony, alimonyPenalty } from 'shanyraq/alimony'\n\nalimony(500000, { children: 2, gross: true }).value // { base: 408975, percent: 33.33, amount: 136325, kept: 272650, … }\nalimonyPenalty(100000, '2026-01-31', '2026-03-02').value // { days: 30, penalty: 3000 }",
+  procedure:
+    "import { procedureTerm } from 'shanyraq/procedure'\n\nprocedureTerm('2026-01-31', 'appeal').value // { start: '2026-02-01', due: '2026-02-28', end: '2026-03-02', moved: true }\nprocedureTerm('2026-03-18', { workingDays: 10 }).value?.end // '2026-04-06'",
+  claim:
+    "import { baseRate, claimDuty, claimPenalty } from 'shanyraq/claim'\n\nbaseRate('2026-10-01') // { rate: 16.25, since: '2026-09-07', stale: false }\nclaimPenalty(1000000, '2026-01-31', '2026-10-01').value // { penalty: 108184.93, total: 1108184.93, … }\nclaimDuty(1108184.93).value?.duty // 11081.85",
   simplified:
     "import { simplifiedTax } from 'shanyraq/tax'\n\nsimplifiedTax(3000000).value // { ipn: 120000, monthly: { opv: 8500, so: 4250, vosms: 5950 }, total: 232200, … }\nsimplifiedTax(3000000, { rate: 3 }).value?.ipn // 90000",
+  vehicle:
+    "import { recyclingFee, registrationFee, vehicleTax } from 'shanyraq/vehicle'\n\nvehicleTax('car', { volume: 2000, made: 2015 }).value // { rate: 3, extra: 3500, coefficient: 0.7, annual: 11532.5, … }\nregistrationFee('car', 2024, 2026).value // { age: 3, rate: 50, fee: 216250 }\nrecyclingFee('car', { volume: 1600 }).value // { coefficient: 3.5, base: 216250, fee: 756875 }",
+  property:
+    "import { landTax, propertyTax, propertyValue } from 'shanyraq/property'\n\npropertyValue({ settlement: 'almaty', area: 60, built: 2010, walls: 'panel' }).value // { wear: 11.2, physical: 0.888, mrpIndex: 1.099949, value: 3516317.4, … }\npropertyTax(15000000).value?.tax // 26100\nlandTax('yard', 1200, { settlement: 'almaty' }).value // { annual: 1400, tax: 1400 }",
   fees: "import { mrpToTenge } from 'shanyraq/tax'\n\nmrpToTenge(8).value // 34600 — паспорт, 36 страниц\nmrpToTenge(10 / 2).value // 21625 — штраф 10 МРП при оплате за 7 суток",
+  penalty:
+    "import { taxPenalty } from 'shanyraq/claim'\n\ntaxPenalty(100000, '2026-07-31', '2026-08-10').value // { days: 10, penalty: 573.63, total: 100573.63, … }\ntaxPenalty(100000, '2026-07-31', '2026-08-10', { monitoring: true }).value?.penalty // 298.29",
   deadlines:
     "import { taxDeadlines } from 'shanyraq/deadlines'\n\ntaxDeadlines(2026, { regime: 'simplified', tags: ['ip'] }).value\n// [{ id: 'socialSelf', date: '2026-01-26', … }, { id: 'f910', form: '910.00', due: '2026-02-15', date: '2026-02-16', moved: true, … }, …]",
   loan: "import { loanSchedule } from 'shanyraq/loan'\n\nloanSchedule(1000000, 20, 12).value // { monthly: 92634.51, overpayment: 111614.09, apr: 21.94, … }\nloanSchedule(1000000, 20, 12, { method: 'differentiated', prepayments: [{ month: 3, amount: 300000 }] })",
@@ -108,7 +124,28 @@ const GROUPS: { title: Record<Lang, string>; tools: ToolId[] }[] = [
   },
   {
     title: { ru: 'Зарплата, налоги, кредиты', kk: 'Жалақы, салықтар, несиелер' },
-    tools: ['salary', 'leave', 'simplified', 'deadlines', 'vat', 'mrp', 'fees', 'loan', 'mortgage'],
+    tools: [
+      'salary',
+      'leave',
+      'dismissal',
+      'maternity',
+      'alimony',
+      'simplified',
+      'deadlines',
+      'penalty',
+      'vat',
+      'mrp',
+      'fees',
+      'vehicle',
+      'property',
+      'loan',
+      'mortgage',
+    ],
+  },
+  // TODO(verify): kk group name
+  {
+    title: { ru: 'Суд и право', kk: 'Сот және құқық' },
+    tools: ['procedure', 'claim'],
   },
   {
     title: { ru: 'Тексты и даты', kk: 'Мәтін мен күндер' },

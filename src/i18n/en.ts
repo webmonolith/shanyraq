@@ -73,4 +73,31 @@ export const en: Messages = {
     range: 'Year is out of range',
     data: 'No working-day calendar data for this year',
   },
+  alimony: {
+    invalid: 'Enter the income as a number',
+    range: 'Income, share, amount or number of children is out of range',
+    date: 'Invalid date, expected YYYY-MM-DD',
+    data: 'No tax rates or MRP for this year',
+  },
+  claim: {
+    invalid: 'Enter the amount as a number',
+    range: 'Amount, dates, rate or payments are out of range',
+    date: 'Invalid date, expected YYYY-MM-DD',
+    data: 'No base rate or MRP for this date',
+  },
+  family: {
+    invalid: 'Enter the income as a number',
+    range: 'Income, months, days or birth order is out of range',
+    data: 'No MRP or MZP for this year',
+  },
+  vehicle: {
+    invalid: 'Enter the engine volume, power, capacity or mass as a number',
+    range: 'Year of manufacture or months are out of range',
+    data: 'No MRP for this year',
+  },
+  property: {
+    invalid: 'Enter the value or area as a number',
+    range: 'Area, year, share, months or coefficient is out of range',
+    data: 'No MRP for this or the previous year',
+  },
 }

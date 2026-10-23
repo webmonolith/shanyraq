@@ -1,11 +1,14 @@
 import { defineConfig } from 'tsup'
 
 const subpaths = [
+  'alimony',
   'bin',
   'calendar',
+  'claim',
   'date',
   'deadlines',
   'faker',
+  'family',
   'i18n',
   'iban',
   'iin',
@@ -14,10 +17,13 @@ const subpaths = [
   'money',
   'phone',
   'plate',
+  'procedure',
   'regions',
   'tax',
   'taxid',
   'translit',
+  'property',
+  'vehicle',
   'zod',
 ]
 

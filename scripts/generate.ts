@@ -334,6 +334,7 @@ interface LeaveData {
   averageWage: { periodMonths: number }
   vacation: { minDays: number }
   sickLeave: { monthlyCapMrp: number }
+  dismissal: { severanceMonths: Record<string, number>; payWithinWorkingDays: number }
 }
 
 const leave = read<LeaveData>('leave')
@@ -345,6 +346,8 @@ write(
     periodMonths: leave.averageWage.periodMonths,
     vacationDays: leave.vacation.minDays,
     sickCapMrp: leave.sickLeave.monthlyCapMrp,
+    severanceMonths: leave.dismissal.severanceMonths,
+    payWithinWorkingDays: leave.dismissal.payWithinWorkingDays,
   })} as const
 `,
 )
@@ -416,5 +419,247 @@ export const RULES: Rule[] = ${json(
       rule,
     })),
   )}
+`,
+)
+
+interface AlimonyData {
+  shares: { children: [number, number][] }
+  deduction: { keepPercent: number }
+  penalty: { percentPerDay: number }
+}
+
+const alimony = read<AlimonyData>('alimony')
+
+write(
+  'alimony/generated.ts',
+  'data/alimony.json',
+  `export const ALIMONY = ${json({
+    shares: alimony.shares.children,
+    keepPercent: alimony.deduction.keepPercent,
+    penaltyPercent: alimony.penalty.percentPerDay,
+  })} as const
+`,
+)
+
+interface ProcedureData {
+  deadlines: { id: string; period: Record<string, number> }[]
+}
+
+const procedure = read<ProcedureData>('procedure')
+
+write(
+  'procedure/generated.ts',
+  'data/procedure.json',
+  `export const PERIODS = ${json(
+    Object.fromEntries(procedure.deadlines.map((d) => [d.id, d.period])),
+  )} as const
+`,
+)
+
+interface ClaimData {
+  baseRate: { since: string; next: string[]; decisions: [string, number][] }
+  duty: {
+    property: Record<'individual' | 'legal', { percent: number; maxMrp: number }>
+    courtOrder: { share: number }
+  }
+  taxPenalty: { multiplier: { default: number; monitoring: number }; since: string; basis: number }
+}
+
+const claim = read<ClaimData>('claim')
+
+write(
+  'claim/generated.ts',
+  'data/claim.json',
+  `export const BASE_RATE = ${json({
+    since: claim.baseRate.since,
+    staleAfter: claim.baseRate.next[0],
+    changes: claim.baseRate.decisions.filter((d, i, all) => i === 0 || d[1] !== all[i - 1]?.[1]),
+  })} as const
+
+export const DUTY = ${json({
+    individual: claim.duty.property.individual,
+    legal: claim.duty.property.legal,
+    courtOrderShare: claim.duty.courtOrder.share,
+  })} as const
+
+export const TAX_PENALTY = ${json({
+    multiplier: claim.taxPenalty.multiplier.default,
+    monitoring: claim.taxPenalty.multiplier.monitoring,
+    since: claim.taxPenalty.since,
+    basis: claim.taxPenalty.basis,
+  })} as const
+`,
+)
+
+interface FamilyData {
+  maternity: { averageMonths: number; dayDivisor: number; leave: Record<string, number> }
+  childcare: { averageMonths: number; replacement: number; maxMzp: number }
+  opv: { percent: number }
+  birth: { mrp: number[] }
+  care: { mrp: number[] }
+}
+
+const family = read<FamilyData>('family')
+
+write(
+  'family/generated.ts',
+  'data/family.json',
+  `export const FAMILY = ${json({
+    maternityMonths: family.maternity.averageMonths,
+    dayDivisor: family.maternity.dayDivisor,
+    leave: family.maternity.leave,
+    childcareMonths: family.childcare.averageMonths,
+    replacement: family.childcare.replacement,
+    childcareMaxMzp: family.childcare.maxMzp,
+    opv: family.opv.percent / 100,
+    birthMrp: family.birth.mrp,
+    careMrp: family.care.mrp,
+  })} as const
+`,
+)
+
+type Brackets = (number | null)[][]
+
+interface VehicleData {
+  tax: {
+    car: { brackets: Brackets; extraFrom: number; extraPerCc: number; age: Brackets }
+    truck: { brackets: Brackets }
+    bus: { brackets: Brackets }
+    moto: { brackets: Brackets }
+    special: number
+  }
+  registration: Record<'car' | 'electric' | 'truck' | 'tractor', Brackets>
+  recycling: {
+    baseMrp: number
+    car: { electric: number[]; brackets: Brackets }
+    truck: { electric: number[]; brackets: Brackets }
+    bus: { electric: number[]; brackets: Brackets }
+  }
+}
+
+const vehicle = read<VehicleData>('vehicle')
+// `null` upper bound → Infinity, so lookups need no special case.
+const open = (b: Brackets) => b.map(([up, ...rest]) => [up ?? 'Infinity', ...rest])
+const jsonInf = (v: unknown) => json(v).replace(/"Infinity"/g, 'Infinity')
+
+write(
+  'vehicle/generated.ts',
+  'data/vehicle.json',
+  `export const TAX = ${jsonInf({
+    car: open(vehicle.tax.car.brackets),
+    extraFrom: vehicle.tax.car.extraFrom,
+    extraPerCc: vehicle.tax.car.extraPerCc,
+    age: open(vehicle.tax.car.age),
+    truck: open(vehicle.tax.truck.brackets),
+    bus: open(vehicle.tax.bus.brackets),
+    moto: open(vehicle.tax.moto.brackets),
+    special: vehicle.tax.special,
+  })} as const
+
+export const REGISTRATION = ${jsonInf(
+    Object.fromEntries(
+      Object.entries(vehicle.registration)
+        .filter((e): e is [string, Brackets] => Array.isArray(e[1]))
+        .map(([k, v]) => [k, open(v)]),
+    ),
+  )} as const
+
+export const RECYCLING = ${jsonInf({
+    baseMrp: vehicle.recycling.baseMrp,
+    car: {
+      electric: vehicle.recycling.car.electric,
+      brackets: open(vehicle.recycling.car.brackets),
+    },
+    truck: {
+      electric: vehicle.recycling.truck.electric,
+      brackets: open(vehicle.recycling.truck.brackets),
+    },
+    bus: {
+      electric: vehicle.recycling.bus.electric,
+      brackets: open(vehicle.recycling.bus.brackets),
+    },
+  })} as const
+`,
+)
+
+interface PropertyData {
+  settlements: {
+    list: { id: string; base: number; land: number }[]
+    yardCity: string[]
+  }
+  auxiliary: { storage: number; garage: number }
+  wear: {
+    groups: { group: number; norm: number; stone: boolean }[]
+    limitStone: number
+    limitOther: number
+    floor: number
+  }
+  functional: {
+    floor: Record<'first' | 'middle' | 'last', number>
+    corner: number
+    walls: { id: string; k: number }[]
+    noAmenities: number
+    heating: Record<string, number>
+  }
+  luxury: { max: number }
+  mrp: Record<string, number | string>
+  rates: { scale: (number | null)[][]; limit: number }
+  land: {
+    yard: Record<'city' | 'other', { upTo: number; low: number; high: number }>
+    garden: { upToHa: number; low: number; high: number; per: number }
+    adjust: number
+  }
+}
+
+const property = read<PropertyData>('property')
+
+write(
+  'property/generated.ts',
+  'data/property.json',
+  `export const SETTLEMENTS = ${json(
+    Object.fromEntries(
+      property.settlements.list.map((s) => [
+        s.id,
+        [s.base, s.land, property.settlements.yardCity.includes(s.id) ? 1 : 0],
+      ]),
+    ),
+  )} as const
+
+export const VALUE = ${json({
+    auxiliary: { storage: property.auxiliary.storage, garage: property.auxiliary.garage },
+    norms: property.wear.groups.map((g) => [g.norm, g.stone ? 1 : 0]),
+    limitStone: property.wear.limitStone,
+    limitOther: property.wear.limitOther,
+    wearFloor: property.wear.floor,
+    floor: {
+      first: property.functional.floor.first,
+      middle: property.functional.floor.middle,
+      last: property.functional.floor.last,
+    },
+    corner: property.functional.corner,
+    walls: Object.fromEntries(property.functional.walls.map((w) => [w.id, w.k])),
+    noAmenities: property.functional.noAmenities,
+    heating: property.functional.heating,
+    luxuryMax: property.luxury.max,
+    mrp: Object.fromEntries(
+      Object.entries(property.mrp).filter((e): e is [string, number] => typeof e[1] === 'number'),
+    ),
+  })} as const
+
+export const RATES = ${jsonInf({
+    scale: open(property.rates.scale),
+    limit: property.rates.limit,
+  })} as const
+
+export const LAND = ${json({
+    yard: { city: property.land.yard.city, other: property.land.yard.other },
+    garden: {
+      upToHa: property.land.garden.upToHa,
+      low: property.land.garden.low,
+      high: property.land.garden.high,
+      per: property.land.garden.per,
+    },
+    adjust: property.land.adjust,
+  })} as const
 `,
 )

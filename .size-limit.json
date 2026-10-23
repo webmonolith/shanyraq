@@ -3,14 +3,14 @@
     "name": "shanyraq/i18n (one language)",
     "path": "dist/i18n/index.js",
     "import": "{ ru }",
-    "limit": "1.2 kB",
+    "limit": "1.4 kB",
     "gzip": true
   },
   {
     "name": "shanyraq/i18n (all languages)",
     "path": "dist/i18n/index.js",
     "import": "{ messages }",
-    "limit": "2.8 kB",
+    "limit": "3.5 kB",
     "gzip": true
   },
   {
@@ -87,7 +87,7 @@
     "name": "shanyraq/leave (with calendar and MRP data)",
     "path": "dist/leave/index.js",
     "import": "*",
-    "limit": "3.2 kB",
+    "limit": "3.8 kB",
     "gzip": true
   },
   {
@@ -102,6 +102,48 @@
     "path": "dist/deadlines/index.js",
     "import": "*",
     "limit": "3.5 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/alimony (with tax rates)",
+    "path": "dist/alimony/index.js",
+    "import": "*",
+    "limit": "2.5 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/claim (with base rates and MRP)",
+    "path": "dist/claim/index.js",
+    "import": "*",
+    "limit": "2.5 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/family (with MRP and MZP)",
+    "path": "dist/family/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/property (with MRP)",
+    "path": "dist/property/index.js",
+    "import": "*",
+    "limit": "2.5 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/vehicle (with MRP)",
+    "path": "dist/vehicle/index.js",
+    "import": "*",
+    "limit": "2 kB",
+    "gzip": true
+  },
+  {
+    "name": "shanyraq/procedure (with calendar data)",
+    "path": "dist/procedure/index.js",
+    "import": "*",
+    "limit": "2.5 kB",
     "gzip": true
   },
   {
