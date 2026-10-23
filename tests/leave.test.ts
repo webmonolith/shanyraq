@@ -25,7 +25,7 @@ describe('vacationPay', () => {
   })
 
   it('Nauryz and 8 March extend the leave; shifted days off do not, and are not paid', () => {
-    const v = val(vacationPay(3600000, new Date(2026, 2, 2), 24))
+    const v = val(vacationPay(3600000, new Date(2026, 2, 2), { days: 24 }))
     expect(v.holidays).toEqual(['2026-03-08', '2026-03-21', '2026-03-22', '2026-03-23'])
     expect(v.end).toBe('2026-03-29')
     expect(v.workingDays).toBe(16)
@@ -33,13 +33,13 @@ describe('vacationPay', () => {
   })
 
   it('accepts string earnings and worked days', () => {
-    const v = val(vacationPay('1 200 000,50', '2026-07-01', 10, { workedDays: 100 }))
+    const v = val(vacationPay('1 200 000,50', '2026-07-01', { days: 10, workedDays: 100 }))
     expect(v.dailyWage).toBe(12000.01)
     expect(v.period.workingDays).toBe(100)
   })
 
   it('period of January crosses into the previous year', () => {
-    expect(val(vacationPay(0, '2026-01-15', 1)).period).toMatchObject({
+    expect(val(vacationPay(0, '2026-01-15', { days: 1 })).period).toMatchObject({
       from: '2025-01-01',
       to: '2025-12-31',
     })
@@ -50,20 +50,20 @@ describe('vacationPay', () => {
     expect(vacationPay('abc', '2026-07-01')).toEqual({ ok: false, error: 'invalid' })
     expect(vacationPay(-1, '2026-07-01')).toEqual({ ok: false, error: 'range' })
     expect(vacationPay(1e14, '2026-07-01')).toEqual({ ok: false, error: 'range' })
-    expect(vacationPay(100, '2026-07-01', 0)).toEqual({ ok: false, error: 'range' })
-    expect(vacationPay(100, '2026-07-01', 1.5)).toEqual({ ok: false, error: 'range' })
-    expect(vacationPay(100, '2026-07-01', 24, { workedDays: 0 })).toEqual({
+    expect(vacationPay(100, '2026-07-01', { days: 0 })).toEqual({ ok: false, error: 'range' })
+    expect(vacationPay(100, '2026-07-01', { days: 1.5 })).toEqual({ ok: false, error: 'range' })
+    expect(vacationPay(100, '2026-07-01', { workedDays: 0 })).toEqual({
       ok: false,
       error: 'range',
     })
     expect(vacationPay(100, '1000-03-01')).toEqual({ ok: false, error: 'range' })
-    expect(vacationPay(100, '9999-12-20', 30)).toEqual({ ok: false, error: 'range' })
-    expect(vacationPay(100, '2031-07-01', 24, { calendar: { strict: true } })).toEqual({
+    expect(vacationPay(100, '9999-12-20', { days: 30 })).toEqual({ ok: false, error: 'range' })
+    expect(vacationPay(100, '2031-07-01', { calendar: { strict: true } })).toEqual({
       ok: false,
       error: 'data',
     })
     expect(
-      vacationPay(100, '2027-12-20', 24, {
+      vacationPay(100, '2027-12-20', {
         workedDays: 200,
         calendar: { strict: true },
       }),
@@ -78,7 +78,7 @@ describe('vacationPay', () => {
         fc.integer({ min: 1, max: 60 }),
         (earnings, offset, days) => {
           const start = new Date(Date.UTC(2025, 0, 1) + offset * 864e5).toISOString().slice(0, 10)
-          const v = val(vacationPay(earnings, start, days))
+          const v = val(vacationPay(earnings, start, { days }))
           expect(v.workingDays).toBe(val(countWorkingDays(v.start, v.end)))
           expect(v.pay).toBeCloseTo(v.dailyWage * v.workingDays, 2)
           expect(v.workingDays).toBeLessThanOrEqual(days)

@@ -138,7 +138,7 @@ taxDeadlines(2026, { regime: 'simplified' })
 taxPenalty(100000, '2026-04-10', '2026-05-10') // penalty 1 849.32 at 1.25 × base rate
 ```
 
-Rates are for 2026 (Tax Code No. 214-VIII, Social Code, budget law); pass `year` where a function takes it.
+Rates are for 2026 (Tax Code No. 214-VIII, Social Code, budget law). Functions that depend on a year take `{ year }` in their options and default to the latest year in the data. A release that adds a new year of data is a minor version and changes default results, so pass `year` when a result must stay fixed.
 
 ### Leave, benefits and pension
 
@@ -148,7 +148,7 @@ import { maternityPay, childcarePay } from 'shanyraq/family'
 import { retirementAge, agePension } from 'shanyraq/pension'
 import { alimony } from 'shanyraq/alimony'
 
-vacationPay(6000000, '2026-07-01', 24)
+vacationPay(6000000, '2026-07-01', { days: 24 })
 // { ok: true, value: { end: '2026-07-25', holidays: ['2026-07-06'], dailyWage: 24390.24, pay: 414634.08, ... } }
 maternityPay(400000) // 126 days → 1 512 000, 1 360 800 after ОПВ
 childcarePay(400000) // 40 % of the average, 144 000 a month
@@ -159,11 +159,11 @@ alimony(500000, { children: 2 }) // a third of net pay
 ### Loans
 
 ```ts
-import { loanSchedule, effectiveRate, gesvLimit } from 'shanyraq/loan'
+import { loanSchedule, effectiveRate, effectiveRateCap } from 'shanyraq/loan'
 
 loanSchedule(20000000, 7, 300) // 7-20-25 mortgage
 // { ok: true, value: { monthly: 141355.84, overpayment: 22406751.7, apr: 7.23, ... } }
-gesvLimit('mortgage', '2026-10-23') // { ok: true, value: 25 } — legal cap on the effective rate
+effectiveRateCap('mortgage', '2026-10-23') // { ok: true, value: 25 } — legal cap on the effective rate
 ```
 
 ### Courts and law

@@ -1,4 +1,5 @@
 import type { VehicleError } from '../core/errors'
+import type { YearOption } from '../core/options'
 import { own } from '../core/own'
 import { err, ok, type Result } from '../core/result'
 import { getTaxYear } from '../tax/tax'
@@ -118,12 +119,12 @@ export const vehicleTax = (
 /**
  * Fee for the first state registration of a vehicle in Kazakhstan (Tax Code art. 615 p. 4).
  * @example
- * registrationFee('car', 2024, 2026).value // { age: 3, rate: 50, fee: 216250 }
+ * registrationFee('car', 2024, { year: 2026 }).value // { age: 3, rate: 50, fee: 216250 }
  */
 export const registrationFee = (
   kind: RegistrationKind,
   made: number,
-  year?: number,
+  { year }: YearOption = {},
 ): Result<RegistrationFee, VehicleError> => {
   const y = getTaxYear(year)
   if (!y) return err('data')

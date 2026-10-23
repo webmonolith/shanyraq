@@ -105,6 +105,6 @@ describe('budget allowances', () => {
     expect(val(careAllowance(2))).toBe(29453.25)
     expect(val(careAllowance(9))).toBe(38492.5)
     expect(birthAllowance(0)).toEqual({ ok: false, error: 'range' })
-    expect(careAllowance(1, 2020)).toEqual({ ok: false, error: 'data' })
+    expect(careAllowance(1, { year: 2020 })).toEqual({ ok: false, error: 'data' })
   })
 })

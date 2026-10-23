@@ -1,4 +1,5 @@
 import type { TaxError } from '../core/errors'
+import type { YearOption } from '../core/options'
 import { err, ok, type Result } from '../core/result'
 import { RATES as R, YEARS } from './generated'
 
@@ -218,7 +219,7 @@ export const extractVAT = (
  */
 export const mrpToTenge = (
   count: number | string,
-  year: number = LATEST,
+  { year = LATEST }: YearOption = {},
 ): Result<number, TaxError> => {
   const c = amount(count, 1e9)
   if (!c.ok) return c
@@ -231,7 +232,7 @@ export const mrpToTenge = (
  * @example
  * vatThreshold() // 43250000
  */
-export const vatThreshold = (year: number = LATEST): number | undefined => {
+export const vatThreshold = ({ year = LATEST }: YearOption = {}): number | undefined => {
   const y = YEARS[year]
   return y && R.vatThresholdMrp * y.mrp
 }

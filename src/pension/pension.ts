@@ -1,6 +1,7 @@
 import { type DateInput, dayNumber, isoDate, toDay } from '../core/date'
 import type { PensionError } from '../core/errors'
 import { daysInMonth } from '../core/id'
+import type { YearOption } from '../core/options'
 import { err, ok, type Result } from '../core/result'
 import type { Gender } from '../iin/iin'
 import { AGE, BASIC, CONTRIBUTIONS, SOLIDARY, YEARS } from './generated'
@@ -111,7 +112,7 @@ export const retirementAge = (
  */
 export const basicPension = (
   record: number,
-  year: number = LATEST,
+  { year = LATEST }: YearOption = {},
 ): Result<BasicPension, PensionError> => {
   if (!years(record)) return err('range')
   const y = YEARS[year]
@@ -133,7 +134,7 @@ export const agePension = (
   income: number | string,
   record1998: number,
   gender: Gender,
-  year: number = LATEST,
+  { year = LATEST }: YearOption = {},
 ): Result<AgePension, PensionError> => {
   const i = money(income)
   if (!Number.isFinite(i)) return err('invalid')

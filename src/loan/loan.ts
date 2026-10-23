@@ -1,6 +1,7 @@
 import { type DateInput, dayNumber, isoDate, toDay } from '../core/date'
 import type { LoanError } from '../core/errors'
 import { daysInMonth } from '../core/id'
+import { own } from '../core/own'
 import { err, ok, type Result } from '../core/result'
 import { GESV_DECIMALS, LIMITS } from './generated'
 
@@ -61,7 +62,7 @@ export interface CashFlow {
   amount: number
 }
 
-export type GesvLoanKind = 'unsecured' | 'secured' | 'mortgage' | 'microcredit' | 'shortMicrocredit'
+export type RateCapKind = 'unsecured' | 'secured' | 'mortgage' | 'microcredit' | 'shortMicrocredit'
 
 const MAX_AMOUNT = 1e12
 const tiyn = (n: number) => Math.round(n * 100) / 100
@@ -93,7 +94,9 @@ const addMonths = (start: number, months: number): number => {
 export const effectiveRate = (
   received: number,
   payments: CashFlow[],
-  decimals: number = GESV_DECIMALS,
+  {
+    decimals = GESV_DECIMALS,
+  }: { /** Decimal places of the percent; default 2. */ decimals?: number } = {},
 ): Result<number, LoanError> => {
   if (!(received > 0 && received <= MAX_AMOUNT) || !payments.length) return err('range')
   if (payments.some((p) => !(p.days >= 0 && nonNegative(p.amount)))) return err('range')
@@ -200,12 +203,12 @@ export const loanSchedule = (
  * Legal ГЭСВ cap in percent on a date (joint resolution of ARDFM No. 84 and NBRK No. 51 of 2026).
  * Mortgages from 2027 depend on loan-to-value; without `ltv` the higher cap is returned.
  * @example
- * gesvLimit('mortgage', '2027-03-01', 0.6).value // 20
+ * effectiveRateCap('mortgage', '2027-03-01', { ltv: 0.6 }).value // 20
  */
-export const gesvLimit = (
-  kind: GesvLoanKind,
+export const effectiveRateCap = (
+  kind: RateCapKind,
   date: DateInput,
-  ltv?: number,
+  { ltv }: { /** Loan-to-value, for mortgages from 2027. */ ltv?: number } = {},
 ): Result<number, LoanError> => {
   const day = toDay(date)
   if (day === undefined) return err('date')
@@ -213,7 +216,7 @@ export const gesvLimit = (
   const iso = isoDate(day)
   const row = LIMITS.find((l) => l.from <= iso && iso <= l.to)
   if (!row) return err('data')
-  if (kind !== 'mortgage') return kind in row ? ok(row[kind]) : err('invalid')
+  if (kind !== 'mortgage') return own(row, kind) ? ok(row[kind]) : err('invalid')
   const tier = row.mortgage.find(([max]) => !max || (ltv !== undefined && ltv <= max))
   return ok((tier as number[])[1] as number)
 }

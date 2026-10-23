@@ -16,7 +16,7 @@ import { formatIBAN, getBank, parseIBAN } from 'shanyraq/iban'
 import { parseIIN } from 'shanyraq/iin'
 import { inheritanceShares } from 'shanyraq/inheritance'
 import { dismissalPay, sickPay, vacationPay } from 'shanyraq/leave'
-import { gesvLimit, loanSchedule } from 'shanyraq/loan'
+import { effectiveRateCap, loanSchedule } from 'shanyraq/loan'
 import { parseAmount } from 'shanyraq/money'
 import { agePension, basicPension, retirementAge } from 'shanyraq/pension'
 import { formatPhone } from 'shanyraq/phone'
@@ -77,7 +77,7 @@ assert.equal(
 )
 assert.deepEqual(inheritanceShares({ spouse: true, children: 3 }).value.heirs[1].share, [1, 4])
 assert.equal(landTax('yard', 1200, { settlement: 'almaty' }).value.annual, 1400)
-assert.equal(registrationFee('car', 2024, 2026).value.fee, 216250)
+assert.equal(registrationFee('car', 2024, { year: 2026 }).value.fee, 216250)
 assert.equal(recyclingFee('car', { volume: 1600 }).value.fee, 756875)
 assert.equal(
   dismissalPay(3600000, '2026-06-30', { unusedDays: 12, reason: 'reduction' }).value.pay,
@@ -85,7 +85,7 @@ assert.equal(
 )
 assert.equal(loanSchedule(1000000, 20, 12).value.apr, 21.94)
 assert.equal(taxDeadlines(2026, { regime: 'simplified', tags: [] }).value[0].date, '2026-02-16')
-assert.equal(gesvLimit('mortgage', '2027-01-01', 0.7).value, 20)
+assert.equal(effectiveRateCap('mortgage', '2027-01-01', { ltv: 0.7 }).value, 20)
 
 const cli = new URL('../../dist/cli.js', import.meta.url).pathname
 const run = (...args) =>

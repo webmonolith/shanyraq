@@ -1449,7 +1449,7 @@ const BasicTable: Content = ({ lang }) => (
       </thead>
       <tbody>
         {[10, 15, 20, 25, 30, 34].map((years) => {
-          const b = basicPension(years, 2026)
+          const b = basicPension(years, { year: 2026 })
           return b.ok ? (
             <tr key={years}>
               <td>
@@ -1979,7 +1979,7 @@ const money2 = (v: number) => {
 const LeaveExample = ({ lang, kind }: { lang: Lang; kind: 'vacation' | 'sick' }) => {
   const r =
     kind === 'vacation'
-      ? vacationPay(3600000, '2026-07-01', 24)
+      ? vacationPay(3600000, '2026-07-01', { days: 24 })
       : sickPay(3600000, '2026-03-02', '2026-03-06')
   if (!r.ok) return null
   const { dailyWage, workingDays, pay, period } = r.value

@@ -16,6 +16,11 @@ export interface LeaveOptions {
   calendar?: CalendarOptions
 }
 
+export interface VacationOptions extends LeaveOptions {
+  /** Calendar days of leave; default 24 (Labour Code art. 88). */
+  days?: number
+}
+
 /** The 12 calendar months before the event month and their working days. */
 export interface LeavePeriod {
   from: string
@@ -147,14 +152,14 @@ const leaveSpan = (
  * Pay for annual leave: average daily wage × working days inside the leave (Average Wage Rules p. 7–8).
  * `earnings` — salary accrued in the 12 calendar months before the leave month.
  * @example
- * vacationPay(3600000, '2026-07-01', 24).value // { end: '2026-07-25', workingDays: 17, pay: 248780.55, … }
+ * vacationPay(3600000, '2026-07-01', { days: 24 }).value // { end: '2026-07-25', workingDays: 17, pay: 248780.55, … }
  */
 export const vacationPay = (
   earnings: number | string,
   start: DateInput,
-  days: number = LEAVE.vacationDays,
-  options: LeaveOptions = {},
+  options: VacationOptions = {},
 ): Result<VacationPay, LeaveError> => {
+  const { days = LEAVE.vacationDays } = options
   const s = toDay(start)
   if (s === undefined) return err('date')
   if (!Number.isInteger(days) || days < 1 || days > 366) return err('range')

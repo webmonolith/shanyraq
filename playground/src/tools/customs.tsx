@@ -115,7 +115,7 @@ export default function Customs({ lang }: ToolProps) {
       ? personalCarDuty(value.trim() || 0, { volume, made: madeDay, declared, eur })
       : undefined
   const year = Number(declared.slice(0, 4))
-  const reg = r?.ok ? registrationFee('car', Number(made.slice(0, 4)), year) : undefined
+  const reg = r?.ok ? registrationFee('car', Number(made.slice(0, 4)), { year }) : undefined
   const recycle = r?.ok ? recyclingFee('car', { volume: num(volume) }) : undefined
   const y = getTaxYear()
   const extras = y ? (CERTIFICATE + PLATES) * y.mrp : 0
