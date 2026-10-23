@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-// Widgets keep their input in ?q= (IIN, IBAN, sums), so nothing past the path may reach Google.
+// Widgets keep their input in the URL fragment (IIN, IBAN, sums); still, nothing past the path may reach Google.
 const clean = (url: string) => {
   try {
     const u = new URL(url)

@@ -118,22 +118,26 @@ export const Status = ({ ok, children }: { ok?: boolean | undefined; children: R
   </p>
 )
 
+const fragment = () => new URLSearchParams(location.hash.slice(1))
+
 /**
- * Input state mirrored in `?<key>=` so a result can be shared by link.
- * Starts from `initial` on both server and client; the URL is read after hydration.
+ * Input state mirrored in `#<key>=` so a result can be shared by link. The fragment never reaches the server,
+ * its logs or analytics (a `?query` does: GA site search reads `q`). Starts from `initial` on both server and
+ * client; the URL is read after hydration.
  */
 export const useQuery = (key: string, initial = ''): [string, (value: string) => void] => {
   const [value, setValue] = useState(initial)
   useEffect(() => {
-    const q = new URLSearchParams(location.search).get(key)
+    const q = fragment().get(key)
     if (q !== null) setValue(q)
   }, [key])
   const set = (v: string) => {
     setValue(v)
-    const url = new URL(location.href)
-    if (v) url.searchParams.set(key, v)
-    else url.searchParams.delete(key)
-    history.replaceState(history.state, '', url)
+    const params = fragment()
+    if (v) params.set(key, v)
+    else params.delete(key)
+    const hash = params.toString()
+    history.replaceState(history.state, '', `${location.pathname}${hash && `#${hash}`}`)
   }
   return [value, set]
 }

@@ -1,7 +1,23 @@
 import './styles.css'
 import { startAnalytics, track } from './analytics'
 
+// Links shared before inputs moved to the fragment: move ?q= there before analytics can read it.
+if (location.search) {
+  const hash = [location.search.slice(1), location.hash.slice(1)].filter(Boolean).join('&')
+  history.replaceState(history.state, '', `${location.pathname}#${hash}`)
+}
+
 if (import.meta.env.PROD && 'serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js')
+
+// Section links scroll without replacing the fragment, which carries the inputs.
+document.addEventListener('click', (e) => {
+  const a = (e.target as Element | null)?.closest?.('a[href^="#"]')
+  const target =
+    a && document.getElementById(decodeURIComponent(a.getAttribute('href')?.slice(1) ?? ''))
+  if (!target) return
+  e.preventDefault()
+  target.scrollIntoView()
+})
 
 // Only the tool widget is interactive; the rest of the page is static prerendered HTML.
 const el = document.getElementById('tool')
