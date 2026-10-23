@@ -1,6 +1,9 @@
 import { daysInMonth } from './id'
 
-/** A `Date` (its local calendar day is used) or a `YYYY-MM-DD` string. */
+/**
+ * A `YYYY-MM-DD` string, or a `Date` read by its local calendar day. Prefer strings: `new Date('2026-03-01')` is
+ * UTC midnight, which west of UTC is still 28 February locally.
+ */
 export type DateInput = Date | string
 
 const DAY_MS = 864e5

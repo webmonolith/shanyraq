@@ -97,7 +97,7 @@ const CODE: Record<string, string> = {
   vat: "import { addVAT, extractVAT } from 'shanyraq/tax'\n\naddVAT(1000).value // { net: 1000, vat: 160, gross: 1160 }\nextractVAT(1160, { rate: 16 }).value?.vat // 160",
   mrp: "import { getTaxYear, mrpToTenge } from 'shanyraq/tax'\n\ngetTaxYear(2026) // { year: 2026, mrp: 4325, mzp: 85000 }\nmrpToTenge(10).value // 43250",
   leave:
-    "import { vacationPay } from 'shanyraq/leave'\n\nvacationPay(3600000, '2026-07-01', 24).value // { end: '2026-07-25', workingDays: 17, pay: 248780.55, … }",
+    "import { vacationPay } from 'shanyraq/leave'\n\nvacationPay(3600000, '2026-07-01', { days: 24 }).value // { end: '2026-07-25', workingDays: 17, pay: 248780.55, … }",
   sick: "import { sickPay } from 'shanyraq/leave'\n\nsickPay(3600000, '2026-03-02', '2026-03-06').value?.pay // 73469.4",
   dismissal:
     "import { dismissalPay } from 'shanyraq/leave'\n\ndismissalPay(3600000, '2026-06-30', { unusedDays: 12, reason: 'reduction' }).value\n// { payBy: '2026-07-03', compensation: { workingDays: 8, pay: 118032.8, … }, severance: { months: 1, pay: 324590.2, … }, pay: 442623 }",
@@ -121,7 +121,7 @@ const CODE: Record<string, string> = {
   vehicle:
     "import { vehicleTax } from 'shanyraq/vehicle'\n\nvehicleTax('car', { volume: 2000, made: 2015 }).value // { rate: 3, extra: 3500, coefficient: 0.7, annual: 11532.5, … }",
   registration:
-    "import { recyclingFee, registrationFee } from 'shanyraq/vehicle'\n\nregistrationFee('car', 2024, 2026).value // { age: 3, rate: 50, fee: 216250 }\nrecyclingFee('car', { volume: 1600 }).value // { coefficient: 3.5, base: 216250, fee: 756875 }",
+    "import { recyclingFee, registrationFee } from 'shanyraq/vehicle'\n\nregistrationFee('car', 2024, { year: 2026 }).value // { age: 3, rate: 50, fee: 216250 }\nrecyclingFee('car', { volume: 1600 }).value // { coefficient: 3.5, base: 216250, fee: 756875 }",
   customs:
     "import { personalCarDuty } from 'shanyraq/customs'\n\npersonalCarDuty(20000, { volume: 1998, made: '2024-05-01', declared: '2026-10-23', eur: 500 }).value\n// { age: 2, group: 'upTo3', percent: 48, perCc: 5.5, byValue: 9600, byVolume: 10989, euro: 10989, duty: 5494500 }",
   property:
@@ -134,7 +134,7 @@ const CODE: Record<string, string> = {
     "import { taxDeadlines } from 'shanyraq/deadlines'\n\ntaxDeadlines(2026, { regime: 'simplified', tags: ['ip'] }).value\n// [{ id: 'socialSelf', date: '2026-01-26', … }, { id: 'f910', form: '910.00', due: '2026-02-15', date: '2026-02-16', moved: true, … }, …]",
   loan: "import { loanSchedule } from 'shanyraq/loan'\n\nloanSchedule(1000000, 20, 12).value // { monthly: 92634.51, overpayment: 111614.09, apr: 21.94, … }\nloanSchedule(1000000, 20, 12, { method: 'differentiated', prepayments: [{ month: 3, amount: 300000 }] })",
   mortgage:
-    "import { gesvLimit, loanSchedule } from 'shanyraq/loan'\n\nloanSchedule(20000000, 7, 300, { start: '2026-10-23' }).value // { monthly: 141355.84, apr: 7.22, … }\ngesvLimit('mortgage', '2027-01-01', 0.7).value // 20",
+    "import { effectiveRateCap, loanSchedule } from 'shanyraq/loan'\n\nloanSchedule(20000000, 7, 300, { start: '2026-10-23' }).value // { monthly: 141355.84, apr: 7.22, … }\neffectiveRateCap('mortgage', '2027-01-01', { ltv: 0.7 }).value // 20",
   money:
     "import { moneyToWords } from 'shanyraq/money'\n\nmoneyToWords(1234.5, { lang: 'kk' }) // { ok: true, value: 'Бір мың екі жүз отыз төрт теңге 50 тиын' }",
   calendar:

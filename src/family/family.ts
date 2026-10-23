@@ -1,4 +1,5 @@
 import type { FamilyError } from '../core/errors'
+import type { YearOption } from '../core/options'
 import { err, ok, type Result } from '../core/result'
 import { RATES as R } from '../tax/generated'
 import { getTaxYear, MAX_SALARY } from '../tax/tax'
@@ -163,13 +164,17 @@ const allowance = (
  * @example
  * birthAllowance(1).value // 164350
  */
-export const birthAllowance = (order: number, year?: number): Result<number, FamilyError> =>
-  allowance(FAMILY.birthMrp, order, year)
+export const birthAllowance = (
+  order: number,
+  { year }: YearOption = {},
+): Result<number, FamilyError> => allowance(FAMILY.birthMrp, order, year)
 
 /**
  * Monthly childcare allowance from the budget for those outside social insurance (Social Code art. 82).
  * @example
  * careAllowance(1).value // 24912
  */
-export const careAllowance = (order: number, year?: number): Result<number, FamilyError> =>
-  allowance(FAMILY.careMrp, order, year)
+export const careAllowance = (
+  order: number,
+  { year }: YearOption = {},
+): Result<number, FamilyError> => allowance(FAMILY.careMrp, order, year)

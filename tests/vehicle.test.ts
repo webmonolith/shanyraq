@@ -69,7 +69,7 @@ describe('vehicleTax', () => {
 
 describe('registrationFee', () => {
   const fee = (kind: Parameters<typeof registrationFee>[0], made: number) =>
-    val(registrationFee(kind, made, 2026))
+    val(registrationFee(kind, made, { year: 2026 }))
   it('cars: up to 2 years with the year of manufacture 0.25 MRP, 3rd year 50, then 500', () => {
     expect(fee('car', 2026)).toEqual({ age: 1, rate: 0.25, fee: 1081.25 })
     expect(fee('car', 2025).rate).toBe(0.25)
@@ -88,10 +88,10 @@ describe('registrationFee', () => {
   })
 
   it('errors', () => {
-    expect(registrationFee('car', 2028, 2026)).toEqual({ ok: false, error: 'range' })
+    expect(registrationFee('car', 2028, { year: 2026 })).toEqual({ ok: false, error: 'range' })
     expect(registrationFee('boat' as 'car', 2020)).toEqual({ ok: false, error: 'invalid' })
     expect(registrationFee('toString' as 'car', 2020)).toEqual({ ok: false, error: 'invalid' })
-    expect(registrationFee('car', 2020, 2020)).toEqual({ ok: false, error: 'data' })
+    expect(registrationFee('car', 2020, { year: 2020 })).toEqual({ ok: false, error: 'data' })
   })
 })
 

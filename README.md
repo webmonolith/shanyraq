@@ -4,11 +4,11 @@ Zero-dependency, tree-shakeable TypeScript utilities for Kazakhstan.
 
 - **Validation:** IIN/BIN, phone numbers and city codes, IBAN and banks, licence plates, regions (KATO).
 - **Payroll and benefits:** salary taxes, vacation and sick pay, dismissal payout, maternity and childcare, pension, alimony.
-- **Taxes and loans:** VAT, simplified regime (910), tax calendar, tax penalty, vehicle and property tax, registration and recycling fees, loan schedules with the effective rate (ГЭСВ).
+- **Taxes and loans:** VAT, simplified regime (910), tax calendar, tax penalty, vehicle and property tax, registration and recycling fees, car import duty for individuals, loan schedules with the effective rate (ГЭСВ).
 - **Courts and law:** procedural deadlines, contractual penalty under Civil Code art. 353, court duty, inheritance shares.
 - **Text:** amounts in words, official date formats, holidays and working days, Kazakh Latin script.
 
-[Русская версия](README.ru.md) · [Online tools](https://shanyraq.webmonolith.kz) (79 pages in Russian and Kazakh, built on this package)
+[Русская версия](README.ru.md) · [Online tools](https://shanyraq.webmonolith.kz) (81 pages in Russian and Kazakh, built on this package)
 
 - **Sourced, not guessed.** Every rule and dataset (`data/*.json`) links to the law, order or registry it comes from, with a retrieval date. What could not be verified is listed in each dataset's `unverified`.
 - **Small.** Most subpaths are ≤ 2 kB gzip; modules that carry data (banks, calendar, deadlines, leave) are up to 4 kB. Import only what you use.
@@ -138,7 +138,7 @@ taxDeadlines(2026, { regime: 'simplified' })
 taxPenalty(100000, '2026-04-10', '2026-05-10') // penalty 1 849.32 at 1.25 × base rate
 ```
 
-Rates are for 2026 (Tax Code No. 214-VIII, Social Code, budget law); pass `year` where a function takes it.
+Rates are for 2026 (Tax Code No. 214-VIII, Social Code, budget law). Functions that depend on a year take `{ year }` in their options and default to the latest year in the data. A release that adds a new year of data is a minor version and changes default results, so pass `year` when a result must stay fixed.
 
 ### Leave, benefits and pension
 
@@ -148,7 +148,7 @@ import { maternityPay, childcarePay } from 'shanyraq/family'
 import { retirementAge, agePension } from 'shanyraq/pension'
 import { alimony } from 'shanyraq/alimony'
 
-vacationPay(6000000, '2026-07-01', 24)
+vacationPay(6000000, '2026-07-01', { days: 24 })
 // { ok: true, value: { end: '2026-07-25', holidays: ['2026-07-06'], dailyWage: 24390.24, pay: 414634.08, ... } }
 maternityPay(400000) // 126 days → 1 512 000, 1 360 800 after ОПВ
 childcarePay(400000) // 40 % of the average, 144 000 a month
@@ -159,11 +159,11 @@ alimony(500000, { children: 2 }) // a third of net pay
 ### Loans
 
 ```ts
-import { loanSchedule, effectiveRate, gesvLimit } from 'shanyraq/loan'
+import { loanSchedule, effectiveRate, effectiveRateCap } from 'shanyraq/loan'
 
 loanSchedule(20000000, 7, 300) // 7-20-25 mortgage
 // { ok: true, value: { monthly: 141355.84, overpayment: 22406751.7, apr: 7.23, ... } }
-gesvLimit('mortgage', '2026-10-23') // { ok: true, value: 25 } — legal cap on the effective rate
+effectiveRateCap('mortgage', '2026-10-23') // { ok: true, value: 25 } — legal cap on the effective rate
 ```
 
 ### Courts and law
@@ -187,10 +187,13 @@ The NBRK base-rate history is built in; results after the next scheduled decisio
 ```ts
 import { vehicleTax, registrationFee, recyclingFee } from 'shanyraq/vehicle'
 import { propertyTax, landTax } from 'shanyraq/property'
+import { personalCarDuty } from 'shanyraq/customs'
 
 vehicleTax('car', { volume: 2000, made: 2018 }) // 3 MRP + 7 ₸ per cc over 1 500 → 16 475
 registrationFee('car', 2018) // 500 MRP → 2 162 500
 propertyTax(30000000) // 96 600
+personalCarDuty(20000, { volume: 1998, made: '2024-05-01', declared: '2026-10-23', eur: 500 })
+// up to 3 years: 48 % of the value but at least 5.5 € per cc → 10 989 € = 5 494 500 ₸
 ```
 
 ### Error messages
@@ -199,6 +202,14 @@ propertyTax(30000000) // 96 600
 import { getMessage } from 'shanyraq/i18n'
 
 getMessage('kk', 'iin', 'checksum') // 'ЖСН-нің бақылау цифры қате'
+```
+
+`getMessage`, `ru`, `kk`, `en` and `messages` carry every module's texts. To bundle only what you use, import one module's object:
+
+```ts
+import { pensionMessages } from 'shanyraq/i18n'
+
+pensionMessages.kk.range // only the pension texts, in ru, kk and en
 ```
 
 ### zod
@@ -260,12 +271,13 @@ Values can also come from stdin, one per line. Exit code is 1 when any value is 
 | `shanyraq/inheritance` | Shares of heirs by law, spouse's half, obligatory share |
 | `shanyraq/vehicle` | Vehicle tax, first registration fee, recycling fee |
 | `shanyraq/property` | Property value, property tax, land tax |
+| `shanyraq/customs` | Single customs payment for a car imported by an individual (EEC decision No. 107) |
 | `shanyraq/calendar` | Holidays, days off, working-day arithmetic |
 | `shanyraq/date` | Official date formats (ru, kk), parsing |
 | `shanyraq/translit` | Kazakh Cyrillic → Latin (2021 and 2018 alphabets) |
 | `shanyraq/plate` | Licence plates (2012+ standard) |
 | `shanyraq/regions` | Regions with KATO and plate codes |
-| `shanyraq/i18n` | Error messages in ru, kk, en |
+| `shanyraq/i18n` | Error messages in ru, kk, en; per-module objects (`pensionMessages`, …) |
 | `shanyraq/zod` | zod schemas |
 | `shanyraq/faker` | Seeded valid test data |
 

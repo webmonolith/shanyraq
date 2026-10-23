@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { kk, ru } from 'shanyraq/i18n'
 import {
-  type GesvLoanKind,
-  gesvLimit,
+  effectiveRateCap,
   type Loan,
   type LoanMethod,
   loanSchedule,
+  type RateCapKind,
 } from 'shanyraq/loan'
 import { programmes } from '../../../data/loan.json'
 import { Choice, Field, fmt, Share, Status, type ToolProps, useQuery } from '../ui'
@@ -201,7 +201,7 @@ export function LoanTool({ lang, mode }: ToolProps & { mode: Mode }) {
   const method: LoanMethod = methodQ === 'differentiated' ? 'differentiated' : 'annuity'
   const kind = (
     mortgage ? 'mortgage' : (t.kinds.find(([k]) => k === kindQ)?.[0] ?? 'unsecured')
-  ) as GesvLoanKind
+  ) as RateCapKind
   const reduce: 'term' | 'payment' = reduceQ === 'payment' ? 'payment' : 'term'
   const preset = PRESETS.find((p) => p.id === programme)
   const pickProgramme = (id: string) => {
@@ -244,7 +244,9 @@ export function LoanTool({ lang, mode }: ToolProps & { mode: Mode }) {
       })
   const capDate = start || today
   const ltv = mortgage && price > 0 ? principal / price : undefined
-  const cap = capDate ? gesvLimit(kind, capDate, ltv) : undefined
+  const cap = capDate
+    ? effectiveRateCap(kind, capDate, ltv === undefined ? {} : { ltv })
+    : undefined
   const loan = r?.ok ? r.value : undefined
   const last = loan?.payments.at(-1)
 

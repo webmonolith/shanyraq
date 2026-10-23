@@ -23,8 +23,10 @@ describe('baseRate', () => {
   })
 
   it('after the next scheduled decision the rate is stale', () => {
-    expect(baseRate('2026-10-23')?.stale).toBe(false)
-    expect(baseRate('2026-10-24')).toEqual({ rate: 16.25, since: '2026-09-07', stale: true })
+    expect(baseRate('2026-10-26')).toEqual({ rate: 16.25, since: '2026-09-07', stale: false })
+    expect(baseRate('2026-10-27')).toEqual({ rate: 15.75, since: '2026-10-27', stale: false })
+    expect(baseRate('2026-12-04')?.stale).toBe(false)
+    expect(baseRate('2026-12-05')).toEqual({ rate: 15.75, since: '2026-10-27', stale: true })
   })
 })
 
@@ -110,7 +112,7 @@ describe('claimPenalty', () => {
     expect(paid).toMatchObject({ rest: 0, penalty: 1, total: 1 })
     expect(paid.parts).toHaveLength(1)
     expect(val(claimPenalty(100, '2026-01-01', '2026-01-01')).penalty).toBe(0)
-    expect(val(claimPenalty(100, '2026-01-01', '2026-12-01')).stale).toBe(true)
+    expect(val(claimPenalty(100, '2026-01-01', '2026-12-31')).stale).toBe(true)
   })
 
   it('errors', () => {
@@ -221,7 +223,7 @@ describe('taxPenalty', () => {
         penalty: 0.33,
       },
     ])
-    expect(val(taxPenalty(100, '2026-10-01', '2026-11-01')).stale).toBe(true)
+    expect(val(taxPenalty(100, '2026-10-01', '2026-12-31')).stale).toBe(true)
     expect(val(taxPenalty(100, '2026-01-01', '2026-01-01'))).toMatchObject({
       days: 0,
       penalty: 0,

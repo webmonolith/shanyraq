@@ -1,7 +1,7 @@
 import fc from 'fast-check'
 import { describe, expect, it } from 'vitest'
 import type { Result } from '../src/core/result'
-import { effectiveRate, gesvLimit, loanSchedule } from '../src/loan'
+import { effectiveRate, effectiveRateCap, loanSchedule } from '../src/loan'
 
 const val = <T>(r: Result<T, string>): T => {
   if (!r.ok) throw new Error(r.error)
@@ -187,8 +187,8 @@ describe('effectiveRate', () => {
   })
 
   it('rounds half up to the given decimals', () => {
-    expect(val(effectiveRate(100000, [{ days: 365, amount: 112345 }], 1))).toBe(12.3)
-    expect(val(effectiveRate(100000, [{ days: 365, amount: 112355 }], 1))).toBe(12.4)
+    expect(val(effectiveRate(100000, [{ days: 365, amount: 112345 }], { decimals: 1 }))).toBe(12.3)
+    expect(val(effectiveRate(100000, [{ days: 365, amount: 112355 }], { decimals: 1 }))).toBe(12.4)
     expect(val(effectiveRate(100000, [{ days: 365, amount: 112345 }]))).toBe(12.35)
   })
 
@@ -206,25 +206,40 @@ describe('effectiveRate', () => {
   })
 })
 
-describe('gesvLimit', () => {
+describe('effectiveRateCap', () => {
   it('caps since 16 May 2026', () => {
-    expect(gesvLimit('unsecured', '2026-05-16')).toEqual({ ok: true, value: 46 })
-    expect(gesvLimit('secured', '2026-10-23')).toEqual({ ok: true, value: 35 })
-    expect(gesvLimit('mortgage', '2026-10-23', 0.5)).toEqual({ ok: true, value: 25 })
-    expect(gesvLimit('microcredit', new Date(2026, 9, 23))).toEqual({ ok: true, value: 46 })
-    expect(gesvLimit('shortMicrocredit', '2026-12-31')).toEqual({ ok: true, value: 179 })
+    expect(effectiveRateCap('unsecured', '2026-05-16')).toEqual({ ok: true, value: 46 })
+    expect(effectiveRateCap('secured', '2026-10-23')).toEqual({ ok: true, value: 35 })
+    expect(effectiveRateCap('mortgage', '2026-10-23', { ltv: 0.5 })).toEqual({
+      ok: true,
+      value: 25,
+    })
+    expect(effectiveRateCap('microcredit', new Date(2026, 9, 23))).toEqual({ ok: true, value: 46 })
+    expect(effectiveRateCap('shortMicrocredit', '2026-12-31')).toEqual({ ok: true, value: 179 })
   })
 
   it('mortgage caps by loan-to-value from 2027', () => {
-    expect(gesvLimit('mortgage', '2027-01-01', 0.7)).toEqual({ ok: true, value: 20 })
-    expect(gesvLimit('mortgage', '2027-01-01', 0.71)).toEqual({ ok: true, value: 25 })
-    expect(gesvLimit('mortgage', '2027-01-01')).toEqual({ ok: true, value: 25 })
+    expect(effectiveRateCap('mortgage', '2027-01-01', { ltv: 0.7 })).toEqual({
+      ok: true,
+      value: 20,
+    })
+    expect(effectiveRateCap('mortgage', '2027-01-01', { ltv: 0.71 })).toEqual({
+      ok: true,
+      value: 25,
+    })
+    expect(effectiveRateCap('mortgage', '2027-01-01')).toEqual({ ok: true, value: 25 })
   })
 
   it('errors', () => {
-    expect(gesvLimit('unsecured', '2026-05-15')).toEqual({ ok: false, error: 'data' })
-    expect(gesvLimit('unsecured', 'nope')).toEqual({ ok: false, error: 'date' })
-    expect(gesvLimit('mortgage', '2027-01-01', 0)).toEqual({ ok: false, error: 'range' })
-    expect(gesvLimit('other' as 'secured', '2027-01-01')).toEqual({ ok: false, error: 'invalid' })
+    expect(effectiveRateCap('unsecured', '2026-05-15')).toEqual({ ok: false, error: 'data' })
+    expect(effectiveRateCap('unsecured', 'nope')).toEqual({ ok: false, error: 'date' })
+    expect(effectiveRateCap('mortgage', '2027-01-01', { ltv: 0 })).toEqual({
+      ok: false,
+      error: 'range',
+    })
+    expect(effectiveRateCap('other' as 'secured', '2027-01-01')).toEqual({
+      ok: false,
+      error: 'invalid',
+    })
   })
 })

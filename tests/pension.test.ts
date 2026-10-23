@@ -70,8 +70,8 @@ describe('basicPension', () => {
   it('errors', () => {
     expect(basicPension(-1)).toEqual({ ok: false, error: 'range' })
     expect(basicPension(Number.NaN)).toEqual({ ok: false, error: 'range' })
-    expect(basicPension(10, 2027)).toEqual({ ok: false, error: 'data' })
-    expect(basicPension(10, 2020)).toEqual({ ok: false, error: 'data' })
+    expect(basicPension(10, { year: 2027 })).toEqual({ ok: false, error: 'data' })
+    expect(basicPension(10, { year: 2020 })).toEqual({ ok: false, error: 'data' })
   })
 })
 
@@ -103,7 +103,7 @@ describe('agePension', () => {
     expect(agePension(-1, 1, 'male')).toEqual({ ok: false, error: 'range' })
     expect(agePension(1, 101, 'male')).toEqual({ ok: false, error: 'range' })
     expect(agePension(1, 1, 'x' as 'male')).toEqual({ ok: false, error: 'range' })
-    expect(agePension(1, 1, 'male', 2020)).toEqual({ ok: false, error: 'data' })
+    expect(agePension(1, 1, 'male', { year: 2020 })).toEqual({ ok: false, error: 'data' })
   })
 })
 

@@ -206,7 +206,7 @@ describe('VAT', () => {
 
   it('registration threshold is 10 000 MRP', () => {
     expect(vatThreshold()).toBe(43_250_000)
-    expect(vatThreshold(2019)).toBeUndefined()
+    expect(vatThreshold({ year: 2019 })).toBeUndefined()
   })
 })
 
@@ -214,7 +214,7 @@ describe('mrpToTenge', () => {
   it('converts', () => {
     expect(val(mrpToTenge(10))).toBe(43250)
     expect(val(mrpToTenge('0,5'))).toBe(2162.5)
-    expect(mrpToTenge(1, 2019)).toEqual({ ok: false, error: 'data' })
+    expect(mrpToTenge(1, { year: 2019 })).toEqual({ ok: false, error: 'data' })
     expect(mrpToTenge(-1)).toEqual({ ok: false, error: 'range' })
   })
 })

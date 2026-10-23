@@ -40,7 +40,7 @@ await writeFile(
 )
 
 // Offline: precache every page and asset except link-preview images, crawler files and the worker itself.
-const SKIP = /^(og\/|sitemap\.xml$|robots\.txt$|sw\.js$)/
+const SKIP = /^(og\/|sitemap\.xml$|robots\.txt$|sw\.js$|\.htaccess$)/
 const files = (await readdir(dist, { recursive: true, withFileTypes: true }))
   .filter((f) => f.isFile())
   .map((f) => relative(fileURLToPath(dist), join(f.parentPath, f.name)))

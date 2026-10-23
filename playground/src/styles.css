@@ -653,7 +653,8 @@ h3 {
 }
 
 /* iOS collapses an empty date input and centres its value */
-.field input[type="date"] {
+.field input[type="date"],
+.field input[type="month"] {
   -webkit-appearance: none;
   appearance: none;
   display: block;
@@ -1035,6 +1036,13 @@ td code {
   white-space: nowrap;
 }
 
+/* long range labels («2 001–3 000 куб. см») would push the last column off a phone screen */
+@media (max-width: 480px) {
+  td:first-child {
+    white-space: normal;
+  }
+}
+
 .tool .table {
   max-height: none;
   background: var(--bg);
@@ -1320,46 +1328,61 @@ td.nowrap {
 }
 
 .foot__nav {
-  grid-template-areas:
-    "a b c"
-    "a b d";
   grid-template-rows: auto 1fr;
   row-gap: 28px;
 }
 
 .foot__col--a {
-  grid-area: a;
+  grid-area: 1 / 1 / 3 / 2;
 }
 
 .foot__col--b {
-  grid-area: b;
+  grid-area: 1 / 2 / 3 / 3;
 }
 
 .foot__col--c {
-  grid-area: c;
+  grid-area: 1 / 3 / 2 / 4;
 }
 
 .foot__col--d {
-  grid-area: d;
+  grid-area: 2 / 3 / 3 / 4;
 }
 
 @media (max-width: 640px) {
   .foot__nav {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-areas:
-      "a b"
-      "a c"
-      "d c";
     grid-template-rows: auto auto 1fr;
     gap: 28px 20px;
+  }
+
+  .foot__col--a {
+    grid-area: 1 / 1 / 3 / 2;
+  }
+
+  .foot__col--b {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+
+  .foot__col--c {
+    grid-area: 2 / 2 / 4 / 3;
+  }
+
+  .foot__col--d {
+    grid-area: 3 / 1 / 4 / 2;
   }
 }
 
 @media (max-width: 340px) {
   .foot__nav {
     grid-template-columns: 1fr;
-    grid-template-areas: "a" "b" "c" "d";
     grid-template-rows: none;
+  }
+
+  .foot__col--a,
+  .foot__col--b,
+  .foot__col--c,
+  .foot__col--d {
+    grid-area: auto;
   }
 }
 

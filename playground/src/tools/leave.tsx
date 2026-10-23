@@ -39,7 +39,7 @@ const T = {
   kk: {
     basis: 'Табыс көрсетілген',
     bases: [
-      ['year', '12 айға'],
+      ['year', '12 айдағы'],
       ['month', 'айына (жыл бойы бірдей)'],
     ] as const,
     earnings: 'Есептелген, ₸',
@@ -82,7 +82,7 @@ export function LeaveTool({ lang, kind }: ToolProps & { kind: 'vacation' | 'sick
   const r = !value.trim()
     ? undefined
     : kind === 'vacation'
-      ? vacationPay(earnings, start, num(days), options)
+      ? vacationPay(earnings, start, { ...options, days: num(days) })
       : sickPay(earnings, from, to, options)
   return (
     <>
