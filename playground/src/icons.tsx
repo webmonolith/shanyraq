@@ -156,6 +156,17 @@ const ICONS: Record<ToolId, ReactNode> = {
       <path d="M46 40V50M41 45H51" />
     </>
   ),
+  sick: (
+    <>
+      <path d="M25 39V12C25 6.6 33 6.6 33 12V39" />
+      <path className="f" d={wc(29, 46, 8)} />
+      <path d={wc(29, 46, 8)} />
+      <path
+        d={`${wl(29, 40, 29, 20)}${wl(36, 16, 40, 16)}${wl(36, 23, 40, 23)}${wl(36, 30, 40, 30)}`}
+      />
+      <path d="M49 10V24M42 17H56" />
+    </>
+  ),
   dismissal: (
     <>
       <path className="f" d={wr(8, 30, 44, 56)} />
@@ -173,6 +184,15 @@ const ICONS: Record<ToolId, ReactNode> = {
       <path className="f" d="M8 30H52C51 40 43 46 30 46S9 40 8 30Z" />
       <path d="M8 30H52C51 40 43 46 30 46S9 40 8 30ZM52 30 56 17H61" />
       <path d={`${wc(19, 53, 5)}${wc(42, 53, 5)}`} />
+    </>
+  ),
+  childcare: (
+    <>
+      <path className="f" d={rr(20, 25, 44, 57, 5)} />
+      <path d={rr(20, 25, 44, 57, 5)} />
+      <path d="M18 25H46M25 25V19H39V25M28.5 19C28.5 9.5 35.5 9.5 35.5 19" />
+      <path className="bg" d={`${wl(32, 34, 39, 34)}${wl(32, 41, 39, 41)}${wl(32, 48, 39, 48)}`} />
+      <path d={`${wl(32, 34, 39, 34)}${wl(32, 41, 39, 41)}${wl(32, 48, 39, 48)}`} />
     </>
   ),
   alimony: (
@@ -209,6 +229,37 @@ const ICONS: Record<ToolId, ReactNode> = {
       <path d="M40 40H52M40 44H52M46 44V54" />
     </>
   ),
+  pension: (
+    <>
+      <path className="f" d={rr(10, 18, 42, 56, 3)} />
+      <path d={rr(10, 18, 42, 56, 3)} />
+      <path d={`${wl(16, 28, 36, 28)}${wl(16, 36, 30, 36)}`} />
+      <path className="bg" d={wc(44, 20, 12)} />
+      <path className="f" d={wc(44, 20, 12)} />
+      <path d={`${wc(44, 20, 12)}M44 13V20L49 24`} />
+      <path className="bg" d={wc(42, 46, 9)} />
+      <path d={`${wc(42, 46, 9)}M38 42H46M38 45H46M42 45V52`} />
+    </>
+  ),
+  inheritance: (
+    <>
+      <path className="f" d="M8 30 32 12 56 30Z" />
+      <path d="M8 30 32 12 56 30ZM12 30V54H52V30" />
+      <path className="bg" d={wc(32, 42, 10)} />
+      <path className="f" d="M32 42V32A10 10 0 0 1 42 42Z" />
+      <path d={`${wc(32, 42, 10)}M32 32V52M22 42H42`} />
+      <circle className="k" cx="32" cy="12" r="2" />
+    </>
+  ),
+  duty: (
+    <>
+      <path className="f" d="M12 22 28 6 40 18 24 34Z" />
+      <path d="M12 22 28 6 40 18 24 34ZM34 28 52 46" />
+      <path d={rr(10, 48, 38, 56, 2)} />
+      <path d={wl(6, 58, 44, 58)} />
+      <circle className="k" cx="52" cy="46" r="1.8" />
+    </>
+  ),
   property: (
     <>
       <path className="f" d="M10 30 32 10 54 30V56H10Z" />
@@ -216,6 +267,16 @@ const ICONS: Record<ToolId, ReactNode> = {
       <path className="bg" d={rr(25, 38, 39, 56, 2)} />
       <path d={rr(25, 38, 39, 56, 2)} />
       <path d={`${wl(6, 56, 58, 56)}M27 43H37M27 47H37M32 47V53`} />
+    </>
+  ),
+  land: (
+    <>
+      <path className="f" d="M6 44 22 35 42 37 58 44 42 55 20 54Z" />
+      <path d="M6 44 22 35 42 37 58 44 42 55 20 54Z" />
+      <path d="M32 44V10" />
+      <path className="f" d="M32 10 47 15.5 32 21Z" />
+      <path d="M32 10 47 15.5 32 21" />
+      <circle className="k" cx="32" cy="44" r="1.8" />
     </>
   ),
   vehicle: (
@@ -226,6 +287,15 @@ const ICONS: Record<ToolId, ReactNode> = {
       <path d={`${wc(18, 44, 6)}${wc(46, 44, 6)}`} />
       <circle className="k" cx="18" cy="44" r="1.6" />
       <circle className="k" cx="46" cy="44" r="1.6" />
+    </>
+  ),
+  registration: (
+    <>
+      <path d={wr(14, 6, 50, 30)} />
+      <path d={`${wl(20, 14, 44, 14)}${wl(20, 22, 38, 22)}`} />
+      <path d={rr(6, 36, 58, 56, 4)} />
+      <path d="M12.5 42.6 15 41V51M20 51 23 41 26 51M21.2 47.5H24.8" />
+      <path className="f" d={wr(40, 40.5, 52, 51.5)} />
     </>
   ),
   simplified: (

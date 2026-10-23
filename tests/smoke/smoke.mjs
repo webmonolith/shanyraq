@@ -13,9 +13,11 @@ import { childcarePay, maternityPay } from 'shanyraq/family'
 import { ru } from 'shanyraq/i18n'
 import { formatIBAN, getBank, parseIBAN } from 'shanyraq/iban'
 import { parseIIN } from 'shanyraq/iin'
+import { inheritanceShares } from 'shanyraq/inheritance'
 import { dismissalPay, sickPay, vacationPay } from 'shanyraq/leave'
 import { gesvLimit, loanSchedule } from 'shanyraq/loan'
 import { parseAmount } from 'shanyraq/money'
+import { agePension, basicPension, retirementAge } from 'shanyraq/pension'
 import { formatPhone } from 'shanyraq/phone'
 import { parsePlate } from 'shanyraq/plate'
 import { procedureTerm } from 'shanyraq/procedure'
@@ -64,6 +66,10 @@ assert.equal(
   3516317.4,
 )
 assert.equal(propertyTax(15000000).value.tax, 26100)
+assert.equal(basicPension(30).value.amount, 55936)
+assert.equal(agePension(300000, 12, 'female').value.amount, 85635)
+assert.equal(retirementAge('1963-05-10', 'male').value.date, '2026-05-10')
+assert.deepEqual(inheritanceShares({ spouse: true, children: 3 }).value.heirs[1].share, [1, 4])
 assert.equal(landTax('yard', 1200, { settlement: 'almaty' }).value.annual, 1400)
 assert.equal(registrationFee('car', 2024, 2026).value.fee, 216250)
 assert.equal(recyclingFee('car', { volume: 1600 }).value.fee, 756875)

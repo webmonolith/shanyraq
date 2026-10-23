@@ -7,9 +7,11 @@ import claim from '../../data/claim.json'
 import deadlines from '../../data/deadlines.json'
 import family from '../../data/family.json'
 import fees from '../../data/fees.json'
+import inheritanceData from '../../data/inheritance.json'
 import language from '../../data/language.json'
 import leave from '../../data/leave.json'
 import loan from '../../data/loan.json'
+import pensionData from '../../data/pension.json'
 import phone from '../../data/phone.json'
 import plates from '../../data/plates.json'
 import procedure from '../../data/procedure.json'
@@ -78,17 +80,31 @@ export const SOURCES: Record<ToolId, Source[]> = {
   salary: taxSource('taxCode', 'socialCode', 'osmsLaw', 'budget2026'),
   vat: taxSource('taxCode', 'budget2026'),
   mrp: taxSource('budget2026', 'taxCode', 'socialCode', 'osmsLaw'),
-  leave: [...linked(leave.source), ...taxSource('budget2026'), calendar.law],
+  leave: [...linked(leave.source), calendar.law],
+  sick: [...linked(leave.source), ...taxSource('budget2026'), calendar.law],
   dismissal: [...linked(leave.source), calendar.law],
   procedure: [...linked(procedure.source), calendar.law],
   claim: [...linked(claim.source), ...taxSource('budget2026')],
+  pension: linked(pensionData.source),
+  inheritance: [
+    ...linked(inheritanceData.source),
+    calendar.law,
+    ...taxSource('taxCode', 'budget2026'),
+  ],
+  duty: [
+    ...linked(claim.source.filter((s) => s.id === 'taxCode' || s.id === 'civilProcedureCode')),
+    ...taxSource('budget2026'),
+  ],
   penalty: [
     ...linked(claim.taxPenalty.source),
     ...linked(claim.source.filter((s) => s.id === 'nbrkRates')),
   ],
   maternity: [...linked(family.source), ...taxSource('budget2026')],
+  childcare: [...linked(family.source), ...taxSource('budget2026')],
   vehicle: [...linked(vehicleData.source), ...taxSource('budget2026')],
+  registration: [...linked(vehicleData.source), ...linked(fees.source), ...taxSource('budget2026')],
   property: [...linked(propertyData.source), ...taxSource('budget2026')],
+  land: [...linked(propertyData.source), ...taxSource('budget2026')],
   alimony: [
     ...linked(alimony.source),
     ...taxSource('taxCode', 'socialCode', 'osmsLaw', 'budget2026'),
@@ -111,4 +127,51 @@ export const SOURCES: Record<ToolId, Source[]> = {
     { title: translit.otherSchemes['2018'].act, url: translit.otherSchemes['2018'].url },
   ],
   faker: [],
+}
+
+// Latest `retrievedAt` of the data files behind each page: shown as «data checked on» and used as dateModified.
+const latest = (...files: { retrievedAt: string }[]): string =>
+  files
+    .map((f) => f.retrievedAt)
+    .sort()
+    .at(-1) as string
+
+export const CHECKED: Record<ToolId, string> = {
+  iin: latest(taxid),
+  phone: latest(phone),
+  codes: latest(phone),
+  iban: latest(banks),
+  plate: latest(plates, regions),
+  regions: latest(regions),
+  batch: latest(taxid, phone, banks, plates),
+  requisites: latest(taxid, banks, phone),
+  salary: latest(tax),
+  vat: latest(tax),
+  mrp: latest(tax),
+  leave: latest(leave, calendar),
+  sick: latest(leave, calendar, tax),
+  dismissal: latest(leave, calendar),
+  maternity: latest(family, tax),
+  childcare: latest(family, tax),
+  pension: latest(pensionData, tax),
+  alimony: latest(alimony, tax),
+  procedure: latest(procedure, calendar),
+  claim: latest(claim, tax),
+  duty: latest(claim, tax),
+  inheritance: latest(inheritanceData, procedure, calendar, fees, tax),
+  simplified: latest(tax),
+  fees: latest(fees, tax),
+  vehicle: latest(vehicleData, tax),
+  registration: latest(vehicleData, fees, tax),
+  property: latest(propertyData, tax),
+  land: latest(propertyData, tax),
+  deadlines: latest(deadlines, calendar),
+  penalty: latest(claim),
+  loan: latest(loan),
+  mortgage: latest(loan),
+  money: latest(language),
+  calendar: latest(calendar),
+  date: latest(language),
+  translit: latest(translit),
+  faker: latest(taxid, phone, banks, plates),
 }

@@ -32,11 +32,6 @@ const REG: Record<RegKind, [RegistrationKind, RecyclingKind]> = {
 // TODO(verify): kk texts need native review.
 const T = {
   ru: {
-    mode: 'Расчёт',
-    modes: [
-      ['tax', 'налог на транспорт за год'],
-      ['register', 'постановка на учёт: регистрация и утильсбор'],
-    ] as const,
     kind: 'Транспорт',
     taxKinds: [
       ['car', 'легковой автомобиль'],
@@ -85,11 +80,6 @@ const T = {
     messages: ru.vehicle,
   },
   kk: {
-    mode: 'Есеп',
-    modes: [
-      ['tax', 'жылдық көлік салығы'],
-      ['register', 'есепке қою: тіркеу және кәдеге жарату алымы'],
-    ] as const,
     kind: 'Көлік',
     taxKinds: [
       ['car', 'жеңіл автокөлік'],
@@ -139,10 +129,8 @@ const T = {
   },
 }
 
-export default function Vehicle({ lang }: ToolProps) {
+export function VehicleTool({ lang, mode }: ToolProps & { mode: 'tax' | 'register' }) {
   const t = T[lang]
-  const [modeQ, setMode] = useQuery('mode', 'tax')
-  const mode = modeQ === 'register' ? 'register' : 'tax'
   const [kindQ, setKind] = useQuery('kind', 'car')
   const taxKind = (TAX_KINDS as string[]).includes(kindQ) ? (kindQ as VehicleKind) : 'car'
   const regKind = (REG_KINDS as string[]).includes(kindQ) ? (kindQ as RegKind) : 'car'
@@ -183,7 +171,6 @@ export default function Vehicle({ lang }: ToolProps) {
   return (
     <>
       <div className="grid">
-        <Choice label={t.mode} value={mode} options={t.modes} onChange={setMode} />
         {mode === 'tax' ? (
           <Choice label={t.kind} value={taxKind} options={t.taxKinds} onChange={setKind} />
         ) : (
@@ -270,4 +257,8 @@ export default function Vehicle({ lang }: ToolProps) {
       )}
     </>
   )
+}
+
+export default function Vehicle({ lang }: ToolProps) {
+  return <VehicleTool lang={lang} mode="tax" />
 }

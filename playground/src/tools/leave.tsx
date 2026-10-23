@@ -11,11 +11,6 @@ const dmy = (iso: string) => iso.split('-').reverse().join('.')
 // TODO(verify): kk texts need native review.
 const T = {
   ru: {
-    kind: 'Что считаем',
-    kinds: [
-      ['vacation', 'отпускные'],
-      ['sick', 'больничный'],
-    ] as const,
     basis: 'Заработок указан',
     bases: [
       ['year', 'за 12 месяцев'],
@@ -43,11 +38,6 @@ const T = {
     messages: ru.leave,
   },
   kk: {
-    kind: 'Не есептейміз',
-    kinds: [
-      ['vacation', 'демалыс ақысы'],
-      ['sick', 'еңбекке жарамсыздық'],
-    ] as const,
     basis: 'Табыс көрсетілген',
     bases: [
       ['year', '12 айға'],
@@ -78,11 +68,9 @@ const T = {
 
 const num = (s: string) => Number(s.replace(/[\s ]/g, '').replace(',', '.'))
 
-export default function Leave({ lang }: ToolProps) {
+export function LeaveTool({ lang, kind }: ToolProps & { kind: 'vacation' | 'sick' }) {
   const t = T[lang]
-  const [kindQ, setKind] = useQuery('kind', 'vacation')
   const [basisQ, setBasis] = useQuery('basis', 'year')
-  const kind = kindQ === 'sick' ? 'sick' : 'vacation'
   const basis = basisQ === 'month' ? 'month' : 'year'
   const [value, setValue] = useQuery('q', '3600000')
   const [start, setStart] = useQuery('start', '2026-07-01')
@@ -100,7 +88,6 @@ export default function Leave({ lang }: ToolProps) {
   return (
     <>
       <div className="grid">
-        <Choice label={t.kind} value={kind} options={t.kinds} onChange={setKind} />
         <Choice label={t.basis} value={basis} options={t.bases} onChange={setBasis} />
         <Field label={t.earnings} value={value} onChange={setValue} inputMode="decimal" />
         {kind === 'vacation' ? (
@@ -167,4 +154,8 @@ export default function Leave({ lang }: ToolProps) {
       )}
     </>
   )
+}
+
+export default function Leave({ lang }: ToolProps) {
+  return <LeaveTool lang={lang} kind="vacation" />
 }

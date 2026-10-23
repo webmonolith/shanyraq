@@ -550,6 +550,35 @@ h3 {
   font-size: 17px;
 }
 
+.checked {
+  margin: -12px 0 24px;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+
+.checked a {
+  color: inherit;
+}
+
+.sibling {
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  background: var(--soft);
+}
+
+.contacts {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.foot .contacts a {
+  color: var(--fg);
+}
+
 /* doodles */
 
 .doodle {
@@ -1392,6 +1421,10 @@ td.nowrap {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.side a.side__about {
+  margin-top: 18px;
 }
 
 .side__note {

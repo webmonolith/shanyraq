@@ -16,6 +16,8 @@ export type ClaimError = 'invalid' | 'range' | 'date' | 'data'
 export type FamilyError = 'invalid' | 'range' | 'data'
 export type VehicleError = 'invalid' | 'range' | 'data'
 export type PropertyError = 'invalid' | 'range' | 'data'
+export type InheritanceError = 'invalid' | 'range'
+export type PensionError = 'invalid' | 'range' | 'date' | 'data'
 
 /** Every error code of every module, keyed by module name. */
 export interface ErrorCodes {
@@ -37,4 +39,6 @@ export interface ErrorCodes {
   family: FamilyError
   vehicle: VehicleError
   property: PropertyError
+  inheritance: InheritanceError
+  pension: PensionError
 }
