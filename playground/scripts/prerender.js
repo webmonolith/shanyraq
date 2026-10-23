@@ -66,7 +66,7 @@ self.addEventListener('activate', (e) => {
   )
 })
 
-// Pages: network first so a deploy shows up at once, cache when offline (?q= ignored).
+// Pages: network first so a deploy shows up at once, cache when offline (the fragment with inputs never reaches the worker).
 // Hashed assets and the rest: cache first.
 self.addEventListener('fetch', (e) => {
   const req = e.request

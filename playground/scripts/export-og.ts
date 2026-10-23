@@ -41,7 +41,8 @@ body{margin:0;width:${size}px;height:${size}px;overflow:hidden;background:#0b7a7
 svg{width:84%;height:84%}
 </style></head><body><svg viewBox="2 2 28 28"><path d="${LOGO_HORN}" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></body></html>`
 
-const ICONS = { 'icons/180': 180, 'icons/192': 192, 'icons/512': 512 }
+// not /icons/: Apache's default config aliases it to the server's own icons
+const ICONS = { 'pwa/180': 180, 'pwa/192': 192, 'pwa/512': 512 }
 
 const TAG = { ru: 'Инструменты для Казахстана', kk: 'Қазақстанға арналған құралдар' }
 
@@ -63,7 +64,7 @@ type Shot = [name: string, width: number, height: number]
 await rm(TMP, { recursive: true, force: true })
 await mkdir(TMP, { recursive: true })
 await mkdir(`${OUT}/og`, { recursive: true })
-await mkdir(`${OUT}/icons`, { recursive: true })
+await mkdir(`${OUT}/pwa`, { recursive: true })
 
 for (const page of pages) {
   const tool = TOOLS.find((t) => t.id === page.tool)
@@ -83,4 +84,4 @@ await Promise.all(
     for (let s = queue.shift(); s; s = queue.shift()) await shot(s, worker)
   }),
 )
-console.log(`public/og: ${pages.length} png, public/icons: ${Object.keys(ICONS).length} png`)
+console.log(`public/og: ${pages.length} png, public/pwa: ${Object.keys(ICONS).length} png`)
